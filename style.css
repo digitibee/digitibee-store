@@ -278,49 +278,49 @@ footer {
 
 /* PANDUAN CARA ORDER DIGITIBEE */
 .order-guide {
-    padding: 45px 15px;
+    padding: 25px 12px;
 }
 
 .order-card {
-    max-width: 950px;
+    max-width: 750px;
     margin: auto;
-    padding: 45px 45px;
+    padding: 25px 22px;
     background: rgba(255, 255, 255, 0.96);
-    border: 4px solid #f6b2cf;
-    border-radius: 40px;
-    box-shadow: 0 10px 30px rgba(210, 100, 150, 0.4);
+    border: 3px solid #f6b2cf;
+    border-radius: 25px;
+    box-shadow: 0 6px 18px rgba(210, 100, 150, 0.3);
 }
 
 .order-title {
     background: linear-gradient(135deg, #a94d22, #d18a4b);
     color: white;
     text-align: center;
-    padding: 20px;
-    border-radius: 35px;
-    font-size: 15px;
+    padding: 12px;
+    border-radius: 22px;
+    font-size: 17px;
     font-weight: bold;
-    margin-bottom: 35px;
-    box-shadow: 0 5px 12px #d9a1a1;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px #d9a1a1;
 }
 
 .order-step {
     display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 20px;
+    grid-template-columns: 65px 1fr;
+    gap: 12px;
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 2px dashed #f5c9dc;
+    padding: 13px 0;
+    border-bottom: 1px dashed #f5c9dc;
 }
 
 .step-icon {
-    width: 90px;
-    height: 90px;
-    border: 4px solid #f5b5d0;
+    width: 58px;
+    height: 58px;
+    border: 3px solid #f5b5d0;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    font-size: 27px;
     background: #fff5fa;
 }
 
@@ -328,25 +328,25 @@ footer {
     display: inline-block;
     background: #ed69a1;
     color: white;
-    padding: 17px 23px;
-    border-radius: 21px;
+    padding: 7px 11px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: bold;
-    margin-right: 19px;
+    margin-right: 7px;
 }
 
 .step-content h3 {
     display: inline;
     color: #63303e;
-    font-size: 21px;
+    font-size: 15px;
 }
 
 .step-content p {
     color: #765761;
-    font-size: 17px;
-    line-height: 1;
-    margin-top: 19px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-top: 8px;
 }
-
 /* NAVBAR BARU DIGITIBEE */
 .navbar-wrapper {
     position: sticky;
