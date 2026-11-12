@@ -627,3 +627,20 @@ footer {
         height: 48px;
     }
 }
+/* PERBAIKAN NAVBAR HP */
+@media (max-width: 600px) {
+    .navbar-wrapper .navbar {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        padding: 8px 4px;
+        gap: 2px;
+    }
+
+    .nav-item {
+        flex: 1;
+        min-width: 0;
+        padding: 8px 2px;
+    }
+}
