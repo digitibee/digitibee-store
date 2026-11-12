@@ -628,19 +628,33 @@ footer {
     }
 }
 /* PERBAIKAN NAVBAR HP */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .navbar-wrapper .navbar {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-around;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between;
         align-items: center;
-        padding: 8px 4px;
-        gap: 2px;
+        width: 100%;
+        padding: 8px 3px;
+        gap: 1px;
     }
 
-    .nav-item {
+    .navbar-wrapper .nav-item {
         flex: 1;
         min-width: 0;
-        padding: 8px 2px;
+        font-size: 9px;
+        padding: 8px 1px;
+        gap: 4px;
+    }
+
+    .navbar-wrapper .nav-item img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .navbar-wrapper .cart-menu img {
+        width: 38px;
+        height: 38px;
     }
 }
