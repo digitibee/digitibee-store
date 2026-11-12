@@ -1,0 +1,637 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --pink: #f58ab5;
+    --pink-dark: #d95791;
+    --pink-light: #fff0f7;
+    --brown: #754b59;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f9dce9;
+    padding: 25px;
+    color: var(--brown);
+}
+
+/* BINGKAI DAN WALLPAPER UTAMA */
+.store-frame {
+    width: 100%;
+    max-width: 1500px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 25px;
+    border: 5px solid #f3a5c5;
+    border-radius: 35px;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 224, 240, 0.25),
+            rgba(255, 224, 240, 0.25)
+        ),
+        url("Digitibee-banner.jpg");
+
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* NAVBAR PUTIH */
+.navbar {
+    width: 100%;
+    min-height: 105px;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 30px;
+    box-shadow: 0 8px 20px rgba(210, 100, 150, 0.15);
+}
+
+.logo {
+    color: var(--pink-dark);
+    font-size: 34px;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--brown);
+    font-size: 19px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--pink-dark);
+}
+
+.cart {
+    background: var(--pink);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 25px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+/* BAGIAN SAMBUTAN */
+.hero {
+    text-align: center;
+    padding: 100px 20px 90px;
+    background: transparent;
+}
+
+.welcome {
+    color: var(--pink-dark);
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    color: #d95791;
+    font-size: clamp(36px, 5vw, 65px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 2px 3px 5px rgba(255,255,255,0.8);
+}
+
+.tagline {
+    display: inline-block;
+    background: rgba(255,255,255,0.75);
+    color: var(--pink-dark);
+    font-size: 25px;
+    font-weight: bold;
+    padding: 15px 35px;
+    border-radius: 20px;
+    margin-bottom: 35px;
+}
+
+.shop-button {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    background: var(--pink-dark);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(190, 70, 125, 0.25);
+}
+
+/* KATALOG PRODUK */
+.products {
+    text-align: center;
+    padding: 55px 30px;
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 30px;
+    margin: 20px 0 40px;
+}
+
+.products h2,
+.testimonials h2 {
+    color: var(--pink-dark);
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.products > p,
+.testimonials > p {
+    margin-bottom: 35px;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.product-card {
+    background: white;
+    padding: 30px 20px;
+    border: 2px solid #f9c9dd;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(210, 100, 150, 0.12);
+}
+
+.product-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.product-card h3 {
+    color: var(--pink-dark);
+    margin-bottom: 12px;
+}
+
+.product-card p {
+    margin-bottom: 15px;
+}
+
+.product-card h4 {
+    margin-bottom: 15px;
+}
+
+.product-card button {
+    background: var(--pink);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+/* TESTIMONI */
+.testimonials {
+    text-align: center;
+    padding: 45px 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 30px;
+    margin-bottom: 30px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 25px;
+    color: var(--pink-dark);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* TAMPILAN HP */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .store-frame {
+        padding: 12px;
+        border-radius: 22px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+
+    nav {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        font-size: 15px;
+    }
+
+    .logo {
+        font-size: 28px;
+    }
+
+    .hero {
+        padding: 70px 10px;
+    }
+
+    .welcome {
+        font-size: 17px;
+    }
+
+    .tagline {
+        font-size: 17px;
+    }
+
+    .shop-button {
+        font-size: 17px;
+    }
+
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+
+    .products {
+        padding: 35px 15px;
+    }
+}
+/* PANDUAN CARA ORDER DIGITIBEE */
+.order-guide {
+    padding: 45px 15px;
+}
+
+.order-card {
+    max-width: 950px;
+    margin: auto;
+    padding: 45px 35px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 4px solid #f6b2cf;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(210, 100, 150, 0.2);
+}
+
+.order-title {
+    background: linear-gradient(135deg, #a94d22, #d18a4b);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 35px;
+    font-size: 27px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    box-shadow: 0 5px 12px #d9a1a1;
+}
+
+.order-step {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 2px dashed #f5c9dc;
+}
+
+.step-icon {
+    width: 90px;
+    height: 90px;
+    border: 4px solid #f5b5d0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    background: #fff5fa;
+}
+
+.step-number {
+    display: inline-block;
+    background: #ed69a1;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.step-content h3 {
+    display: inline;
+    color: #63303e;
+    font-size: 21px;
+}
+
+.step-content p {
+    color: #765761;
+    font-size: 17px;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+.order-decoration {
+    text-align: center;
+    font-size: 35px;
+    margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+    .order-card {
+        padding: 25px 15px;
+    }
+
+    .order-title {
+        font-size: 20px;
+    }
+
+    .order-step {
+        grid-template-columns: 65px 1fr;
+        gap: 12px;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+
+    .step-content h3 {
+        font-size: 16px;
+    }
+
+    .step-content p {
+        font-size: 14px;
+    }
+}
+/* BANNER PROMO DIGITIBEE */
+.promo-apps {
+    position: relative;
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.97);
+    border: 3px solid #ffc5dc;
+    border-radius: 35px;
+    box-shadow: 0 8px 25px rgba(210, 100, 150, 0.18);
+    overflow: hidden;
+}
+
+.promo-content {
+    max-width: 520px;
+}
+
+.promo-label {
+    display: inline-block;
+    color: #ed69a1;
+    border: 2px solid #ffc5dc;
+    border-radius: 30px;
+    padding: 10px 18px;
+    font-weight: bold;
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+
+.promo-label span {
+    background: #ed69a1;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 12px;
+    margin-left: 8px;
+}
+
+.promo-apps h2 {
+    color: #542b3b;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.promo-apps p {
+    color: #765761;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.app-icons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.app-icons span {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ffd2e4;
+    border-radius: 15px;
+    background: white;
+    font-weight: bold;
+    font-size: 13px;
+    box-shadow: 0 3px 8px #f8dce9;
+}
+
+.netflix { color: #e50914; font-size: 30px !important; }
+.disney { color: #173c75; }
+.spotify { color: #1db954; }
+.youtube { color: #ff0033; font-size: 25px !important; }
+.canva { color: #6554c0; }
+
+.promo-button {
+    display: inline-block;
+    background: #f45ca5;
+    color: white;
+    padding: 16px 25px;
+    border-radius: 35px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 5px 15px rgba(244, 92, 165, 0.25);
+}
+
+.promo-button:hover {
+    background: #d9438d;
+}
+
+@media (max-width: 600px) {
+    .promo-apps {
+        padding: 25px 18px;
+    }
+
+    .promo-apps h2 {
+        font-size: 23px;
+    }
+
+    .promo-apps p {
+        font-size: 15px;
+    }
+}
+/* NAVBAR BARU DIGITIBEE */
+.navbar-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    text-align: center;
+    padding: 12px 10px 18px;
+    background: linear-gradient(180deg, #f9dce9 0%, rgba(249,220,233,0.95) 100%);
+    border-radius: 25px;
+}
+
+/* LABEL SINCE 2024 */
+.since-label {
+    display: inline-block;
+    background: white;
+    color: #d95791;
+    padding: 9px 28px;
+    border: 3px solid #f6b2cf;
+    border-radius: 30px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 0 #e9a0bd;
+}
+
+/* MENU UTAMA */
+.navbar-wrapper .navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 8px;
+    max-width: 1000px;
+    min-height: 105px;
+    margin: auto;
+    padding: 12px;
+    background: #fffafd;
+    border: 4px solid #f4a5c5;
+    border-radius: 35px;
+    box-shadow: 0 8px 0 #e58bb1, 0 12px 20px rgba(180, 80, 125, 0.18);
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 12px 5px;
+    color: #9c5272;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.nav-item span {
+    font-size: 27px;
+}
+
+.nav-item:hover {
+    background: #fff0f7;
+    transform: translateY(-3px);
+}
+
+/* TOMBOL KERANJANG */
+.nav-item.cart-menu {
+    background: linear-gradient(145deg, #ff9bc5, #e94f96);
+    color: white;
+    border: 3px solid white;
+    box-shadow: 0 5px 0 #ca4380;
+    border-radius: 25px;
+}
+
+.nav-item.cart-menu span {
+    font-size: 34px;
+}
+
+/* LOGO DIGITIBEE */
+.brand-title {
+    color: #d95791;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-top: 20px;
+    text-shadow: 2px 3px 0 white;
+}
+
+/* TAMPILAN HP */
+@media (max-width: 600px) {
+    .navbar-wrapper {
+        padding: 8px 2px 15px;
+    }
+
+    .navbar-wrapper .navbar {
+        min-height: 75px;
+        padding: 7px 3px;
+        gap: 2px;
+        border-radius: 22px;
+    }
+
+    .nav-item {
+        font-size: 10px;
+        padding: 9px 2px;
+        gap: 5px;
+    }
+
+    .nav-item span {
+        font-size: 21px;
+    }
+
+    .nav-item.cart-menu span {
+        font-size: 25px;
+    }
+
+    .brand-title {
+        font-size: 23px;
+    }
+}
+/* UKURAN IKON NAVBAR */
+.navbar-wrapper .nav-item img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+}
+
+.navbar-wrapper .nav-item img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    display: block;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    mix-blend-mode: normal;
+}
+
+@media (max-width: 600px) {
+    .navbar-wrapper .nav-item img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .navbar-wrapper .cart-menu img {
+        width: 48px;
+        height: 48px;
+    }
+}
