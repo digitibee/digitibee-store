@@ -610,14 +610,6 @@ footer {
     height: 65px;
     object-fit: contain;
     display: block;
-    background: transparent;
-}
-
-.navbar-wrapper .nav-item img {
-    width: 65px;
-    height: 65px;
-    object-fit: contain;
-    display: block;
     background-color: transparent;
     border: none;
     box-shadow: none;
