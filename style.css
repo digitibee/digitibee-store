@@ -720,3 +720,10 @@ body::before {
         margin-top: 10px !important;
     }
 }
+/* HILANGKAN KOTAK PUTIH SINCE 2024 */
+.navbar-wrapper .since-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
