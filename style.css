@@ -620,6 +620,9 @@ body::before {
     margin-top: 4px !important;
 }
 .order-decoration {
-    display: none !important;
-}
+    display: block !important;
+    width: 100%;
+    text-align: center !important;
+    margin: 12px auto 0;
+    font-size: 20px;
 }
