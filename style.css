@@ -692,3 +692,26 @@ body::before {
     background: transparent;
     background-image: none;
 }
+/* HERO LEBIH RINGKAS DI HP */
+@media (max-width: 600px) {
+    .hero {
+        padding: 35px 10px 45px;
+    }
+
+    .welcome {
+        font-size: 14px;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+        margin-bottom: 12px;
+    }
+
+    .tagline {
+        font-size: 16px;
+        padding: 12px 18px;
+        margin-bottom: 15px;
+    }
+}
