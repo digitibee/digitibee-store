@@ -626,3 +626,49 @@ body::before {
     margin: 12px auto 0;
     font-size: 20px;
 }
+/* HERO DIGITIBEE DUA KOLOM */
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    text-align: left;
+    max-width: 900px;
+    margin: auto;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
+.hero-text .welcome {
+    font-size: 18px;
+    letter-spacing: 0;
+}
+
+.hero-text h1 {
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.hero-text .shop-button {
+    display: inline-block;
+    font-size: 16px;
+    padding: 13px 22px;
+    margin: 10px 0 0;
+}
