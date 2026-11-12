@@ -672,3 +672,50 @@ body::before {
     padding: 13px 22px;
     margin: 10px 0 0;
 }
+/* HERO DIGITIBEE KHUSUS HP */
+@media (max-width: 600px) {
+
+    .hero {
+        padding: 35px 10px !important;
+    }
+
+    .hero-content {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 5px !important;
+        text-align: left !important;
+    }
+
+    .hero-text {
+        flex: 1 !important;
+        min-width: 0;
+    }
+
+    .hero-image {
+        flex: 1 !important;
+        min-width: 0;
+    }
+
+    .hero-image img {
+        width: 100% !important;
+        max-width: 160px !important;
+        height: auto !important;
+    }
+
+    .hero-text .welcome {
+        font-size: 13px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .hero-text h1 {
+        font-size: 20px !important;
+        line-height: 1.2 !important;
+    }
+
+    .hero-text .shop-button {
+        font-size: 12px !important;
+        padding: 10px 13px !important;
+        margin-top: 10px !important;
+    }
+}
