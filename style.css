@@ -719,14 +719,6 @@ body::before {
         padding: 10px 13px !important;
         margin-top: 10px !important;
     }
-}
-/* HILANGKAN KOTAK PUTIH SINCE 2024 */
-.navbar-wrapper .since-label {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
 /* BLOK SINCE 2024 */
 .navbar-wrapper .since-label {
     background: #ffffff !important;
