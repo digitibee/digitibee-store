@@ -577,3 +577,48 @@ body::before {
         margin-bottom: 15px;
     }
 }
+/* KHUSUS MEMPERKECIL CARA ORDER DI HP */
+@media (max-width: 600px) {
+    .order-guide {
+        padding: 12px 5px !important;
+    }
+
+    .order-card {
+        padding: 15px 12px !important;
+        border-radius: 18px !important;
+    }
+
+    .order-title {
+        font-size: 14px !important;
+        padding: 10px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .order-step {
+        grid-template-columns: 48px 1fr !important;
+        gap: 9px !important;
+        padding: 10px 0 !important;
+    }
+
+    .step-icon {
+        width: 43px !important;
+        height: 43px !important;
+        font-size: 19px !important;
+    }
+
+    .step-number {
+        font-size: 10px !important;
+        padding: 5px 8px !important;
+        margin-right: 5px !important;
+    }
+
+    .step-content h3 {
+        font-size: 13px !important;
+    }
+
+    .step-content p {
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        margin-top: 6px !important;
+    }
+}
