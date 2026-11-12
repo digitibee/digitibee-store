@@ -277,49 +277,49 @@ footer {
 }
 /* PANDUAN CARA ORDER DIGITIBEE */
 .order-guide {
-    padding: 35px 5px;
+    padding: 45px 15px;
 }
 
 .order-card {
-    max-width: 940px;
+    max-width: 950px;
     margin: auto;
-    padding: 35px 25px;
+    padding: 45px 45px;
     background: rgba(255, 255, 255, 0.96);
-    border: 3px solid #f6b2cf;
-    border-radius: 30px;
-    box-shadow: 0 9px 20px rgba(200, 90, 140, 0.3);
+    border: 4px solid #f6b2cf;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(210, 100, 150, 0.4);
 }
 
 .order-title {
     background: linear-gradient(135deg, #a94d22, #d18a4b);
     color: white;
     text-align: center;
-    padding: 10px;
-    border-radius: 25px;
+    padding: 20px;
+    border-radius: 35px;
     font-size: 27px;
     font-weight: bold;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 11px #d9a1a1;
+    margin-bottom: 35px;
+    box-shadow: 0 5px 12px #d9a1a1;
 }
 
 .order-step {
     display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 10px;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px dashed #f5c9dc;
+    padding: 20px 0;
+    border-bottom: 2px dashed #f5c9dc;
 }
 
 .step-icon {
-    width: 80px;
-    height: 80px;
-    border: 3px solid #f5b5d0;
-    border-radius: 40%;
+    width: 90px;
+    height: 90px;
+    border: 4px solid #f5b5d0;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 40px;
     background: #fff5fa;
 }
 
@@ -327,57 +327,57 @@ footer {
     display: inline-block;
     background: #ed69a1;
     color: white;
-    padding: 7px 13px;
-    border-radius: 11px;
+    padding: 17px 23px;
+    border-radius: 21px;
     font-weight: bold;
-    margin-right: 9px;
+    margin-right: 19px;
 }
 
 .step-content h3 {
     display: inline;
     color: #63303e;
-    font-size: 11px;
+    font-size: 21px;
 }
 
 .step-content p {
     color: #765761;
-    font-size: 7px;
+    font-size: 17px;
     line-height: 1;
-    margin-top: 9px;
+    margin-top: 19px;
 }
 
 .order-decoration {
     text-align: center;
-    font-size: 25px;
-    margin-top: 15px;
+    font-size: 35px;
+    margin-top: 25px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 610px) {
     .order-card {
-        padding: 15px 5px;
+        padding: 25px 15px;
     }
 
     .order-title {
-        font-size: 10px;
+        font-size: 20px;
     }
 
     .order-step {
-        grid-template-columns: 65px 1fr;
-        gap: 11px;
+        grid-template-columns: 75px 1fr;
+        gap: 12px;
     }
 
     .step-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 18px;
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
     }
 
     .step-content h3 {
-        font-size: 6px;
+        font-size: 16px;
     }
 
     .step-content p {
-        font-size: 4px;
+        font-size: 14px;
     }
 }
 
