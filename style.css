@@ -674,12 +674,12 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -5;
+    z-index: -15;
 
     background-image:
         linear-gradient(
-            rgba(245, 214, 230, 0.35),
-            rgba(245, 214, 230, 0.35)
+            rgba(225, 194, 210, 0.55),
+            rgba(225, 194, 210, 0.55)
         ),
         url("Digitibee-banner.JPG");
 
