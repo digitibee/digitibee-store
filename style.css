@@ -663,3 +663,32 @@ footer {
         height: 38px;
     }
 }
+/* WALLPAPER TETAP DIAM */
+body {
+    background: #f9dce9;
+    position: relative;
+    isolation: isolate;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 224, 240, 0.25),
+            rgba(255, 224, 240, 0.25)
+        ),
+        url("Digitibee-banner.JPG");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.store-frame {
+    background: transparent;
+    background-image: none;
+}
