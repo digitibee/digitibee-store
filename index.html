@@ -459,22 +459,69 @@
     <!-- =================================
          TESTIMONI
     ================================== -->
-    <section class="store-page" id="testimoni">
+    
+<section class="store-page" id="testimoni">
 
-      <button class="back-home" onclick="showPage('home')">
-        ← KEMBALI KE HOME
+  <button class="back-home" onclick="showPage('home')">
+    ← KEMBALI KE HOME
+  </button>
+
+  <div class="page-heading">
+    <h2>Yuk, bagikan pengalaman manismu bersama Digitibee!🩷</h2>
+  </div>
+
+  <div class="testimonial-invite">
+    <button type="button" class="share-story-button"
+      onclick="document.getElementById('testimonialForm').hidden = false;">
+    </button>
+  </div>
+
+  <div class="content-panel">
+
+    <form id="testimonialForm" hidden>
+      <h3>Ceritakan pengalamanmu</h3>
+
+      <label for="testimonialName">Nama atau inisial</label>
+      <input
+        type="text"
+        id="testimonialName"
+        placeholder="Contoh: A***"
+        required
+      >
+
+      <label for="testimonialMessage">Ceritamu</label>
+      <textarea
+        id="testimonialMessage"
+        placeholder="Ceritakan pengalaman belanjamu di Digitibee..."
+        rows="5"
+        required
+      ></textarea>
+
+      <label for="testimonialPhoto">Foto (opsional)</label>
+      <input
+        type="file"
+        id="testimonialPhoto"
+        accept="image/*"
+      >
+
+      <button type="submit" class="share-story-button">
+        KIRIM TESTIMONI 🩷
       </button>
 
-      <div class="page-heading">
-        <h2>Cerita manis dari pelanggan Digitibee</h2>
-      </div>
+      <button type="button"
+        onclick="document.getElementById('testimonialForm').hidden = true;">
+        Batal
+      </button>
+    </form>
 
-      <div class="content-panel">
-        <div id="testimonialList">
-          <p class="empty-message">Memuat testimoni...</p>
-        </div>
+    <div id="testimonialList">
+      <p class="empty-message">Memuat testimoni...</p>
+    </div>
 
-    </section>
+  </div>
+
+</section>
+
 
 
     <!-- =================================
