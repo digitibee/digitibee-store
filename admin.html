@@ -72,6 +72,7 @@
       color: #a17b91;
       font-size: 13px;
     }
+    
     .login-box {
   max-width: 380px;
   margin: 35px auto;
@@ -104,9 +105,11 @@
   font-weight: bold;
   font-size: 15px;
 }
+    
     main, footer {
   display: none;
 }
+    
     .logout-area {
   text-align: center;
   padding: 15px;
@@ -127,7 +130,6 @@
   font-size: 12px;
 }
 
-}
   </style>
 </head>
 
@@ -152,7 +154,6 @@
 
     <p id="loginMessage"></p>
   </section>
-
   
 <main>
 
@@ -183,7 +184,6 @@
     <h3>LEADERBOARD</h3>
   </section>
 </div>
-
 
   <!-- HALAMAN DAFTAR PRODUK -->
   <div id="productPage" style="display:none;">
@@ -242,10 +242,45 @@
 
   </div>
 
+  
+  </div>
+
+  <!-- HALAMAN PESANAN -->
+  <div id="orderPage" style="display:none;">
+    <button onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+    <section class="menu-card">
+      <h3>PESANAN</h3>
+    </section>
+  </div>
+
+  <!-- HALAMAN PEMBAYARAN -->
+  <div id="paymentPage" style="display:none;">
+    <button onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+    <section class="menu-card">
+      <h3>PEMBAYARAN</h3>
+    </section>
+  </div>
+
+  <!-- HALAMAN TESTIMONI -->
+  <div id="testimonialPage" style="display:none;">
+    <button onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+    <section class="menu-card">
+      <h3>TESTIMONI</h3>
+    </section>
+  </div>
+
+  <!-- HALAMAN LEADERBOARD -->
+  <div id="leaderboardPage" style="display:none;">
+    <button onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+    <section class="menu-card">
+      <h3>LEADERBOARD</h3>
+    </section>
+  </div>
+
 </main>
 
   <section class="logout-area">
-    <button onclick="logoutAdmin()"LOGOUT</button>
+    <button onclick="logoutAdmin()">LOGOUT</button>
     <p>Terima kasih sudah mengelola digitibee ♡</p>
   </section>
 
@@ -327,8 +362,6 @@ async function loginAdmin() {
   message.textContent = 'Detail error: ' +
     (error?.message || String(error));
 }
-}
-
 
 </script>
 <script>
@@ -360,7 +393,6 @@ async function checkAdminSession() {
   } catch (error) {
     console.error('Session check error:', error);
   }
-}
 
 checkAdminSession();
   async function logoutAdmin() {
@@ -380,7 +412,6 @@ checkAdminSession();
   document.getElementById('loginMessage').textContent =
     'Kamu berhasil logout. Sampai jumpa! 💗';
 }
-
 
 function openMenuPage(pageId) {
   const pages = [
@@ -409,13 +440,11 @@ function openMenuPage(pageId) {
   if (pageId === 'productPage') {
     loadProducts();
   }
-}
 
 function openProductPage() {
   openMenuPage('productPage');
 }
 
-  
 let editingProductId = null;
   
 async function editProduct(productId) {
@@ -481,7 +510,6 @@ async function editProduct(productId) {
   } catch (error) {
     message.textContent = 'Gagal memuat produk: ' + error.message;
   }
-}
 
 async function loadProducts() {
   const container = document.getElementById('productList');
@@ -589,7 +617,6 @@ function backToDashboard() {
   document.getElementById('dashboardPage').style.display = 'block';
 }
 
-
 function openAddProduct() {
   document.getElementById('productPage').style.display = 'none';
   document.getElementById('addProductPage').style.display = 'block';
@@ -688,7 +715,6 @@ function addVariantRow() {
 
   container.appendChild(row);
 }
-
 
 async function saveProduct() {
   const message = document.getElementById('productMessage');
@@ -848,7 +874,6 @@ async function saveProduct() {
           deleteError.message
         );
       }
-    }
 
     message.textContent = isEditing
       ? 'Perubahan produk berhasil disimpan! 💗'
@@ -877,9 +902,6 @@ async function saveProduct() {
 
     message.textContent = 'Gagal menyimpan: ' + error.message;
   }
-}
-
-}
 
 </script>
 </body>
