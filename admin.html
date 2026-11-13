@@ -130,6 +130,18 @@
   font-size: 12px;
 }
 
+    
+.menu-card button {
+  background: #f4a9c8;
+  color: #713c56;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
   </style>
 </head>
 
@@ -159,31 +171,38 @@
 
   <!-- DASHBOARD UTAMA -->
 
+
 <div id="dashboardPage">
   <section class="welcome">
     <h2>Hai, Owner Yang Cantik! 💗</h2>
   </section>
 
-  <section class="menu-card" onclick="openMenuPage('productPage')" style="cursor:pointer;">
+  <section class="menu-card">
     <h3>PRODUK</h3>
+    <button onclick="openMenuPage('productPage')">KLIK DI SINI</button>
   </section>
 
-  <section class="menu-card" onclick="openMenuPage('orderPage')" style="cursor:pointer;">
+  <section class="menu-card">
     <h3>PESANAN</h3>
+    <button onclick="openMenuPage('orderPage')">KLIK DI SINI</button>
   </section>
 
-  <section class="menu-card" onclick="openMenuPage('paymentPage')" style="cursor:pointer;">
+  <section class="menu-card">
     <h3>PEMBAYARAN</h3>
+    <button onclick="openMenuPage('paymentPage')">KLIK DI SINI</button>
   </section>
 
-  <section class="menu-card" onclick="openMenuPage('testimonialPage')" style="cursor:pointer;">
+  <section class="menu-card">
     <h3>TESTIMONI</h3>
+    <button onclick="openMenuPage('testimonialPage')">KLIK DI SINI</button>
   </section>
 
-  <section class="menu-card" onclick="openMenuPage('leaderboardPage')" style="cursor:pointer;">
+  <section class="menu-card">
     <h3>LEADERBOARD</h3>
+    <button onclick="openMenuPage('leaderboardPage')">KLIK DI SINI</button>
   </section>
 </div>
+
 
   <!-- HALAMAN DAFTAR PRODUK -->
   <div id="productPage" style="display:none;">
