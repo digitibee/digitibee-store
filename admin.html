@@ -377,11 +377,95 @@ checkAdminSession();
 }
   
 
-function openProductPage() {
+
+async function openProductPage() {
   document.getElementById('dashboardPage').style.display = 'none';
   document.getElementById('productPage').style.display = 'block';
   document.getElementById('addProductPage').style.display = 'none';
+
+  await loadProducts();
 }
+
+async function loadProducts() {
+  const container = document.getElementById('productList');
+
+  container.innerHTML = '<p>Memuat produk...</p>';
+
+  try {
+    const { data: products, error } = await supabaseClient
+      .from('products')
+      .select('id, name, description, image_url, availability_type')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    container.innerHTML = '';
+
+    if (!products || products.length === 0) {
+      container.textContent = 'Belum ada produk. Silakan tambahkan produk pertama.';
+      return;
+    }
+
+    for (const product of products) {
+      const { data: variants, error: variantError } = await supabaseClient
+        .from('product_variants')
+        .select('id, name, duration, price, stock')
+        .eq('product_id', product.id);
+
+      if (variantError) throw variantError;
+
+      const card = document.createElement('div');
+      card.style.cssText =
+        'background:rgba(255,255,255,.8);padding:15px;margin:15px 0;border-radius:16px;border:1px solid #efbfd5;';
+
+      const title = document.createElement('h3');
+      title.textContent = product.name;
+      title.style.color = '#a64f7c';
+      card.appendChild(title);
+
+      if (product.image_url) {
+        const img = document.createElement('img');
+        img.src = product.image_url;
+        img.alt = product.name;
+        img.style.cssText =
+          'width:100%;max-width:180px;height:140px;object-fit:contain;border-radius:12px;';
+        card.appendChild(img);
+      }
+
+      const description = document.createElement('p');
+      description.textContent = product.description || '';
+      card.appendChild(description);
+
+      const availability = document.createElement('p');
+      availability.textContent =
+        product.availability_type.replace('_', ' ').toUpperCase();
+      card.appendChild(availability);
+
+      const variantTitle = document.createElement('strong');
+      variantTitle.textContent = 'Variasi Produk';
+      card.appendChild(variantTitle);
+
+      (variants || []).forEach(v => {
+        const item = document.createElement('p');
+        item.textContent =
+          `${v.name} • ${v.duration || '-'} • Rp${Number(v.price).toLocaleString('id-ID')} • Stok: ${v.stock}`;
+        card.appendChild(item);
+      });
+
+      const editButton = document.createElement('button');
+      editButton.textContent = 'EDIT PRODUK';
+      editButton.disabled = true;
+      editButton.title = 'Fitur edit akan kita aktifkan pada langkah berikutnya';
+      card.appendChild(editButton);
+
+      container.appendChild(card);
+    }
+
+  } catch (error) {
+    container.textContent = 'Gagal memuat produk: ' + error.message;
+  }
+}
+
 
 function backToDashboard() {
   document.getElementById('productPage').style.display = 'none';
