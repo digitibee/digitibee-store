@@ -672,74 +672,119 @@ footer {
 }
 
    
-/* FORM TESTIMONI DIGITIBEE */
-#testimonialForm:not([hidden]) {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-  text-align: left;
-}
 
-#testimonialForm h3 {
-  text-align: center;
-  color: #d94b91;
-  font-size: 22px;
-  margin: 5px 0 15px;
-}
+/* DIGITIBEE CHAT TESTIMONIAL */
 
-#testimonialForm label {
-  display: block;
-  color: #805466;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-#testimonialForm input[type="text"],
-#testimonialForm textarea {
+.chat-testimonial:not([hidden]) {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  border: 2px solid #f4a6ca;
-  border-radius: 14px;
-  padding: 13px;
-  background: #fffafd;
-  color: #594653;
-  font-family: inherit;
-  font-size: 16px;
+  margin: 20px auto;
+  overflow: hidden;
+  border: 3px solid #f5a6ca;
+  border-radius: 25px;
+  background: #fff8fc;
+  box-shadow: 0 6px 15px rgba(220, 90, 150, 0.12);
 }
 
-#testimonialForm textarea {
-  min-height: 130px;
-  resize: vertical;
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px;
+  background: #f9d9e9;
+  color: #a83e77;
 }
 
-#testimonialForm input[type="file"] {
+.chat-heart {
+  font-size: 32px;
+  color: #df5599;
+}
+
+.chat-header strong {
   display: block;
-  width: 100%;
-  font-size: 14px;
-  color: #805466;
-}
-
-#testimonialForm button {
-  font-family: inherit;
-  margin-top: 8px;
-}
-
-#testimonialForm button[type="submit"] {
-  width: 100%;
-  padding: 15px;
   font-size: 17px;
 }
 
-#testimonialForm button[type="button"] {
+.chat-header small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #96647c;
+}
+
+.chat-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-body label:not(.photo-upload) {
+  color: #89566d;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.chat-body input[type="text"],
+.chat-body textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 2px solid #f4bfd6;
+  border-radius: 17px;
+  background: white;
+  color: #594653;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.chat-body textarea {
+  min-height: 115px;
+  resize: vertical;
+}
+
+.chat-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.photo-upload {
+  padding: 11px 16px;
+  border-radius: 25px;
+  background: #fce5f0;
+  color: #d94b91;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#testimonialPhoto {
+  display: none;
+}
+
+.send-story {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: #e65396;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c83d80;
+}
+
+.cancel-story {
   align-self: center;
   border: none;
-  border-radius: 20px;
-  padding: 10px 25px;
-  background: #f8d5e5;
-  color: #805466;
+  background: transparent;
+  color: #a66c86;
+  padding: 8px;
   font-weight: bold;
+  cursor: pointer;
 }
 }
