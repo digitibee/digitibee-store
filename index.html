@@ -146,21 +146,5 @@ const supabase = window.supabase.createClient(
     SUPABASE_KEY
 );
 </script>
-    <script>
-async function testSupabaseConnection() {
-    const { data, error } = await supabase
-        .from('categories')
-        .select('*')
-        .limit(1);
-
-    if (error) {
-        alert('Koneksi gagal: ' + error.message);
-    } else {
-        alert('Berhasil! DIGITIBEE terhubung ke Supabase 🎉');
-    }
-}
-
-testSupabaseConnection();
-</script>
 </body>
 </html>
