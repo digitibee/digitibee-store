@@ -167,6 +167,43 @@ const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+
+<script>
+async function loginAdmin() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const password = document.getElementById('adminPassword').value;
+  const message = document.getElementById('loginMessage');
+
+  message.textContent = 'Memeriksa akun...';
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    message.textContent = 'Login gagal. Periksa email dan password.';
+    return;
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', data.user.id)
+    .single();
+
+  if (profileError || profile.role !== 'admin') {
+    await supabase.auth.signOut();
+    message.textContent = 'Akun ini bukan Admin DIGITIBEE.';
+    return;
+  }
+
+  document.getElementById('loginBox').style.display = 'none';
+  document.querySelector('main').style.display = 'block';
+  document.querySelector('footer').style.display = 'block';
+}
+
 </script>
+
 </body>
 </html>
