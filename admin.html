@@ -377,6 +377,32 @@ checkAdminSession();
 }
   
 
+function openProductPage() {
+  document.getElementById('dashboardPage').style.display = 'none';
+  document.getElementById('productPage').style.display = 'block';
+  document.getElementById('addProductPage').style.display = 'none';
+}
+
+function backToDashboard() {
+  document.getElementById('productPage').style.display = 'none';
+  document.getElementById('addProductPage').style.display = 'none';
+  document.getElementById('dashboardPage').style.display = 'block';
+}
+
+function openAddProduct() {
+  document.getElementById('productPage').style.display = 'none';
+  document.getElementById('addProductPage').style.display = 'block';
+  document.getElementById('productMessage').textContent = '';
+  document.getElementById('variantList').innerHTML = '';
+  addVariantRow();
+  loadCategories();
+}
+
+function backToProductPage() {
+  document.getElementById('addProductPage').style.display = 'none';
+  document.getElementById('productPage').style.display = 'block';
+}
+
 function showProductForm() {
   document.getElementById('productForm').style.display = 'block';
 
