@@ -11,16 +11,32 @@
       box-sizing: border-box;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url('walpaper-digitibee.JPG');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color: #594653;
-    }
+    html {
+  min-height: 100%;
+  background: #fff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #594653;
+  background: transparent;
+  position: relative;
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('walpaper-digitibee.JPG');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
 
     header {
       background: #f8c9df;
@@ -249,7 +265,7 @@
 
 <!-- LOGIN ADMIN -->
 <section class="login-box" id="loginBox">
-  <h2>Owner Login 🎀</h2>
+  <h2>Selamat datang ☺️</h2>
   <p>Silakan masuk ke Dashboard Digitibee</p>
 
   <input
@@ -320,7 +336,7 @@
     <!-- LOGOUT HANYA DI DASHBOARD -->
     <section class="logout-area">
       <button onclick="logoutAdmin()">LOGOUT</button>
-      <p>Terima kasih sudah mengelola Digitibee ♡</p>
+      <p>Terima kasih sudah mengelola digitibee ♡</p>
     </section>
 
   </div>
@@ -469,7 +485,7 @@
 </main>
 
 <footer id="adminFooter" style="display:none;">
-  © 2026 Digitibee
+  © digitibee 2024
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.89.0/dist/umd/supabase.min.js"></script>
