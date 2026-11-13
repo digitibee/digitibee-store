@@ -149,68 +149,19 @@
     <p id="loginMessage"></p>
   </section>
 
-  <main>
+  
+<main>
+
+  <!-- DASHBOARD UTAMA -->
+  <div id="dashboardPage">
     <section class="welcome">
       <h2>Hai, Owner Yang Cantik! 💗</h2>
     </section>
 
-    
-<section class="menu-card" id="productMenu">
-  <h3>PRODUK</h3>
-  <button onclick="showProductForm()">+ TAMBAH PRODUK</button>
-  <div id="productList"></div>
-</section>
-
-
-<section class="menu-card" id="productForm" style="display:none;">
-
-  <label>Foto Produk</label>
-  <input type="file" id="productImage" accept="image/*">
-
-  <label>Nama Produk</label>
-  <input type="text" id="productName" placeholder="Nama produk">
-
-  <label>Deskripsi</label>
-  <textarea id="productDescription" placeholder="Deskripsi produk"></textarea>
-
-  <label>Kategori</label>
-  <select id="productCategory">
-    <option value="">Pilih kategori</option>
-  </select>
-
-  <label>Variasi Produk</label>
-  <div id="variantList"></div>
-
-  <button type="button" onclick="addVariantRow()">
-    + TAMBAH VARIASI
-  </button>
-
-  <label>Ketersediaan</label>
-  <select id="productAvailability">
-    <option value="ready_stock">READY STOCK</option>
-    <option value="pre_order">PRE-ORDER</option>
-    <option value="sold_out">SOLD OUT</option>
-  </select>
-
-  <button onclick="saveProduct()">SIMPAN PRODUK</button>
-  <button onclick="hideProductForm()">BATAL</button>
-
-  <p id="productMessage"></p>
-</section>
-
-
-  <label>Ketersediaan</label>
-  <select id="productAvailability">
-    <option value="ready_stock">READY STOCK</option>
-    <option value="pre_order">PRE-ORDER</option>
-    <option value="sold_out">SOLD OUT</option>
-  </select>
-
-  <button onclick="saveProduct()">SIMPAN PRODUK</button>
-  <button onclick="hideProductForm()">BATAL</button>
-  <p id="productMessage"></p>
-</section>
-
+    <section class="menu-card">
+      <h3>PRODUK</h3>
+      <button onclick="openProductPage()">BUKA PRODUK</button>
+    </section>
 
     <section class="menu-card">
       <h3>PESANAN</h3>
@@ -227,7 +178,66 @@
     <section class="menu-card">
       <h3>LEADERBOARD</h3>
     </section>
-    </main>
+  </div>
+
+  <!-- HALAMAN DAFTAR PRODUK -->
+  <div id="productPage" style="display:none;">
+
+    <button onclick="backToDashboard()">← KEMBALI</button>
+
+    <section class="menu-card">
+      <h3>PRODUK</h3>
+      <button onclick="openAddProduct()">+ TAMBAH PRODUK</button>
+      <div id="productList"></div>
+    </section>
+
+  </div>
+
+  <!-- HALAMAN FORM TAMBAH PRODUK -->
+  <div id="addProductPage" style="display:none;">
+
+    <button onclick="backToProductPage()">← KEMBALI</button>
+
+    <section class="menu-card">
+      <h3>TAMBAH PRODUK</h3>
+
+      <label>Foto Produk</label>
+      <input type="file" id="productImage" accept="image/*">
+
+      <label>Nama Produk</label>
+      <input type="text" id="productName" placeholder="Nama produk">
+
+      <label>Deskripsi</label>
+      <textarea id="productDescription" placeholder="Deskripsi produk"></textarea>
+
+      <label>Kategori</label>
+      <select id="productCategory">
+        <option value="">Pilih kategori</option>
+      </select>
+
+      <label>Variasi Produk</label>
+      <div id="variantList"></div>
+
+      <button type="button" onclick="addVariantRow()">
+        + TAMBAH VARIASI
+      </button>
+
+      <label>Ketersediaan</label>
+      <select id="productAvailability">
+        <option value="ready_stock">READY STOCK</option>
+        <option value="pre_order">PRE-ORDER</option>
+        <option value="sold_out">SOLD OUT</option>
+      </select>
+
+      <button onclick="saveProduct()">SIMPAN PRODUK</button>
+      <button onclick="backToProductPage()">BATAL</button>
+
+      <p id="productMessage"></p>
+    </section>
+
+  </div>
+
+</main>
 
   <section class="logout-area">
     <button onclick="logoutAdmin()"LOGOUT</button>
