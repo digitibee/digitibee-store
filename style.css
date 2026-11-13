@@ -1,3 +1,8 @@
+
+/* =========================================
+   1. RESET DAN VARIABEL
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -20,9 +25,35 @@ body {
     background: #f9dce9;
     padding: 25px;
     color: var(--brown);
+    position: relative;
+    isolation: isolate;
 }
 
-/* BINGKAI DAN WALLPAPER UTAMA */
+/* =========================================
+   2. WALLPAPER TETAP DIAM
+========================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -15;
+    background-image:
+        linear-gradient(
+            rgba(225, 194, 210, 0.55),
+            rgba(225, 194, 210, 0.55)
+        ),
+        url("Digitibee-banner.JPG");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* =========================================
+   3. BINGKAI UTAMA
+========================================= */
+
 .store-frame {
     width: 100%;
     max-width: 1500px;
@@ -31,73 +62,152 @@ body {
     padding: 25px;
     border: 5px solid #f3a5c5;
     border-radius: 35px;
-
-    background-image:
-        linear-gradient(
-            rgba(255, 224, 240, 0.25),
-            rgba(255, 224, 240, 0.25)
-        ),
-        url("Digitibee-banner.JPG");
-
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: transparent;
 }
 
-/* NAVBAR PUTIH */
-.navbar {
-    width: 100%;
-    min-height: 105px;
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+/* =========================================
+   4. NAVBAR DIGITIBEE
+========================================= */
 
-    background: rgba(255, 255, 255, 0.96);
+.navbar-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    text-align: center;
+    padding: 12px 10px 18px;
+    background: transparent !important;
+    border-radius: 25px;
+}
+
+/* LABEL SINCE 2024 */
+
+.navbar-wrapper .since-label {
+    display: inline-block;
+    background: #ffffff !important;
+    color: #d95791;
+    padding: 9px 28px;
+    border: 3px solid #f6b2cf !important;
     border-radius: 30px;
-    box-shadow: 0 8px 20px rgba(210, 100, 150, 0.15);
-}
-
-.logo {
-    color: var(--pink-dark);
-    font-size: 34px;
-    font-weight: 700;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--brown);
-    font-size: 19px;
     font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 0 #e9a0bd !important;
 }
 
-nav a:hover {
-    color: var(--pink-dark);
+/* MENU UTAMA */
+
+.navbar-wrapper .navbar {
+    width: 100%;
+    max-width: 1000px;
+    min-height: 105px;
+    margin: auto;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 8px;
+    background: #fffafd !important;
+    border: 4px solid #f4a5c5 !important;
+    border-radius: 35px;
+    box-shadow: none !important;
 }
 
-.cart {
-    background: var(--pink);
-    color: white;
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 12px 5px;
+    color: #9c5272;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background: #fff0f7;
+    transform: translateY(-3px);
+}
+
+/* IKON NAVBAR */
+
+.navbar-wrapper .nav-item img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    display: block;
+    background-color: transparent;
     border: none;
-    border-radius: 30px;
-    padding: 15px 25px;
-    font-size: 17px;
-    cursor: pointer;
+    box-shadow: none;
+    mix-blend-mode: normal;
 }
 
-/* BAGIAN SAMBUTAN */
+/* MENU KERANJANG */
+
+.nav-item.cart-menu {
+    background: linear-gradient(145deg, #ff9bc5, #e94f96);
+    color: white;
+    border: 3px solid white;
+    box-shadow: 0 5px 0 #ca4380;
+    border-radius: 25px;
+}
+
+.nav-item.cart-menu img {
+    width: 65px;
+    height: 65px;
+}
+
+/* LOGO DIGITIBEE */
+
+.brand-title {
+    color: #d95791;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-top: 20px;
+    text-shadow: 2px 3px 0 white;
+}
+
+/* =========================================
+   5. HERO / HALAMAN HOME
+========================================= */
+
 .hero {
     text-align: center;
     padding: 100px 20px 90px;
     background: transparent;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    text-align: left;
+    max-width: 900px;
+    margin: auto;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
 }
 
 .welcome {
@@ -108,12 +218,22 @@ nav a:hover {
     margin-bottom: 25px;
 }
 
+.hero-text .welcome {
+    font-size: 18px;
+    letter-spacing: 0;
+}
+
 .hero h1 {
     color: #d95791;
     font-size: clamp(36px, 5vw, 65px);
     font-weight: 800;
     margin-bottom: 20px;
     text-shadow: 2px 3px 5px rgba(255,255,255,0.8);
+}
+
+.hero-text h1 {
+    font-size: 32px;
+    line-height: 1.2;
 }
 
 .tagline {
@@ -126,6 +246,8 @@ nav a:hover {
     border-radius: 20px;
     margin-bottom: 35px;
 }
+
+/* TOMBOL PRICELIST */
 
 .shop-button {
     display: block;
@@ -141,7 +263,17 @@ nav a:hover {
     box-shadow: 0 6px 15px rgba(190, 70, 125, 0.25);
 }
 
-/* KATALOG PRODUK */
+.hero-text .shop-button {
+    display: inline-block;
+    font-size: 16px;
+    padding: 13px 22px;
+    margin: 10px 0 0;
+}
+
+/* =========================================
+   6. KATALOG PRODUK
+========================================= */
+
 .products {
     text-align: center;
     padding: 55px 30px;
@@ -194,6 +326,16 @@ nav a:hover {
     margin-bottom: 15px;
 }
 
+.product-card img {
+    width: 100%;
+    max-width: 180px;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    margin: 10px auto;
+}
+
 .product-card button {
     background: var(--pink);
     color: white;
@@ -203,7 +345,10 @@ nav a:hover {
     cursor: pointer;
 }
 
-/* TESTIMONI */
+/* =========================================
+   7. TESTIMONI
+========================================= */
+
 .testimonials {
     text-align: center;
     padding: 45px 20px;
@@ -212,71 +357,10 @@ nav a:hover {
     margin-bottom: 30px;
 }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 25px;
-    color: var(--pink-dark);
-    font-weight: bold;
-    font-size: 18px;
-}
+/* =========================================
+   8. PANDUAN CARA ORDER
+========================================= */
 
-/* TAMPILAN HP */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    .store-frame {
-        padding: 12px;
-        border-radius: 22px;
-    }
-
-    .navbar {
-        flex-direction: column;
-        padding: 20px 10px;
-    }
-
-    nav {
-        gap: 18px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    nav a {
-        font-size: 15px;
-    }
-
-    .logo {
-        font-size: 28px;
-    }
-
-    .hero {
-        padding: 70px 10px;
-    }
-
-    .welcome {
-        font-size: 17px;
-    }
-
-    .tagline {
-        font-size: 17px;
-    }
-
-    .shop-button {
-        font-size: 17px;
-    }
-
-    .product-container {
-        grid-template-columns: 1fr;
-    }
-
-    .products {
-        padding: 35px 15px;
-    }
-}
-
-/* PANDUAN CARA ORDER DIGITIBEE */
 .order-guide {
     padding: 20px 7px;
 }
@@ -347,151 +431,43 @@ footer {
     line-height: 1.2;
     margin-top: 6px;
 }
-/* NAVBAR BARU DIGITIBEE */
-.navbar-wrapper {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+
+.order-decoration {
+    display: none;
+}
+
+/* =========================================
+   9. FOOTER
+========================================= */
+
+footer {
     text-align: center;
-    padding: 12px 10px 18px;
-    background: transparent !important;
-    border-radius: 25px;
-}
-
-/* LABEL SINCE 2024 */
-.since-label {
-    display: inline-block;
-    background: transparent;
-    color: #d95791;
-    padding: 9px 28px;
-    border: none;
-    border-radius: 30px;
+    padding: 25px;
+    color: var(--pink-dark);
     font-weight: bold;
-    margin-bottom: 12px;
-    box-shadow: none;
-}
+    font-size: 18px;
 }
 
-/* MENU UTAMA */
-.navbar-wrapper .navbar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 8px;
-    max-width: 1000px;
-    min-height: 105px;
-    margin: auto;
-    padding: 12px;
-    background: transparent !important;
-    border: 4px solid #f4a5c5;
-    border-radius: 35px;
-    box-shadow: 0 8px 0 #e58bb1, 0 12px 20px rgba(180, 80, 125, 0.18);
-}
+/* =========================================
+   10. TAMPILAN TABLET DAN HP
+========================================= */
 
-.nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 12px 5px;
-    color: #9c5272;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 20px;
-    transition: 0.2s;
-}
+@media (max-width: 768px) {
 
-.nav-item span {
-    font-size: 27px;
-}
-
-.nav-item:hover {
-    background: #fff0f7;
-    transform: translateY(-3px);
-}
-
-/* TOMBOL KERANJANG */
-.nav-item.cart-menu {
-    background: linear-gradient(145deg, #ff9bc5, #e94f96);
-    color: white;
-    border: 3px solid white;
-    box-shadow: 0 5px 0 #ca4380;
-    border-radius: 25px;
-}
-
-.nav-item.cart-menu span {
-    font-size: 34px;
-}
-
-/* LOGO DIGITIBEE */
-.brand-title {
-    color: #d95791;
-    font-size: 30px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    margin-top: 20px;
-    text-shadow: 2px 3px 0 white;
-}
-
-/* TAMPILAN HP */
-@media (max-width: 600px) {
-    .navbar-wrapper {
-        padding: 8px 2px 15px;
+    body {
+        padding: 10px;
     }
 
-    .navbar-wrapper .navbar {
-        min-height: 75px;
-        padding: 7px 3px;
-        gap: 2px;
+    .store-frame {
+        padding: 12px;
         border-radius: 22px;
     }
 
-    .nav-item {
-        font-size: 10px;
-        padding: 9px 2px;
-        gap: 5px;
+    .navbar {
+        flex-direction: column;
+        padding: 20px 10px;
     }
 
-    .nav-item span {
-        font-size: 21px;
-    }
-
-    .nav-item.cart-menu span {
-        font-size: 25px;
-    }
-
-    .brand-title {
-        font-size: 23px;
-    }
-}
-/* UKURAN IKON NAVBAR */
-.navbar-wrapper .nav-item img {
-    width: 65px;
-    height: 65px;
-    object-fit: contain;
-    display: block;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    mix-blend-mode: normal;
-}
-
-@media (max-width: 600px) {
-    .navbar-wrapper .nav-item img {
-        width: 38px;
-        height: 38px;
-    }
-
-    .navbar-wrapper .cart-menu img {
-        width: 48px;
-        height: 48px;
-    }
-}
-/* NAVBAR HP LEBIH PENDEK */
-@media (max-width: 768px) {
     .navbar-wrapper {
         padding: 6px 2px 10px;
     }
@@ -525,159 +501,54 @@ footer {
         width: 38px;
         height: 38px;
     }
-}
-/* WALLPAPER TETAP DIAM */
-body {
-    background: #f9dce9;
-    position: relative;
-    isolation: isolate;
-}
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -15;
+    .navbar-wrapper .since-label {
+        padding: 9px 28px;
+    }
 
-    background-image:
-        linear-gradient(
-            rgba(225, 194, 210, 0.55),
-            rgba(225, 194, 210, 0.55)
-        ),
-        url("Digitibee-banner.JPG");
+    .nav-item {
+        font-size: 10px;
+    }
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+    .logo {
+        font-size: 28px;
+    }
 
-.store-frame {
-    background: transparent;
-    background-image: none;
-}
-/* HERO LEBIH RINGKAS DI HP */
-@media (max-width: 600px) {
     .hero {
-        padding: 35px 10px 45px;
+        padding: 70px 10px;
     }
 
     .welcome {
-        font-size: 14px;
-        margin-bottom: 15px;
-        letter-spacing: 1px;
-    }
-
-    .hero h1 {
-        font-size: 34px;
-        margin-bottom: 12px;
+        font-size: 17px;
     }
 
     .tagline {
-        font-size: 16px;
-        padding: 12px 18px;
-        margin-bottom: 15px;
-    }
-}
-/* KHUSUS MEMPERKECIL CARA ORDER DI HP */
-@media (max-width: 600px) {
-    .order-guide {
-        padding: 12px 5px !important;
+        font-size: 17px;
     }
 
-.order-card {
-    padding: 10px 8px !important;
+    .shop-button {
+        font-size: 17px;
+    }
+
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+
+    .products {
+        padding: 35px 15px;
+    }
 }
 
-.order-title {
-    font-size: 12px !important;
-    padding: 7px !important;
-    margin-bottom: 8px !important;
-}
+/* =========================================
+   11. TAMPILAN KHUSUS HP
+========================================= */
 
-.order-step {
-    grid-template-columns: 40px 1fr !important;
-    gap: 7px !important;
-    padding: 7px 0 !important;
-}
-
-.step-icon {
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 16px !important;
-}
-
-.step-number {
-    font-size: 9px !important;
-    padding: 4px 7px !important;
-}
-
-.step-content h3 {
-    font-size: 11px !important;
-}
-
-.step-content p {
-    font-size: 10px !important;
-    line-height: 1.3 !important;
-    margin-top: 4px !important;
-}
-.order-decoration {
-    display: block !important;
-    width: 100%;
-    text-align: center !important;
-    margin: 12px auto 0;
-    font-size: 20px;
-}
-/* HERO DIGITIBEE DUA KOLOM */
-.hero-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    text-align: left;
-    max-width: 900px;
-    margin: auto;
-}
-
-.hero-text {
-    flex: 1;
-    min-width: 0;
-}
-
-.hero-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-image img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    object-fit: contain;
-}
-
-.hero-text .welcome {
-    font-size: 18px;
-    letter-spacing: 0;
-}
-
-.hero-text h1 {
-    font-size: 32px;
-    line-height: 1.2;
-}
-
-.hero-text .shop-button {
-    display: inline-block;
-    font-size: 16px;
-    padding: 13px 22px;
-    margin: 10px 0 0;
-}
-/* HERO DIGITIBEE KHUSUS HP */
 @media (max-width: 600px) {
+
+    /* HERO */
 
     .hero {
-        padding: 35px 10px !important;
+        padding: 35px 10px 45px !important;
     }
 
     .hero-content {
@@ -712,6 +583,7 @@ body::before {
     .hero-text h1 {
         font-size: 20px !important;
         line-height: 1.2 !important;
+        margin-bottom: 12px;
     }
 
     .hero-text .shop-button {
@@ -719,24 +591,61 @@ body::before {
         padding: 10px 13px !important;
         margin-top: 10px !important;
     }
-/* BLOK SINCE 2024 */
-.navbar-wrapper .since-label {
-    background: #ffffff !important;
-    border: 3px solid #f6b2cf !important;
-    border-radius: 30px;
-    box-shadow: 0 4px 0 #e9a0bd !important;
-    padding: 9px 28px;
-}
 
-/* BLOK MENU NAVIGASI */
-.navbar-wrapper .navbar {
-    background: #fffafd !important;
-    border: 4px solid #f4a5c5 !important;
-    border-radius: 35px;
-    box-shadow: none !important;
-}
+    .tagline {
+        font-size: 16px;
+        padding: 12px 18px;
+        margin-bottom: 15px;
+    }
 
-/* LATAR BELAKANG LUAR */
-.navbar-wrapper {
-    background: transparent !important;
+    /* CARA ORDER */
+
+    .order-guide {
+        padding: 12px 5px !important;
+    }
+
+    .order-card {
+        padding: 10px 8px !important;
+    }
+
+    .order-title {
+        font-size: 12px !important;
+        padding: 7px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .order-step {
+        grid-template-columns: 40px 1fr !important;
+        gap: 7px !important;
+        padding: 7px 0 !important;
+    }
+
+    .step-icon {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 16px !important;
+    }
+
+    .step-number {
+        font-size: 9px !important;
+        padding: 4px 7px !important;
+    }
+
+    .step-content h3 {
+        font-size: 11px !important;
+    }
+
+    .step-content p {
+        font-size: 10px !important;
+        line-height: 1.3 !important;
+        margin-top: 4px !important;
+    }
+
+    .order-decoration {
+        display: block !important;
+        width: 100%;
+        text-align: center !important;
+        margin: 12px auto 0;
+        font-size: 20px;
+    }
 }
