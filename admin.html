@@ -1,176 +1,371 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Digitibee</title>
+
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: Arial, sans-serif; color: #594653;
-      background: url('walpaper-digitibee.JPG') center / cover fixed no-repeat;
+    * {
+      box-sizing: border-box;
     }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('walpaper-digitibee.JPG');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #594653;
+    }
+
     header {
-      background: #f8c9df; padding: 20px 16px; text-align: center;
+      background: #f8c9df;
+      padding: 24px 20px;
+      text-align: center;
       border-radius: 0 0 25px 25px;
     }
-    header h1 { margin: 0; color: #8d4269; font-size: 25px; }
-    main { width: 100%; max-width: 850px; margin: 20px auto; padding: 0 16px; }
+
+    header h1 {
+      margin: 0;
+      color: #8d4269;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 25px auto;
+      padding: 0 16px;
+    }
+
     .welcome, .menu-card {
-      background: rgba(255,255,255,.48); backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px); padding: 10px 14px;
-      margin-bottom: 8px; border-radius: 15px;
-      border: 1px solid rgba(255,255,255,.65); box-shadow: 0 3px 10px #eacbdc22;
+      background: rgba(255,255,255,.58);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.65);
+      box-shadow: 0 4px 15px #eacbdc33;
     }
-    .welcome h2 { margin: 2px 0; color: #69495b; font-size: 21px; }
-    .menu-card h3 { margin: 0 0 4px; color: #a64f7c; font-size: 16px; }
-    .menu-card p { margin: 5px 0; font-size: 13px; }
+
+    .menu-card h3 {
+      margin: 0 0 8px;
+      color: #a64f7c;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .menu-card p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
     .login-box {
-      width: calc(100% - 32px); max-width: 420px; margin: 35px auto;
-      padding: 25px; background: rgba(255,255,255,.78);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      border-radius: 22px; text-align: center; box-shadow: 0 5px 20px #eacbdc55;
+      max-width: 420px;
+      margin: 35px auto;
+      padding: 25px;
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 5px 20px #eacbdc55;
     }
+
     .login-box input {
-      width: 100%; padding: 13px; margin: 8px 0;
-      border: 1px solid #e8b8d0; border-radius: 12px; font-size: 15px;
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      border: 1px solid #e8b8d0;
+      border-radius: 12px;
+      font-size: 15px;
     }
-    button { cursor: pointer; font-family: Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-    button:disabled { opacity: .6; cursor: wait; }
+
+    button {
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+
     .login-box button {
-      width: 100%; padding: 13px; margin-top: 12px; border: 0;
-      border-radius: 12px; background: #d979a8; color: white;
-      font-weight: bold; font-size: 15px;
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #d979a8;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
     }
-    .menu-card button {
-      display: inline-block; background: transparent; color: #d979a8;
-      border: 0; border-radius: 0; padding: 3px 0; margin: 0;
-      font-size: 12px; font-weight: bold; text-decoration: underline;
-      text-underline-offset: 3px; cursor: pointer;
-    }
-    .page-button, .action-button {
-      background: #f4a9c8; color: #713c56; border: 0;
-      border-radius: 10px; padding: 10px 16px; font-size: 13px;
-      font-weight: bold; margin: 4px 4px 10px 0;
-    }
-    .logout-area { text-align: center; padding: 10px 15px 18px; margin-top: 8px; }
+
+    .menu-card button,
+    .page-button,
     .logout-area button {
-      background: #f4a9c8; color: #713c56; border: 0;
-      border-radius: 14px; padding: 12px 35px; font-weight: bold; font-size: 14px;
+      background: #f4a9c8;
+      color: #713c56;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: bold;
     }
-    .logout-area p { color: #a17b91; font-size: 12px; }
-    .form-group { display: flex; flex-direction: column; gap: 7px; margin: 12px 0; }
-    .form-group label, .variant-row label { font-weight: bold; font-size: 13px; }
+
+    .page-button {
+      margin-bottom: 14px;
+    }
+
+    .logout-area {
+      text-align: center;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .logout-area button {
+      padding: 13px 35px;
+      font-size: 14px;
+    }
+
+    .logout-area p {
+      color: #a17b91;
+      font-size: 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin: 14px 0;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
     input, textarea, select {
-      width: 100%; padding: 11px; border: 1px solid #e8b8d0;
-      border-radius: 10px; font-size: 14px; background: #fff; color: #594653;
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #e8b8d0;
+      border-radius: 10px;
+      font-size: 14px;
+      background: #fff;
+      color: #594653;
     }
-    textarea { min-height: 85px; resize: vertical; }
+
+    textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
     .variant-row {
-      border: 1px solid #e8b8d0; padding: 12px; margin: 10px 0;
-      border-radius: 12px; background: #fff9fc;
+      border: 1px solid #e8b8d0;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 12px;
+      background: #fff9fc;
     }
-    .variant-row label { display: block; margin: 9px 0 5px; }
+
+    .variant-row label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 10px 0 5px;
+    }
+
     .variant-row button {
-      margin-top: 10px; background: #f4a9c8; border: 0;
-      border-radius: 10px; padding: 9px; color: #713c56; font-size: 12px;
+      margin-top: 10px;
+      background: #f4a9c8;
+      border: none;
+      border-radius: 10px;
+      padding: 9px;
+      color: #713c56;
     }
+
     .product-card {
-      background: rgba(255,255,255,.85); padding: 14px; margin: 12px 0;
-      border-radius: 15px; border: 1px solid #efbfd5;
+      background: rgba(255,255,255,.85);
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 16px;
+      border: 1px solid #efbfd5;
     }
-    .product-card h3 { margin: 0 0 8px; color: #a64f7c; font-size: 17px; }
+
     .product-card img {
-      width: 100%; max-width: 180px; height: 140px; object-fit: contain;
-      border-radius: 12px; display: block; margin: 10px 0;
+      width: 100%;
+      max-width: 180px;
+      height: 140px;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+      margin: 10px 0;
     }
-    .message { font-size: 13px; color: #a64f7c; margin-top: 12px; overflow-wrap: anywhere; }
-    footer { text-align: center; padding: 20px; color: #a17b91; font-size: 13px; }
+
+    .product-card button {
+      margin: 5px 5px 5px 0;
+    }
+
+    .message {
+      font-size: 13px;
+      color: #a64f7c;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #a17b91;
+      font-size: 13px;
+    }
+
     @media (min-width: 600px) {
-      .form-group { display: grid; grid-template-columns: 145px 1fr; align-items: start; }
+      .form-group {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        align-items: start;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header><h1>Dashboard Digitibee</h1></header>
+<header>
+  <h1>Dashboard Digitibee</h1>
+</header>
 
+<!-- LOGIN ADMIN -->
 <section class="login-box" id="loginBox">
-  <h2>Silakan Login Owner 🎀</h2>
+  <h2>Owner Login 🎀</h2>
   <p>Silakan masuk ke Dashboard Digitibee</p>
-  <input type="email" id="adminEmail" placeholder="Email Admin" autocomplete="username">
-  <input type="password" id="adminPassword" placeholder="Password" autocomplete="current-password">
-  <button id="loginButton" type="button" onclick="loginAdmin()">MASUK</button>
+
+  <input
+    type="email"
+    id="adminEmail"
+    placeholder="Email Admin"
+    autocomplete="username"
+  >
+
+  <input
+    type="password"
+    id="adminPassword"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
+
+  <button id="loginButton" onclick="loginAdmin()">
+    MASUK
+  </button>
+
   <p id="loginMessage" class="message" role="status"></p>
 </section>
 
 <main id="adminMain" style="display:none;">
+
+  <!-- DASHBOARD -->
   <div id="dashboardPage">
-    <section class="welcome"><h2>Hai, Owner Yang Cantik! 💗</h2></section>
+
+    <section class="welcome">
+      <h2>Hai, Owner Yang Cantik! 💗</h2>
+    </section>
 
     <section class="menu-card">
       <h3>PRODUK</h3>
-      <button type="button" onclick="openMenuPage('productPage')">KLIK DI SINI</button>
+      <button onclick="openMenuPage('productPage')">
+        KLIK DI SINI
+      </button>
     </section>
 
     <section class="menu-card">
       <h3>PESANAN</h3>
-      <button type="button" onclick="openMenuPage('orderPage')">KLIK DI SINI</button>
+      <button onclick="openMenuPage('orderPage')">
+        KLIK DI SINI
+      </button>
     </section>
 
     <section class="menu-card">
       <h3>PEMBAYARAN</h3>
-      <button type="button" onclick="openMenuPage('paymentPage')">KLIK DI SINI</button>
+      <button onclick="openMenuPage('paymentPage')">
+        KLIK DI SINI
+      </button>
     </section>
 
     <section class="menu-card">
       <h3>TESTIMONI</h3>
-      <button type="button" onclick="openMenuPage('testimonialPage')">KLIK DI SINI</button>
+      <button onclick="openMenuPage('testimonialPage')">
+        KLIK DI SINI
+      </button>
     </section>
 
     <section class="menu-card">
       <h3>LEADERBOARD</h3>
-      <button type="button" onclick="openMenuPage('leaderboardPage')">KLIK DI SINI</button>
+      <button onclick="openMenuPage('leaderboardPage')">
+        KLIK DI SINI
+      </button>
     </section>
 
+    <!-- LOGOUT HANYA DI DASHBOARD -->
     <section class="logout-area">
-      <button type="button" onclick="logoutAdmin()">LOGOUT</button>
+      <button onclick="logoutAdmin()">LOGOUT</button>
       <p>Terima kasih sudah mengelola Digitibee ♡</p>
     </section>
+
   </div>
 
+  <!-- HALAMAN PRODUK -->
   <div id="productPage" style="display:none;">
-    <button class="page-button" type="button" onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+
+    <button class="page-button" onclick="backToDashboard()">
+      ← KEMBALI KE DASHBOARD
+    </button>
+
     <section class="menu-card">
       <h3>PRODUK</h3>
-      <button class="action-button" type="button" onclick="openAddProduct()">+ TAMBAH PRODUK</button>
-      <div id="productList"><p>Daftar produk akan ditampilkan di sini.</p></div>
+
+      <button onclick="openAddProduct()">
+        + TAMBAH PRODUK
+      </button>
+
+      <div id="productList">
+        <p>Daftar produk akan ditampilkan di sini.</p>
+      </div>
     </section>
+
   </div>
 
+  <!-- FORM TAMBAH / EDIT PRODUK -->
   <div id="addProductPage" style="display:none;">
-    <button class="page-button" type="button" onclick="backToProductPage()">← KEMBALI</button>
+
+    <button class="page-button" onclick="backToProductPage()">
+      ← KEMBALI
+    </button>
+
     <section class="menu-card">
+
       <h3 id="productFormTitle">TAMBAH PRODUK</h3>
 
       <div class="form-group">
-        <label for="productImage">Foto Produk</label>
+        <label>Foto Produk</label>
         <input type="file" id="productImage" accept="image/*">
       </div>
 
       <div class="form-group">
-        <label for="productName">Nama Produk</label>
+        <label>Nama Produk</label>
         <input type="text" id="productName" placeholder="Nama produk">
       </div>
 
       <div class="form-group">
-        <label for="productDescription">Deskripsi</label>
+        <label>Deskripsi</label>
         <textarea id="productDescription" placeholder="Deskripsi produk"></textarea>
       </div>
 
       <div class="form-group">
-        <label for="productCategory">Kategori</label>
-        <select id="productCategory"><option value="">Pilih kategori</option></select>
+        <label>Kategori</label>
+        <select id="productCategory">
+          <option value="">Pilih kategori</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -178,10 +373,12 @@
         <div id="variantList"></div>
       </div>
 
-      <button class="action-button" type="button" onclick="addVariantRow()">+ TAMBAH VARIASI</button>
+      <button type="button" onclick="addVariantRow()">
+        + TAMBAH VARIASI
+      </button>
 
       <div class="form-group">
-        <label for="productAvailability">Ketersediaan</label>
+        <label>Ketersediaan</label>
         <select id="productAvailability">
           <option value="ready_stock">READY STOCK</option>
           <option value="pre_order">PRE-ORDER</option>
@@ -189,133 +386,188 @@
         </select>
       </div>
 
-      <button class="action-button" type="button" onclick="saveProduct()">SIMPAN PRODUK</button>
-      <button class="action-button" type="button" onclick="backToProductPage()">BATAL</button>
+      <button onclick="saveProduct()">
+        SIMPAN PRODUK
+      </button>
+
+      <button onclick="backToProductPage()">
+        BATAL
+      </button>
+
       <p id="productMessage" class="message"></p>
+
     </section>
   </div>
 
+  <!-- HALAMAN PESANAN -->
   <div id="orderPage" style="display:none;">
-    <button class="page-button" type="button" onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+
+    <button class="page-button" onclick="backToDashboard()">
+      ← KEMBALI KE DASHBOARD
+    </button>
+
     <section class="menu-card">
       <h3>PESANAN</h3>
       <p>Halaman pengelolaan pesanan akan dibuat pada tahap berikutnya.</p>
     </section>
+
   </div>
 
+  <!-- HALAMAN PEMBAYARAN -->
   <div id="paymentPage" style="display:none;">
-    <button class="page-button" type="button" onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+
+    <button class="page-button" onclick="backToDashboard()">
+      ← KEMBALI KE DASHBOARD
+    </button>
+
     <section class="menu-card">
       <h3>PEMBAYARAN</h3>
       <p>Halaman verifikasi pembayaran akan dibuat pada tahap berikutnya.</p>
     </section>
+
   </div>
 
+  <!-- HALAMAN TESTIMONI -->
   <div id="testimonialPage" style="display:none;">
-    <button class="page-button" type="button" onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+
+    <button class="page-button" onclick="backToDashboard()">
+      ← KEMBALI KE DASHBOARD
+    </button>
+
     <section class="menu-card">
       <h3>TESTIMONI</h3>
       <p>Halaman pengelolaan testimoni akan dibuat pada tahap berikutnya.</p>
     </section>
+
   </div>
 
+  <!-- HALAMAN LEADERBOARD -->
   <div id="leaderboardPage" style="display:none;">
-    <button class="page-button" type="button" onclick="backToDashboard()">← KEMBALI KE DASHBOARD</button>
+
+    <button class="page-button" onclick="backToDashboard()">
+      ← KEMBALI KE DASHBOARD
+    </button>
+
     <section class="menu-card">
       <h3>LEADERBOARD</h3>
       <p>Halaman leaderboard akan dibuat pada tahap berikutnya.</p>
     </section>
+
   </div>
+
 </main>
 
-<footer id="adminFooter" style="display:none;">© 2026 Digitibee</footer>
+<footer id="adminFooter" style="display:none;">
+  © 2026 Digitibee
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.89.0/dist/umd/supabase.min.js"></script>
 
 <script>
-/* GANTI placeholder di bawah dengan publishable key Supabase milikmu. */
-const SUPABASE_URL = "https://seyhvhsllxzneobfgywd.supabase.co";
-const SUPABASE_KEY = "sb_publishable_-L_jnYqLdJm3MGRXWIbNLQ_8cqrPpxO";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+/* =====================================
+   1. KONFIGURASI SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+  "https://seyhvhsllxzneobfgywd.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_-L_jnYqLdJm3MGRXWIbNLQ_8cqrPpxO";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 let editingProductId = null;
 
-const pageIds = [
-  "dashboardPage",
-  "productPage",
-  "addProductPage",
-  "orderPage",
-  "paymentPage",
-  "testimonialPage",
-  "leaderboardPage"
-];
+
+/* =====================================
+   2. TAMPILAN LOGIN DAN DASHBOARD
+===================================== */
 
 function showDashboard() {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("adminMain").style.display = "block";
-  document.getElementById("adminFooter").style.display = "block";
+  document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('adminMain').style.display = 'block';
+  document.getElementById('adminFooter').style.display = 'block';
+
   backToDashboard();
 }
 
 function showLogin() {
-  document.getElementById("loginBox").style.display = "block";
-  document.getElementById("adminMain").style.display = "none";
-  document.getElementById("adminFooter").style.display = "none";
-  document.getElementById("adminPassword").value = "";
+  document.getElementById('loginBox').style.display = 'block';
+  document.getElementById('adminMain').style.display = 'none';
+  document.getElementById('adminFooter').style.display = 'none';
+
+  document.getElementById('adminPassword').value = '';
 }
 
+
+/* =====================================
+   3. LOGIN ADMIN
+===================================== */
+
 async function loginAdmin() {
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
-  const message = document.getElementById("loginMessage");
-  const button = document.getElementById("loginButton");
+  const email = document.getElementById('adminEmail').value.trim();
+  const password = document.getElementById('adminPassword').value;
+  const message = document.getElementById('loginMessage');
+  const button = document.getElementById('loginButton');
 
   if (!email || !password) {
-    message.textContent = "Email dan password wajib diisi.";
+    message.textContent = 'Email dan password wajib diisi.';
     return;
   }
 
   button.disabled = true;
-  button.textContent = "MEMERIKSA...";
-  message.textContent = "Sedang memeriksa akun...";
+  button.textContent = 'MEMERIKSA...';
+  message.textContent = 'Sedang memeriksa akun...';
 
   try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
 
     if (error) throw error;
 
-    const { data: profile, error: profileError } = await supabaseClient
-      .from("profiles")
-      .select("role")
-      .eq("id", data.user.id)
-      .single();
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user.id)
+        .single();
 
     if (profileError) throw profileError;
 
-    if (profile.role !== "admin") {
+    if (profile.role !== 'admin') {
       await supabaseClient.auth.signOut();
-      throw new Error("Akun ini bukan Admin Digitibee.");
+      throw new Error('Akun ini bukan Admin Digitibee.');
     }
 
-    message.textContent = "";
+    message.textContent = '';
     showDashboard();
 
   } catch (error) {
-    console.error("Login error:", error);
-    message.textContent = "Login gagal: " + (error.message || String(error));
+    console.error('Login error:', error);
+    message.textContent = 'Login gagal: ' + error.message;
 
   } finally {
     button.disabled = false;
-    button.textContent = "MASUK";
+    button.textContent = 'MASUK';
   }
 }
 
+
+/* =====================================
+   4. CEK SESSION LOGIN
+===================================== */
+
 async function checkAdminSession() {
   try {
-    const { data, error } = await supabaseClient.auth.getSession();
+    const { data, error } =
+      await supabaseClient.auth.getSession();
+
     if (error) throw error;
 
     if (!data.session) {
@@ -323,13 +575,16 @@ async function checkAdminSession() {
       return;
     }
 
-    const { data: profile, error: profileError } = await supabaseClient
-      .from("profiles")
-      .select("role")
-      .eq("id", data.session.user.id)
-      .single();
+    const user = data.session.user;
 
-    if (profileError || profile?.role !== "admin") {
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+    if (profileError || profile?.role !== 'admin') {
       await supabaseClient.auth.signOut();
       showLogin();
       return;
@@ -338,52 +593,75 @@ async function checkAdminSession() {
     showDashboard();
 
   } catch (error) {
-    console.error("Session error:", error);
+    console.error('Session error:', error);
     showLogin();
-    document.getElementById("loginMessage").textContent =
-      "Gagal memeriksa sesi: " + (error.message || String(error));
+
+    document.getElementById('loginMessage').textContent =
+      'Gagal memeriksa sesi: ' + error.message;
   }
 }
 
+
+/* =====================================
+   5. LOGOUT
+===================================== */
+
 async function logoutAdmin() {
-  const button = document.querySelector("#dashboardPage .logout-area button");
+  const button = document.querySelector('.logout-area button');
+
   button.disabled = true;
-  button.textContent = "LOGOUT...";
+  button.textContent = 'LOGOUT...';
 
   try {
     const { error } = await supabaseClient.auth.signOut();
+
     if (error) throw error;
 
     showLogin();
-    document.getElementById("loginMessage").textContent =
-      "Kamu berhasil logout. Sampai jumpa! 💗";
+
+    document.getElementById('loginMessage').textContent =
+      'Kamu berhasil logout. Sampai jumpa! 💗';
 
   } catch (error) {
-    alert("Gagal logout: " + (error.message || String(error)));
+    alert('Gagal logout: ' + error.message);
 
   } finally {
     button.disabled = false;
-    button.textContent = "LOGOUT";
+    button.textContent = 'LOGOUT';
   }
 }
 
+
+/* =====================================
+   6. NAVIGASI LIMA MENU
+===================================== */
+
+const pageIds = [
+  'dashboardPage',
+  'productPage',
+  'addProductPage',
+  'orderPage',
+  'paymentPage',
+  'testimonialPage',
+  'leaderboardPage'
+];
+
 function openMenuPage(pageId) {
+  pageIds.forEach(id => {
+    const page = document.getElementById(id);
+    if (page) page.style.display = 'none';
+  });
+
   const target = document.getElementById(pageId);
 
   if (!target) {
-    alert("Halaman tidak ditemukan: " + pageId);
+    alert('Halaman tidak ditemukan: ' + pageId);
     return;
   }
 
-  pageIds.forEach(id => {
-    const page = document.getElementById(id);
-    if (page) page.style.display = "none";
-  });
+  target.style.display = 'block';
 
-  target.style.display = "block";
-  window.scrollTo(0, 0);
-
-  if (pageId === "productPage") {
+  if (pageId === 'productPage') {
     loadProducts();
   }
 }
@@ -391,59 +669,80 @@ function openMenuPage(pageId) {
 function backToDashboard() {
   pageIds.forEach(id => {
     const page = document.getElementById(id);
-    if (page) page.style.display = "none";
+    if (page) page.style.display = 'none';
   });
 
-  document.getElementById("dashboardPage").style.display = "block";
-  window.scrollTo(0, 0);
+  document.getElementById('dashboardPage').style.display = 'block';
 }
 
-function backToProductPage() {
-  document.getElementById("addProductPage").style.display = "none";
-  document.getElementById("productPage").style.display = "block";
-  editingProductId = null;
-  window.scrollTo(0, 0);
+function openProductPage() {
+  openMenuPage('productPage');
 }
+
+
+/* =====================================
+   7. FORM TAMBAH PRODUK
+===================================== */
 
 function resetProductForm() {
   editingProductId = null;
-  document.getElementById("productFormTitle").textContent = "TAMBAH PRODUK";
-  document.getElementById("productImage").value = "";
-  document.getElementById("productName").value = "";
-  document.getElementById("productDescription").value = "";
-  document.getElementById("productCategory").value = "";
-  document.getElementById("productAvailability").value = "ready_stock";
-  document.getElementById("variantList").innerHTML = "";
-  document.getElementById("productMessage").textContent = "";
+
+  document.getElementById('productFormTitle').textContent =
+    'TAMBAH PRODUK';
+
+  document.getElementById('productImage').value = '';
+  document.getElementById('productName').value = '';
+  document.getElementById('productDescription').value = '';
+  document.getElementById('productCategory').value = '';
+  document.getElementById('productAvailability').value = 'ready_stock';
+  document.getElementById('variantList').innerHTML = '';
+  document.getElementById('productMessage').textContent = '';
+
   addVariantRow();
 }
 
 async function openAddProduct() {
   resetProductForm();
 
-  document.getElementById("productPage").style.display = "none";
-  document.getElementById("addProductPage").style.display = "block";
+  document.getElementById('productPage').style.display = 'none';
+  document.getElementById('addProductPage').style.display = 'block';
 
   await loadCategories();
-  window.scrollTo(0, 0);
 }
 
+
+/* =====================================
+   8. KEMBALI KE DAFTAR PRODUK
+===================================== */
+
+function backToProductPage() {
+  document.getElementById('addProductPage').style.display = 'none';
+  document.getElementById('productPage').style.display = 'block';
+  editingProductId = null;
+}
+
+
+/* =====================================
+   9. LOAD KATEGORI
+===================================== */
+
 async function loadCategories() {
-  const select = document.getElementById("productCategory");
+  const select = document.getElementById('productCategory');
+
   select.innerHTML = '<option value="">Memuat kategori...</option>';
 
   try {
     const { data, error } = await supabaseClient
-      .from("categories")
-      .select("id, name")
-      .order("name");
+      .from('categories')
+      .select('id, name')
+      .order('name');
 
     if (error) throw error;
 
     select.innerHTML = '<option value="">Pilih kategori</option>';
 
     (data || []).forEach(category => {
-      const option = document.createElement("option");
+      const option = document.createElement('option');
       option.value = category.id;
       option.textContent = category.name;
       select.appendChild(option);
@@ -451,19 +750,27 @@ async function loadCategories() {
 
   } catch (error) {
     select.innerHTML = '<option value="">Gagal memuat kategori</option>';
-    document.getElementById("productMessage").textContent =
-      "Gagal memuat kategori: " + error.message;
+
+    document.getElementById('productMessage').textContent =
+      'Gagal memuat kategori: ' + error.message;
   }
 }
 
+
+/* =====================================
+   10. TAMBAH VARIASI
+===================================== */
+
 function addVariantRow() {
-  const container = document.getElementById("variantList");
-  const row = document.createElement("div");
-  row.className = "variant-row";
+  const container = document.getElementById('variantList');
+
+  const row = document.createElement('div');
+  row.className = 'variant-row';
 
   row.innerHTML = `
     <label>Jenis Akun / Variasi</label>
-    <input type="text" class="variant-name" placeholder="Contoh: 1P1U">
+    <input type="text" class="variant-name"
+      placeholder="Contoh: 1P1U">
 
     <label>Durasi</label>
     <select class="variant-duration">
@@ -481,152 +788,182 @@ function addVariantRow() {
     </select>
 
     <label>Harga (Rp)</label>
-    <input type="number" class="variant-price" min="0" placeholder="Masukkan harga">
+    <input type="number" class="variant-price"
+      min="0" placeholder="Masukkan harga">
 
     <label>Stok</label>
-    <input type="number" class="variant-stock" min="0" value="0">
+    <input type="number" class="variant-stock"
+      min="0" value="0">
 
-    <button type="button" class="remove-variant">HAPUS VARIASI</button>
+    <button type="button" class="remove-variant">
+      HAPUS VARIASI
+    </button>
   `;
 
-  row.querySelector(".remove-variant").addEventListener("click", () => {
+  row.querySelector('.remove-variant').addEventListener('click', () => {
     row.remove();
   });
 
   container.appendChild(row);
 }
 
+
+/* =====================================
+   11. LOAD DAFTAR PRODUK
+===================================== */
+
 async function loadProducts() {
-  const container = document.getElementById("productList");
-  container.innerHTML = "<p>Memuat produk...</p>";
+  const container = document.getElementById('productList');
+
+  container.innerHTML = '<p>Memuat produk...</p>';
 
   try {
     const { data: products, error } = await supabaseClient
-      .from("products")
-      .select("id, name, description, image_url, availability_type")
-      .order("created_at", { ascending: false });
+      .from('products')
+      .select('id, name, description, image_url, availability_type')
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
 
-    container.innerHTML = "";
+    container.innerHTML = '';
 
     if (!products || products.length === 0) {
       container.textContent =
-        "Belum ada produk. Silakan tambahkan produk pertama.";
+        'Belum ada produk. Silakan tambahkan produk pertama.';
       return;
     }
 
     for (const product of products) {
-      const { data: variants, error: variantError } = await supabaseClient
-        .from("product_variants")
-        .select("id, name, duration, price, stock")
-        .eq("product_id", product.id);
+      const { data: variants, error: variantError } =
+        await supabaseClient
+          .from('product_variants')
+          .select('id, name, duration, price, stock')
+          .eq('product_id', product.id);
 
       if (variantError) throw variantError;
 
-      const card = document.createElement("div");
-      card.className = "product-card";
+      const card = document.createElement('div');
+      card.className = 'product-card';
 
-      const title = document.createElement("h3");
+      const title = document.createElement('h3');
       title.textContent = product.name;
+      title.style.color = '#a64f7c';
       card.appendChild(title);
 
       if (product.image_url) {
-        const img = document.createElement("img");
+        const img = document.createElement('img');
         img.src = product.image_url;
         img.alt = product.name;
         card.appendChild(img);
       }
 
-      const desc = document.createElement("p");
-      desc.textContent = product.description || "";
-      card.appendChild(desc);
+      const description = document.createElement('p');
+      description.textContent = product.description || '';
+      card.appendChild(description);
 
-      const availability = document.createElement("p");
+      const availability = document.createElement('p');
       availability.textContent =
-        (product.availability_type || "ready_stock")
-          .replace("_", " ")
-          .toUpperCase();
+        (product.availability_type || 'ready_stock')
+          .replace('_', ' ').toUpperCase();
       card.appendChild(availability);
 
-      const variantTitle = document.createElement("strong");
-      variantTitle.textContent = "Variasi Produk";
+      const variantTitle = document.createElement('strong');
+      variantTitle.textContent = 'Variasi Produk';
       card.appendChild(variantTitle);
 
       (variants || []).forEach(v => {
-        const item = document.createElement("p");
+        const item = document.createElement('p');
+
         item.textContent =
-          `${v.name} • ${v.duration || "-"} • Rp${Number(v.price).toLocaleString("id-ID")} • Stok: ${v.stock}`;
+          `${v.name} • ${v.duration || '-'} • Rp${Number(v.price).toLocaleString('id-ID')} • Stok: ${v.stock}`;
+
         card.appendChild(item);
       });
 
-      const editButton = document.createElement("button");
-      editButton.className = "action-button";
-      editButton.type = "button";
-      editButton.textContent = "EDIT PRODUK";
-      editButton.addEventListener("click", () => editProduct(product.id));
+      const editButton = document.createElement('button');
+      editButton.textContent = 'EDIT PRODUK';
+      editButton.onclick = () => editProduct(product.id);
 
       card.appendChild(editButton);
       container.appendChild(card);
     }
 
   } catch (error) {
-    console.error("Load products error:", error);
+    console.error('Load products error:', error);
+
     container.textContent =
-      "Gagal memuat produk: " + (error.message || String(error));
+      'Gagal memuat produk: ' + error.message;
   }
 }
 
+
+/* =====================================
+   12. EDIT PRODUK
+===================================== */
+
 async function editProduct(productId) {
-  const message = document.getElementById("productMessage");
+  const message = document.getElementById('productMessage');
+
   editingProductId = productId;
-  message.textContent = "Memuat data produk...";
+  message.textContent = 'Memuat data produk...';
 
   try {
     const { data: product, error } = await supabaseClient
-      .from("products")
-      .select("*")
-      .eq("id", productId)
+      .from('products')
+      .select('*')
+      .eq('id', productId)
       .single();
 
     if (error) throw error;
 
-    const { data: variants, error: variantError } = await supabaseClient
-      .from("product_variants")
-      .select("*")
-      .eq("product_id", productId);
+    const { data: variants, error: variantError } =
+      await supabaseClient
+        .from('product_variants')
+        .select('*')
+        .eq('product_id', productId);
 
     if (variantError) throw variantError;
 
-    document.getElementById("productPage").style.display = "none";
-    document.getElementById("addProductPage").style.display = "block";
-    document.getElementById("productFormTitle").textContent = "EDIT PRODUK";
-    document.getElementById("productName").value = product.name || "";
-    document.getElementById("productDescription").value =
-      product.description || "";
-    document.getElementById("productAvailability").value =
-      product.availability_type || "ready_stock";
+    document.getElementById('productPage').style.display = 'none';
+    document.getElementById('addProductPage').style.display = 'block';
+
+    document.getElementById('productFormTitle').textContent =
+      'EDIT PRODUK';
+
+    document.getElementById('productName').value = product.name || '';
+    document.getElementById('productDescription').value =
+      product.description || '';
+
+    document.getElementById('productAvailability').value =
+      product.availability_type || 'ready_stock';
 
     await loadCategories();
 
-    document.getElementById("productCategory").value =
-      product.category_id || "";
+    document.getElementById('productCategory').value =
+      product.category_id || '';
 
-    const container = document.getElementById("variantList");
-    container.innerHTML = "";
+    const container = document.getElementById('variantList');
+    container.innerHTML = '';
 
     (variants || []).forEach(variant => {
       addVariantRow();
 
-      const row = container.querySelectorAll(".variant-row");
-      const current = row[row.length - 1];
+      const rows = container.querySelectorAll('.variant-row');
+      const row = rows[rows.length - 1];
 
-      current.dataset.variantId = variant.id;
-      current.querySelector(".variant-name").value = variant.name || "";
-      current.querySelector(".variant-duration").value =
-        variant.duration || "Tanpa Durasi";
-      current.querySelector(".variant-price").value = variant.price ?? "";
-      current.querySelector(".variant-stock").value = variant.stock ?? 0;
+      row.dataset.variantId = variant.id;
+
+      row.querySelector('.variant-name').value =
+        variant.name || '';
+
+      row.querySelector('.variant-duration').value =
+        variant.duration || 'Tanpa Durasi';
+
+      row.querySelector('.variant-price').value =
+        variant.price ?? '';
+
+      row.querySelector('.variant-stock').value =
+        variant.stock ?? 0;
     });
 
     if (!variants || variants.length === 0) {
@@ -634,92 +971,103 @@ async function editProduct(productId) {
     }
 
     message.textContent =
-      "Data produk berhasil dimuat. Foto lama tetap digunakan jika tidak diganti.";
-
-    window.scrollTo(0, 0);
+      'Data produk berhasil dimuat. Foto lama tetap digunakan jika tidak diganti.';
 
   } catch (error) {
     message.textContent =
-      "Gagal memuat produk: " + (error.message || String(error));
+      'Gagal memuat produk: ' + error.message;
   }
 }
 
+
+/* =====================================
+   13. SIMPAN PRODUK BARU / EDIT
+===================================== */
+
 async function saveProduct() {
-  const message = document.getElementById("productMessage");
-  const file = document.getElementById("productImage").files[0];
-  const name = document.getElementById("productName").value.trim();
+  const message = document.getElementById('productMessage');
+
+  const file = document.getElementById('productImage').files[0];
+  const name = document.getElementById('productName').value.trim();
   const description =
-    document.getElementById("productDescription").value.trim();
-  const category = document.getElementById("productCategory").value;
+    document.getElementById('productDescription').value.trim();
+  const category = document.getElementById('productCategory').value;
   const availability =
-    document.getElementById("productAvailability").value;
+    document.getElementById('productAvailability').value;
 
   const rows = [
-    ...document.querySelectorAll("#variantList .variant-row")
+    ...document.querySelectorAll('#variantList .variant-row')
   ];
 
   const variants = rows.map(row => ({
     id: row.dataset.variantId || null,
-    name: row.querySelector(".variant-name").value.trim(),
-    duration: row.querySelector(".variant-duration").value,
-    price: Number(row.querySelector(".variant-price").value),
-    stock: Number(row.querySelector(".variant-stock").value)
+    name: row.querySelector('.variant-name').value.trim(),
+    duration: row.querySelector('.variant-duration').value,
+    price: Number(row.querySelector('.variant-price').value),
+    stock: Number(row.querySelector('.variant-stock').value)
   }));
 
   const isEditing = editingProductId !== null;
 
   if (!name || (!isEditing && !file)) {
-    message.textContent = "Nama dan foto produk wajib diisi.";
+    message.textContent =
+      'Nama dan foto produk wajib diisi.';
     return;
   }
 
-  if (file && (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024)) {
-    message.textContent = "Pilih foto maksimal 5 MB.";
+  if (file && (
+    !file.type.startsWith('image/') ||
+    file.size > 5 * 1024 * 1024
+  )) {
+    message.textContent =
+      'Pilih foto maksimal 5 MB.';
     return;
   }
 
   if (!category) {
-    message.textContent = "Silakan pilih kategori produk.";
+    message.textContent = 'Silakan pilih kategori produk.';
     return;
   }
 
-  if (
-    !variants.length ||
-    variants.some(v =>
-      !v.name ||
-      !Number.isFinite(v.price) ||
-      v.price < 0 ||
-      !Number.isInteger(v.stock) ||
-      v.stock < 0
-    )
-  ) {
+  if (!variants.length || variants.some(v =>
+    !v.name ||
+    !Number.isFinite(v.price) ||
+    v.price < 0 ||
+    !Number.isInteger(v.stock) ||
+    v.stock < 0
+  )) {
     message.textContent =
-      "Lengkapi jenis variasi, harga, dan stok setiap baris.";
+      'Lengkapi jenis variasi, harga, dan stok setiap baris.';
     return;
   }
 
-  message.textContent = "Sedang menyimpan produk...";
+  message.textContent = 'Sedang menyimpan produk...';
+
   let uploadedFilePath = null;
 
   try {
     let imageUrl = null;
 
     if (file) {
-      const extension = file.name.split(".").pop().toLowerCase();
+      const extension = file.name.split('.').pop().toLowerCase();
 
       uploadedFilePath =
-        Date.now() + "-" +
-        Math.random().toString(36).slice(2) + "." + extension;
+        Date.now() + '-' +
+        Math.random().toString(36).slice(2) +
+        '.' + extension;
 
       const { error: uploadError } = await supabaseClient.storage
-        .from("product-images")
-        .upload(uploadedFilePath, file, { upsert: false });
+        .from('product-images')
+        .upload(uploadedFilePath, file, {
+          upsert: false
+        });
 
       if (uploadError) throw uploadError;
 
-      const { data: imageData } = supabaseClient.storage
-        .from("product-images")
-        .getPublicUrl(uploadedFilePath);
+      const { data: imageData } =
+        supabaseClient.storage
+          .from('product-images')
+          .getPublicUrl(uploadedFilePath);
 
       imageUrl = imageData.publicUrl;
     }
@@ -736,18 +1084,20 @@ async function saveProduct() {
         availability_type: availability
       };
 
-      if (imageUrl) updateData.image_url = imageUrl;
+      if (imageUrl) {
+        updateData.image_url = imageUrl;
+      }
 
       const { error } = await supabaseClient
-        .from("products")
+        .from('products')
         .update(updateData)
-        .eq("id", productId);
+        .eq('id', productId);
 
       if (error) throw error;
 
     } else {
       const { data: product, error } = await supabaseClient
-        .from("products")
+        .from('products')
         .insert({
           category_id: category,
           name,
@@ -755,20 +1105,22 @@ async function saveProduct() {
           image_url: imageUrl,
           price: 0,
           stock: 0,
-          status: "active",
+          status: 'active',
           availability_type: availability
         })
-        .select("id")
+        .select('id')
         .single();
 
       if (error) throw error;
+
       productId = product.id;
     }
 
-    const { data: oldVariants, error: oldError } = await supabaseClient
-      .from("product_variants")
-      .select("id")
-      .eq("product_id", productId);
+    const { data: oldVariants, error: oldError } =
+      await supabaseClient
+        .from('product_variants')
+        .select('id')
+        .eq('product_id', productId);
 
     if (oldError) throw oldError;
 
@@ -781,12 +1133,15 @@ async function saveProduct() {
         stock: v.stock
       };
 
-      if (v.id) item.id = v.id;
+      if (v.id) {
+        item.id = v.id;
+      }
+
       return item;
     });
 
     const { error: variantError } = await supabaseClient
-      .from("product_variants")
+      .from('product_variants')
       .upsert(variantData);
 
     if (variantError) throw variantError;
@@ -799,49 +1154,55 @@ async function saveProduct() {
       .map(v => v.id)
       .filter(id => !currentIds.includes(id));
 
-    if (removedIds.length) {
+    if (removedIds.length > 0) {
       const { error: deleteError } = await supabaseClient
-        .from("product_variants")
+        .from('product_variants')
         .delete()
-        .in("id", removedIds);
+        .in('id', removedIds);
 
       if (deleteError) throw deleteError;
     }
 
     message.textContent = isEditing
-      ? "Perubahan produk berhasil disimpan! 💗"
-      : "Produk berhasil ditambahkan! 💗";
+      ? 'Perubahan produk berhasil disimpan! 💗'
+      : 'Produk berhasil ditambahkan! 💗';
 
     editingProductId = null;
 
-    document.getElementById("productImage").value = "";
-    document.getElementById("productName").value = "";
-    document.getElementById("productDescription").value = "";
-    document.getElementById("productCategory").value = "";
-    document.getElementById("productAvailability").value = "ready_stock";
-    document.getElementById("variantList").innerHTML = "";
+    document.getElementById('productImage').value = '';
+    document.getElementById('productName').value = '';
+    document.getElementById('productDescription').value = '';
+    document.getElementById('productCategory').value = '';
+    document.getElementById('productAvailability').value = 'ready_stock';
+    document.getElementById('variantList').innerHTML = '';
 
-    document.getElementById("addProductPage").style.display = "none";
-    document.getElementById("productPage").style.display = "block";
+    document.getElementById('addProductPage').style.display = 'none';
+    document.getElementById('productPage').style.display = 'block';
 
     await loadProducts();
-    window.scrollTo(0, 0);
 
   } catch (error) {
-    console.error("Save product error:", error);
+    console.error('Save product error:', error);
 
     if (uploadedFilePath) {
       await supabaseClient.storage
-        .from("product-images")
+        .from('product-images')
         .remove([uploadedFilePath]);
     }
 
     message.textContent =
-      "Gagal menyimpan produk: " + (error.message || String(error));
+      'Gagal menyimpan produk: ' + error.message;
   }
 }
 
+
+/* =====================================
+   14. MULAI PERIKSA SESSION
+===================================== */
+
 checkAdminSession();
+
 </script>
+
 </body>
 </html>
