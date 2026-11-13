@@ -173,39 +173,66 @@ const supabase = window.supabase.createClient(
 </script>
 
 <script>
+
 async function loginAdmin() {
   const email = document.getElementById('adminEmail').value.trim();
   const password = document.getElementById('adminPassword').value;
   const message = document.getElementById('loginMessage');
 
+  if (!email || !password) {
+    message.textContent = 'Email dan password wajib diisi.';
+    return;
+  }
+
   message.textContent = 'Memeriksa akun...';
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+  let timeout;
 
-  if (error) {
-    message.textContent = 'Login gagal. Periksa email dan password.';
-    return;
+  try {
+    const result = await Promise.race([
+      supabase.auth.signInWithPassword({ email, password }),
+      new Promise((_, reject) => {
+        timeout = setTimeout(
+          () => reject(new Error('timeout')),
+          15000
+        );
+      })
+    ]);
+
+    clearTimeout(timeout);
+
+    const { data, error } = result;
+
+    if (error) {
+      message.textContent = 'Login gagal: ' + error.message;
+      return;
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', data.user.id)
+      .single();
+
+    if (profileError || profile?.role !== 'admin') {
+      await supabase.auth.signOut();
+      message.textContent = 'Akun ini bukan Admin DIGITIBEE.';
+      return;
+    }
+
+    document.getElementById('loginBox').style.display = 'none';
+    document.querySelector('main').style.display = 'block';
+    document.querySelector('footer').style.display = 'block';
+
+  } catch (error) {
+    clearTimeout(timeout);
+
+    message.textContent = error.message === 'timeout'
+      ? 'Koneksi terlalu lama. Coba periksa internet.'
+      : 'Terjadi kesalahan. Silakan coba lagi.';
   }
-
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', data.user.id)
-    .single();
-
-  if (profileError || profile.role !== 'admin') {
-    await supabase.auth.signOut();
-    message.textContent = 'Akun ini bukan Admin DIGITIBEE.';
-    return;
-  }
-
-  document.getElementById('loginBox').style.display = 'none';
-  document.querySelector('main').style.display = 'block';
-  document.querySelector('footer').style.display = 'block';
 }
+
 
 </script>
 
