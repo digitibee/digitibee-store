@@ -498,15 +498,26 @@
     ></textarea>
 
     <div class="chat-bottom">
-      <label for="testimonialPhoto" class="photo-upload">
-  +
-</label>
 
-<input
-  type="file"
-  id="testimonialPhoto"
-  accept="image/*"
->
+  <div class="chat-attachment">
+    <label for="testimonialPhoto" class="photo-upload">
+      +
+    </label>
+
+    <input
+      type="file"
+      id="testimonialPhoto"
+      accept="image/*"
+    >
+
+    <div id="photoPreview" class="photo-preview"></div>
+  </div>
+
+  <button type="submit" class="send-story">
+    ➤
+  </button>
+
+</div>
 
 <div id="photoPreview" class="photo-preview"></div>
 
@@ -1191,6 +1202,40 @@ function initializeStore() {
 initializeStore();
 
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const photoInput = document.getElementById("testimonialPhoto");
+  const preview = document.getElementById("photoPreview");
 
+  if (!photoInput || !preview) return;
+
+  photoInput.addEventListener("change", function () {
+    preview.innerHTML = "";
+
+    const file = this.files[0];
+
+    if (!file) {
+      preview.style.display = "none";
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      alert("Pilih file gambar, ya!");
+      this.value = "";
+      preview.style.display = "none";
+      return;
+    }
+
+    const img = document.createElement("img");
+    const imageURL = URL.createObjectURL(file);
+
+    img.src = imageURL;
+    img.alt = "Foto testimoni";
+
+    preview.appendChild(img);
+    preview.style.display = "block";
+  });
+});
+</script>
 </body>
 </html>
