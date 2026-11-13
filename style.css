@@ -653,4 +653,21 @@ footer {
   font-size: 28px;
   font-weight: 600;
 }
+
+   .testimonial-invite {
+  text-align: center;
+  margin: 25px 0;
+}
+
+.share-story-button {
+  background: #e65396;
+  color: white;
+  border: 3px solid white;
+  border-radius: 35px;
+  padding: 16px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #c83d80;
+}
 }
