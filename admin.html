@@ -385,6 +385,71 @@ async function openProductPage() {
 
   await loadProducts();
 }
+  
+let editingProductId = null;
+  
+async function editProduct(productId) {
+  editingProductId = productId;
+
+  const message = document.getElementById('productMessage');
+  message.textContent = 'Memuat data produk...';
+
+  try {
+    const { data: product, error } = await supabaseClient
+      .from('products')
+      .select('*')
+      .eq('id', productId)
+      .single();
+
+    if (error) throw error;
+
+    const { data: variants, error: variantError } = await supabaseClient
+      .from('product_variants')
+      .select('*')
+      .eq('product_id', productId);
+
+    if (variantError) throw variantError;
+
+    document.getElementById('productPage').style.display = 'none';
+    document.getElementById('addProductPage').style.display = 'block';
+
+    document.getElementById('productName').value = product.name || '';
+    document.getElementById('productDescription').value =
+      product.description || '';
+    document.getElementById('productAvailability').value =
+      product.availability_type || 'ready_stock';
+
+    await loadCategories();
+
+    document.getElementById('productCategory').value =
+      product.category_id || '';
+
+    const container = document.getElementById('variantList');
+    container.innerHTML = '';
+
+    (variants || []).forEach(variant => {
+      addVariantRow();
+
+      const rows = container.querySelectorAll('.variant-row');
+      const row = rows[rows.length - 1];
+
+      row.querySelector('.variant-name').value = variant.name || '';
+      row.querySelector('.variant-duration').value =
+        variant.duration || 'Tanpa Durasi';
+      row.querySelector('.variant-price').value = variant.price;
+      row.querySelector('.variant-stock').value = variant.stock;
+    });
+
+    if (!variants || variants.length === 0) {
+      addVariantRow();
+    }
+
+    message.textContent = 'Data produk berhasil dimuat.';
+
+  } catch (error) {
+    message.textContent = 'Gagal memuat produk: ' + error.message;
+  }
+}
 
 async function loadProducts() {
   const container = document.getElementById('productList');
@@ -453,11 +518,14 @@ async function loadProducts() {
       });
 
       const editButton = document.createElement('button');
-      editButton.textContent = 'EDIT PRODUK';
-      editButton.disabled = true;
-      editButton.title = 'Fitur edit akan kita aktifkan pada langkah berikutnya';
-      card.appendChild(editButton);
+editButton.textContent = 'EDIT PRODUK';
+editButton.disabled = false;
 
+editButton.addEventListener('click', () => {
+  editProduct(product.id);
+});
+
+card.appendChild(editButton);
       container.appendChild(card);
     }
 
