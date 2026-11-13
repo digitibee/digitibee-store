@@ -107,9 +107,25 @@
 
 <body>
 
-  <header>
+    <header>
     <h1>Dashboard Digitibee</h1>
   </header>
+
+  <!-- FORM LOGIN ADMIN -->
+  <section class="login-box" id="loginBox">
+    <h2>Owner Login 🎀</h2>
+    <p>Silakan masuk ke Dashboard DIGITIBEE</p>
+
+    <input type="email" id="adminEmail"
+      placeholder="Email Admin">
+
+    <input type="password" id="adminPassword"
+      placeholder="Password">
+
+    <button onclick="loginAdmin()">MASUK</button>
+
+    <p id="loginMessage"></p>
+  </section>
 
   <main>
     <section class="welcome">
@@ -144,7 +160,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://seyhvhsllxzneobfgywd.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://seyhvhsllxzneobfgywd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_-L_jnYqLdJm3MGRXWIbNLQ_8cqrPpxO";
 
 const supabase = window.supabase.createClient(
