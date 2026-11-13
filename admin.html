@@ -238,6 +238,38 @@ async function loginAdmin() {
 
 
 </script>
+<script>
+async function checkAdminSession() {
+  try {
+    const { data, error } = await supabaseClient.auth.getSession();
 
+    if (error || !data.session) {
+      return;
+    }
+
+    const user = data.session.user;
+
+    const { data: profile, error: profileError } = await supabaseClient
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    if (profileError || profile?.role !== 'admin') {
+      await supabaseClient.auth.signOut();
+      return;
+    }
+
+    document.getElementById('loginBox').style.display = 'none';
+    document.querySelector('main').style.display = 'block';
+    document.querySelector('footer').style.display = 'block';
+
+  } catch (error) {
+    console.error('Session check error:', error);
+  }
+}
+
+checkAdminSession();
+</script>
 </body>
 </html>
