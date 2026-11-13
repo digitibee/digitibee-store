@@ -102,6 +102,9 @@
   font-weight: bold;
   font-size: 15px;
 }
+    main, footer {
+  display: none;
+}
   </style>
 </head>
 
@@ -167,6 +170,7 @@ const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+</script>
 
 <script>
 async function loginAdmin() {
