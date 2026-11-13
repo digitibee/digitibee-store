@@ -648,4 +648,9 @@ footer {
         margin: 12px auto 0;
         font-size: 20px;
     }
+
+   .empty-message {
+  font-size: 24px;
+  font-weight: 600;
+}
 }
