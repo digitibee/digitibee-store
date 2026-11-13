@@ -224,13 +224,14 @@ async function loginAdmin() {
     document.querySelector('main').style.display = 'block';
     document.querySelector('footer').style.display = 'block';
 
-  } catch (error) {
-    clearTimeout(timeout);
+ } catch (error) {
+  clearTimeout(timeout);
 
-    message.textContent = error.message === 'timeout'
-      ? 'Koneksi terlalu lama. Coba periksa internet.'
-      : 'Terjadi kesalahan. Silakan coba lagi.';
-  }
+  console.error('Login error:', error);
+
+  message.textContent = 'Detail error: ' +
+    (error?.message || String(error));
+}
 }
 
 
