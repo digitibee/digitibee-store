@@ -177,7 +177,7 @@
 
   <section class="logout-area">
     <button onclick="logoutAdmin()">↪ LOGOUT</button>
-    <p>Terima kasih sudah mengelola DIGITIBEE ♡</p>
+    <p>Terima kasih sudah mengelola digitibee ♡</p>
   </section>
 
   <footer>
@@ -242,7 +242,7 @@ async function loginAdmin() {
 
     if (profileError || profile?.role !== 'admin') {
       await supabaseClient.auth.signOut();
-      message.textContent = 'Akun ini bukan Admin DIGITIBEE.';
+      message.textContent = 'Akun ini bukan Admin digitibee.';
       return;
     }
 
