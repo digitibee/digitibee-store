@@ -294,6 +294,23 @@ async function checkAdminSession() {
 }
 
 checkAdminSession();
+  async function logoutAdmin() {
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    alert('Gagal logout. Silakan coba lagi.');
+    return;
+  }
+
+  document.getElementById('loginBox').style.display = 'block';
+  document.querySelector('main').style.display = 'none';
+  document.querySelector('.logout-area').style.display = 'none';
+  document.querySelector('footer').style.display = 'none';
+
+  document.getElementById('adminPassword').value = '';
+  document.getElementById('loginMessage').textContent =
+    'Kamu berhasil logout. Sampai jumpa! 💗';
+}
 </script>
 </body>
 </html>
