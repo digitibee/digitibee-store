@@ -805,4 +805,19 @@ footer {
   cursor: pointer;
   padding: 10px;
 }
+
+   .photo-preview {
+  display: none;
+  margin-top: 12px;
+}
+
+.photo-preview img {
+  display: block;
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover;
+  border: 3px solid #f4a6ca;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(220, 90, 150, 0.15);
+}
 }
