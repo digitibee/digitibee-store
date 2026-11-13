@@ -753,12 +753,17 @@ footer {
 }
 
 .photo-upload {
-  padding: 11px 16px;
-  border-radius: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
   background: #fce5f0;
   color: #d94b91;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: normal;
   cursor: pointer;
 }
 
