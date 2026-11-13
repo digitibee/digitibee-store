@@ -1079,6 +1079,33 @@ async function loadTestimonials() {
     container.innerHTML =
       '<p class="empty-message">Testimoni belum dapat dimuat.</p>';
   }
+
+  const testimonialPhoto = document.getElementById("testimonialPhoto");
+const photoPreview = document.getElementById("photoPreview");
+
+testimonialPhoto.addEventListener("change", function () {
+  photoPreview.innerHTML = "";
+
+  const file = this.files[0];
+
+  if (!file) {
+    photoPreview.style.display = "none";
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    alert("Silakan pilih file gambar.");
+    this.value = "";
+    photoPreview.style.display = "none";
+    return;
+  }
+
+  const image = document.createElement("img");
+  image.src = URL.createObjectURL(file);
+
+  photoPreview.appendChild(image);
+  photoPreview.style.display = "block";
+});
 }
 
 
