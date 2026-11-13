@@ -124,6 +124,17 @@
   color: #a17b91;
   font-size: 12px;
 }
+
+    .product-menu-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  color: #594653;
+  appearance: none;
+  -webkit-appearance: none;
+}
   </style>
 </head>
 
@@ -158,11 +169,14 @@
       <h2>Hai, Owner Yang Cantik! 💗</h2>
     </section>
 
-    <section class="menu-card"
-  onclick="openProductPage()"
-  style="cursor:pointer;">
+    <button
+  type="button"
+  class="menu-card product-menu-button"
+  onclick="openProductPage()">
+
   <h3>PRODUK</h3>
-</section>
+
+</button>
 
     <section class="menu-card">
       <h3>PESANAN</h3>
