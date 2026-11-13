@@ -303,11 +303,6 @@
 
 </main>
 
-  <section class="logout-area">
-    <button onclick="logoutAdmin()">LOGOUT</button>
-    <p>Terima kasih sudah mengelola digitibee ♡</p>
-  </section>
-
   <footer>
     © 2026 digitibee
   </footer>
@@ -386,7 +381,8 @@ async function loginAdmin() {
   message.textContent = 'Detail error: ' +
     (error?.message || String(error));
 }
-
+}
+  
 </script>
 <script>
 async function checkAdminSession() {
@@ -418,7 +414,8 @@ async function checkAdminSession() {
     console.error('Session check error:', error);
   }
 
-checkAdminSession();
+}
+  checkAdminSession();
   async function logoutAdmin() {
   const { error } = await supabaseClient.auth.signOut();
 
@@ -461,7 +458,7 @@ function openMenuPage(pageId) {
     targetPage.style.display = 'block';
   }
 
-  if (pageId === 'productPage') {
+  if (pageId === 'productPage') } {
     loadProducts();
   }
 
@@ -534,7 +531,7 @@ async function editProduct(productId) {
   } catch (error) {
     message.textContent = 'Gagal memuat produk: ' + error.message;
   }
-
+}
 async function loadProducts() {
   const container = document.getElementById('productList');
 
@@ -891,7 +888,7 @@ async function saveProduct() {
         .from('product_variants')
         .delete()
         .in('id', removedIds);
-
+}
       if (deleteError) {
         throw new Error(
           'Data tersimpan, tetapi variasi yang dihapus belum berhasil dibersihkan: ' +
@@ -917,13 +914,13 @@ async function saveProduct() {
 
     await loadProducts();
 
-  } catch (error) {
+  { catch (error) } {
     if (uploadedFilePath) {
       await supabaseClient.storage
         .from('product-images')
         .remove([uploadedFilePath]);
     }
-
+  
     message.textContent = 'Gagal menyimpan: ' + error.message;
   }
 
