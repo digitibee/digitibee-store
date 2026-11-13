@@ -670,4 +670,76 @@ footer {
   cursor: pointer;
   box-shadow: 0 5px 0 #c83d80;
 }
+
+   
+/* FORM TESTIMONI DIGITIBEE */
+#testimonialForm:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  text-align: left;
+}
+
+#testimonialForm h3 {
+  text-align: center;
+  color: #d94b91;
+  font-size: 22px;
+  margin: 5px 0 15px;
+}
+
+#testimonialForm label {
+  display: block;
+  color: #805466;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+#testimonialForm input[type="text"],
+#testimonialForm textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #f4a6ca;
+  border-radius: 14px;
+  padding: 13px;
+  background: #fffafd;
+  color: #594653;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+#testimonialForm textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+#testimonialForm input[type="file"] {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  color: #805466;
+}
+
+#testimonialForm button {
+  font-family: inherit;
+  margin-top: 8px;
+}
+
+#testimonialForm button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  font-size: 17px;
+}
+
+#testimonialForm button[type="button"] {
+  align-self: center;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 25px;
+  background: #f8d5e5;
+  color: #805466;
+  font-weight: bold;
+}
 }
