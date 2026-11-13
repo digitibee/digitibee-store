@@ -1101,6 +1101,8 @@ testimonialPhoto.addEventListener("change", function () {
 document.getElementById("testimonialForm").addEventListener("submit", async function(event) {
   event.preventDefault();
 
+  alert("Tombol kirim berhasil ditekan!");
+
   const name = document.getElementById("testimonialName").value.trim();
   const message = document.getElementById("testimonialMessage").value.trim();
   const rating = Number(document.getElementById("testimonialRating").value);
