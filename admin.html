@@ -160,13 +160,13 @@
     © 2026 digitibee
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.89.0/dist/umd/supabase.min.js"></script>
 
 <script>
 const SUPABASE_URL = "https://seyhvhsllxzneobfgywd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_-L_jnYqLdJm3MGRXWIbNLQ_8cqrPpxO";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -190,7 +190,7 @@ async function loginAdmin() {
 
   try {
     const result = await Promise.race([
-      supabase.auth.signInWithPassword({ email, password }),
+      supabaseClient.auth.signInWithPassword({ email, password }),
       new Promise((_, reject) => {
         timeout = setTimeout(
           () => reject(new Error('timeout')),
@@ -208,14 +208,13 @@ async function loginAdmin() {
       return;
     }
 
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
+    const { data: profile, error: profileError } = await supabaseClient.from('profiles')
       .select('role')
       .eq('id', data.user.id)
       .single();
 
     if (profileError || profile?.role !== 'admin') {
-      await supabase.auth.signOut();
+      await supabaseClient.auth.signOut();
       message.textContent = 'Akun ini bukan Admin DIGITIBEE.';
       return;
     }
