@@ -212,7 +212,7 @@ body::before {
 
 .welcome {
     color: var(--pink-dark);
-    font-size: 25px;
+    font-size: 32px;
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 25px;
@@ -576,7 +576,7 @@ footer {
     }
 
     .hero-text .welcome {
-        font-size: 13px !important;
+        font-size: 18px !important;
         margin-bottom: 10px !important;
     }
 
