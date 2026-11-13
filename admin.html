@@ -433,6 +433,8 @@ async function editProduct(productId) {
       const rows = container.querySelectorAll('.variant-row');
       const row = rows[rows.length - 1];
 
+      row.dataset.variantId = variant.id;
+      
       row.querySelector('.variant-name').value = variant.name || '';
       row.querySelector('.variant-duration').value =
         variant.duration || 'Tanpa Durasi';
@@ -640,6 +642,7 @@ function addVariantRow() {
   container.appendChild(row);
 }
 
+
 async function saveProduct() {
   const message = document.getElementById('productMessage');
   const file = document.getElementById('productImage').files[0];
@@ -652,14 +655,23 @@ async function saveProduct() {
   const rows = [...document.querySelectorAll('.variant-row')];
 
   const variants = rows.map(row => ({
+    id: row.dataset.variantId || null,
     name: row.querySelector('.variant-name').value.trim(),
     duration: row.querySelector('.variant-duration').value,
     price: Number(row.querySelector('.variant-price').value),
     stock: Number(row.querySelector('.variant-stock').value)
   }));
 
-  if (!name || !file) {
+  const isEditing = editingProductId !== null;
+
+  if (!name || (!isEditing && !file)) {
     message.textContent = 'Nama dan foto produk wajib diisi.';
+    return;
+  }
+
+  if (file && (!file.type.startsWith('image/') ||
+      file.size > 5 * 1024 * 1024)) {
+    message.textContent = 'Pilih foto maksimal 5 MB.';
     return;
   }
 
@@ -675,65 +687,127 @@ async function saveProduct() {
     return;
   }
 
-  if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
-    message.textContent = 'Pilih foto maksimal 5 MB.';
-    return;
-  }
+  message.textContent = 'Sedang menyimpan...';
 
-  message.textContent = 'Sedang menyimpan produk...';
-
-  let filePath = null;
-  let productId = null;
+  let uploadedFilePath = null;
 
   try {
-    const extension = file.name.split('.').pop().toLowerCase();
-    filePath = Date.now() + '-' +
-      Math.random().toString(36).slice(2) + '.' + extension;
+    let imageUrl = null;
 
-    const { error: uploadError } = await supabaseClient.storage
-      .from('product-images')
-      .upload(filePath, file, { upsert: false });
+    if (file) {
+      const extension = file.name.split('.').pop().toLowerCase();
+      uploadedFilePath = Date.now() + '-' +
+        Math.random().toString(36).slice(2) + '.' + extension;
 
-    if (uploadError) throw uploadError;
+      const { error: uploadError } = await supabaseClient.storage
+        .from('product-images')
+        .upload(uploadedFilePath, file, { upsert: false });
 
-    const { data: imageData } = supabaseClient.storage
-      .from('product-images')
-      .getPublicUrl(filePath);
+      if (uploadError) throw uploadError;
 
-    const { data: product, error: productError } = await supabaseClient
-      .from('products')
-      .insert({
+      const { data: imageData } = supabaseClient.storage
+        .from('product-images')
+        .getPublicUrl(uploadedFilePath);
+
+      imageUrl = imageData.publicUrl;
+    }
+
+    let productId = editingProductId;
+
+    if (isEditing) {
+      const updateData = {
         category_id: category || null,
         name,
         description,
-        image_url: imageData.publicUrl,
         price: 0,
         stock: 0,
-        status: 'active',
         availability_type: availability
-      })
+      };
+
+      if (imageUrl) updateData.image_url = imageUrl;
+
+      const { error } = await supabaseClient
+        .from('products')
+        .update(updateData)
+        .eq('id', productId);
+
+      if (error) throw error;
+
+    } else {
+      const { data: product, error } = await supabaseClient
+        .from('products')
+        .insert({
+          category_id: category || null,
+          name,
+          description,
+          image_url: imageUrl,
+          price: 0,
+          stock: 0,
+          status: 'active',
+          availability_type: availability
+        })
+        .select('id')
+        .single();
+
+      if (error) throw error;
+
+      productId = product.id;
+    }
+
+    const { data: oldVariants, error: oldError } = await supabaseClient
+      .from('product_variants')
       .select('id')
-      .single();
+      .eq('product_id', productId);
 
-    if (productError) throw productError;
+    if (oldError) throw oldError;
 
-    productId = product.id;
+    const variantData = variants.map(v => {
+      const item = {
+        product_id: productId,
+        name: v.name,
+        duration: v.duration,
+        price: v.price,
+        stock: v.stock
+      };
 
-    const variantData = variants.map(v => ({
-      product_id: productId,
-      name: v.name,
-      duration: v.duration,
-      price: v.price,
-      stock: v.stock
-    }));
+      if (v.id) item.id = v.id;
+
+      return item;
+    });
 
     const { error: variantError } = await supabaseClient
       .from('product_variants')
-      .insert(variantData);
+      .upsert(variantData);
 
     if (variantError) throw variantError;
 
-    message.textContent = 'Produk dan variasi berhasil disimpan! 💗';
+    const currentIds = variants
+      .filter(v => v.id)
+      .map(v => v.id);
+
+    const removedIds = (oldVariants || [])
+      .map(v => v.id)
+      .filter(id => !currentIds.includes(id));
+
+    if (removedIds.length > 0) {
+      const { error: deleteError } = await supabaseClient
+        .from('product_variants')
+        .delete()
+        .in('id', removedIds);
+
+      if (deleteError) {
+        throw new Error(
+          'Data tersimpan, tetapi variasi yang dihapus belum berhasil dibersihkan: ' +
+          deleteError.message
+        );
+      }
+    }
+
+    message.textContent = isEditing
+      ? 'Perubahan produk berhasil disimpan! 💗'
+      : 'Produk berhasil ditambahkan! 💗';
+
+    editingProductId = null;
 
     document.getElementById('productImage').value = '';
     document.getElementById('productName').value = '';
@@ -742,21 +816,22 @@ async function saveProduct() {
     document.getElementById('productAvailability').value = 'ready_stock';
     document.getElementById('variantList').innerHTML = '';
 
-  } catch (error) {
-    if (productId) {
-      await supabaseClient.from('product_variants')
-        .delete().eq('product_id', productId);
-      await supabaseClient.from('products')
-        .delete().eq('id', productId);
-    }
+    document.getElementById('addProductPage').style.display = 'none';
+    document.getElementById('productPage').style.display = 'block';
 
-    if (filePath) {
+    await loadProducts();
+
+  } catch (error) {
+    if (uploadedFilePath) {
       await supabaseClient.storage
-        .from('product-images').remove([filePath]);
+        .from('product-images')
+        .remove([uploadedFilePath]);
     }
 
     message.textContent = 'Gagal menyimpan: ' + error.message;
   }
+}
+
 }
 
 </script>
