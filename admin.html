@@ -157,33 +157,33 @@
 <main>
 
   <!-- DASHBOARD UTAMA -->
-  <div id="dashboardPage">
-    <section class="welcome">
-      <h2>Hai, Owner Yang Cantik! 💗</h2>
-    </section>
 
-    <section class="menu-card"
-  onclick="openProductPage()"
-  style="cursor:pointer;">
-  <h3>PRODUK</h3>
-</section>
+<div id="dashboardPage">
+  <section class="welcome">
+    <h2>Hai, Owner Yang Cantik! 💗</h2>
+  </section>
 
-    <section class="menu-card">
-      <h3>PESANAN</h3>
-    </section>
+  <section class="menu-card" onclick="openMenuPage('productPage')" style="cursor:pointer;">
+    <h3>PRODUK</h3>
+  </section>
 
-    <section class="menu-card">
-      <h3>PEMBAYARAN</h3>
-    </section>
+  <section class="menu-card" onclick="openMenuPage('orderPage')" style="cursor:pointer;">
+    <h3>PESANAN</h3>
+  </section>
 
-    <section class="menu-card">
-      <h3>TESTIMONI</h3>
-    </section>
+  <section class="menu-card" onclick="openMenuPage('paymentPage')" style="cursor:pointer;">
+    <h3>PEMBAYARAN</h3>
+  </section>
 
-    <section class="menu-card">
-      <h3>LEADERBOARD</h3>
-    </section>
-  </div>
+  <section class="menu-card" onclick="openMenuPage('testimonialPage')" style="cursor:pointer;">
+    <h3>TESTIMONI</h3>
+  </section>
+
+  <section class="menu-card" onclick="openMenuPage('leaderboardPage')" style="cursor:pointer;">
+    <h3>LEADERBOARD</h3>
+  </section>
+</div>
+
 
   <!-- HALAMAN DAFTAR PRODUK -->
   <div id="productPage" style="display:none;">
@@ -381,13 +381,40 @@ checkAdminSession();
     'Kamu berhasil logout. Sampai jumpa! 💗';
 }
 
-async function openProductPage() {
-  document.getElementById('dashboardPage').style.display = 'none';
-  document.getElementById('productPage').style.display = 'block';
-  document.getElementById('addProductPage').style.display = 'none';
 
-  loadProducts();
+function openMenuPage(pageId) {
+  const pages = [
+    'dashboardPage',
+    'productPage',
+    'addProductPage',
+    'orderPage',
+    'paymentPage',
+    'testimonialPage',
+    'leaderboardPage'
+  ];
+
+  pages.forEach(id => {
+    const page = document.getElementById(id);
+    if (page) {
+      page.style.display = 'none';
+    }
+  });
+
+  const targetPage = document.getElementById(pageId);
+
+  if (targetPage) {
+    targetPage.style.display = 'block';
+  }
+
+  if (pageId === 'productPage') {
+    loadProducts();
+  }
 }
+
+function openProductPage() {
+  openMenuPage('productPage');
+}
+
   
 let editingProductId = null;
   
@@ -540,11 +567,28 @@ card.appendChild(editButton);
 }
 
 
+
 function backToDashboard() {
-  document.getElementById('productPage').style.display = 'none';
-  document.getElementById('addProductPage').style.display = 'none';
+  const pages = [
+    'dashboardPage',
+    'productPage',
+    'addProductPage',
+    'orderPage',
+    'paymentPage',
+    'testimonialPage',
+    'leaderboardPage'
+  ];
+
+  pages.forEach(id => {
+    const page = document.getElementById(id);
+    if (page) {
+      page.style.display = 'none';
+    }
+  });
+
   document.getElementById('dashboardPage').style.display = 'block';
 }
+
 
 function openAddProduct() {
   document.getElementById('productPage').style.display = 'none';
