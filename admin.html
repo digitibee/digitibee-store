@@ -161,6 +161,7 @@
   <div id="productList"></div>
 </section>
 
+
 <section class="menu-card" id="productForm" style="display:none;">
 
   <label>Foto Produk</label>
@@ -172,16 +173,31 @@
   <label>Deskripsi</label>
   <textarea id="productDescription" placeholder="Deskripsi produk"></textarea>
 
-  <label>Harga (Rp)</label>
-  <input type="number" id="productPrice" min="0" placeholder="Harga">
-
-  <label>Stok</label>
-  <input type="number" id="productStock" min="0" value="0">
-
   <label>Kategori</label>
   <select id="productCategory">
     <option value="">Pilih kategori</option>
   </select>
+
+  <label>Variasi Produk</label>
+  <div id="variantList"></div>
+
+  <button type="button" onclick="addVariantRow()">
+    + TAMBAH VARIASI
+  </button>
+
+  <label>Ketersediaan</label>
+  <select id="productAvailability">
+    <option value="ready_stock">READY STOCK</option>
+    <option value="pre_order">PRE-ORDER</option>
+    <option value="sold_out">SOLD OUT</option>
+  </select>
+
+  <button onclick="saveProduct()">SIMPAN PRODUK</button>
+  <button onclick="hideProductForm()">BATAL</button>
+
+  <p id="productMessage"></p>
+</section>
+
 
   <label>Ketersediaan</label>
   <select id="productAvailability">
@@ -350,8 +366,14 @@ checkAdminSession();
     'Kamu berhasil logout. Sampai jumpa! 💗';
 }
   
+
 function showProductForm() {
   document.getElementById('productForm').style.display = 'block';
+
+  if (!document.querySelector('.variant-row')) {
+    addVariantRow();
+  }
+
   loadCategories();
 }
 
@@ -383,83 +405,169 @@ async function loadCategories() {
   });
 }
 
+function addVariantRow() {
+  const container = document.getElementById('variantList');
+
+  const row = document.createElement('div');
+  row.className = 'variant-row';
+  row.style.cssText =
+    'border:1px solid #e8b8d0;padding:12px;margin:12px 0;border-radius:12px;background:#fff9fc;';
+
+  row.innerHTML = `
+    <label>Jenis Akun / Variasi</label>
+    <input type="text" class="variant-name"
+      placeholder="Contoh: 1P1U">
+
+    <label>Durasi</label>
+    <select class="variant-duration">
+      <option value="1 Hari">1 Hari</option>
+      <option value="3 Hari">3 Hari</option>
+      <option value="7 Hari">7 Hari</option>
+      <option value="1 Bulan">1 Bulan</option>
+      <option value="2 Bulan">2 Bulan</option>
+      <option value="3 Bulan">3 Bulan</option>
+      <option value="6 Bulan">6 Bulan</option>
+      <option value="1 Tahun">1 Tahun</option>
+      <option value="Tanpa Durasi">Tanpa Durasi</option>
+    </select>
+
+    <label>Harga (Rp)</label>
+    <input type="number" class="variant-price"
+      min="0" placeholder="Masukkan harga">
+
+    <label>Stok</label>
+    <input type="number" class="variant-stock"
+      min="0" value="0">
+
+    <button type="button" class="remove-variant"
+      style="margin-top:10px;background:#f4a9c8;border:0;border-radius:10px;padding:9px;">
+      HAPUS VARIASI
+    </button>
+  `;
+
+  row.querySelector('.remove-variant').addEventListener('click', () => {
+    row.remove();
+  });
+
+  container.appendChild(row);
+}
+
 async function saveProduct() {
   const message = document.getElementById('productMessage');
   const file = document.getElementById('productImage').files[0];
 
   const name = document.getElementById('productName').value.trim();
   const description = document.getElementById('productDescription').value.trim();
-  const price = Number(document.getElementById('productPrice').value);
-  const stock = Number(document.getElementById('productStock').value);
   const category = document.getElementById('productCategory').value;
   const availability = document.getElementById('productAvailability').value;
 
-  if (!name || !file || !Number.isFinite(price) || price < 0 ||
-      !Number.isInteger(stock) || stock < 0) {
-    message.textContent = 'Lengkapi nama, foto, harga, dan stok dengan benar.';
+  const rows = [...document.querySelectorAll('.variant-row')];
+
+  const variants = rows.map(row => ({
+    name: row.querySelector('.variant-name').value.trim(),
+    duration: row.querySelector('.variant-duration').value,
+    price: Number(row.querySelector('.variant-price').value),
+    stock: Number(row.querySelector('.variant-stock').value)
+  }));
+
+  if (!name || !file) {
+    message.textContent = 'Nama dan foto produk wajib diisi.';
     return;
   }
 
-  if (!file.type.startsWith('image/')) {
-    message.textContent = 'File harus berupa gambar.';
+  if (!variants.length || variants.some(v =>
+    !v.name ||
+    !Number.isFinite(v.price) ||
+    v.price < 0 ||
+    !Number.isInteger(v.stock) ||
+    v.stock < 0
+  )) {
+    message.textContent =
+      'Lengkapi jenis variasi, harga, dan stok setiap baris.';
     return;
   }
 
-  if (file.size > 5 * 1024 * 1024) {
-    message.textContent = 'Ukuran foto maksimal 5 MB.';
+  if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
+    message.textContent = 'Pilih foto maksimal 5 MB.';
     return;
   }
 
-  message.textContent = 'Sedang mengunggah foto...';
+  message.textContent = 'Sedang menyimpan produk...';
+
+  let filePath = null;
+  let productId = null;
 
   try {
     const extension = file.name.split('.').pop().toLowerCase();
-    const filePath = Date.now() + '-' + Math.random().toString(36).slice(2) + '.' + extension;
+    filePath = Date.now() + '-' +
+      Math.random().toString(36).slice(2) + '.' + extension;
 
-    const { error: uploadError } = await supabaseClient
-      .storage
+    const { error: uploadError } = await supabaseClient.storage
       .from('product-images')
       .upload(filePath, file, { upsert: false });
 
     if (uploadError) throw uploadError;
 
-    const { data: imageData } = supabaseClient
-      .storage
+    const { data: imageData } = supabaseClient.storage
       .from('product-images')
       .getPublicUrl(filePath);
 
-    const { error: insertError } = await supabaseClient
+    const { data: product, error: productError } = await supabaseClient
       .from('products')
       .insert({
         category_id: category || null,
-        name: name,
-        description: description,
+        name,
+        description,
         image_url: imageData.publicUrl,
-        price: price,
-        stock: stock,
+        price: 0,
+        stock: 0,
         status: 'active',
         availability_type: availability
-      });
+      })
+      .select('id')
+      .single();
 
-    if (insertError) {
-      await supabaseClient.storage
-        .from('product-images')
-        .remove([filePath]);
-      throw insertError;
-    }
+    if (productError) throw productError;
 
-    message.textContent = 'Produk berhasil disimpan! 🎀';
+    productId = product.id;
+
+    const variantData = variants.map(v => ({
+      product_id: productId,
+      name: v.name,
+      duration: v.duration,
+      price: v.price,
+      stock: v.stock
+    }));
+
+    const { error: variantError } = await supabaseClient
+      .from('product_variants')
+      .insert(variantData);
+
+    if (variantError) throw variantError;
+
+    message.textContent = 'Produk dan variasi berhasil disimpan! 💗';
 
     document.getElementById('productImage').value = '';
     document.getElementById('productName').value = '';
     document.getElementById('productDescription').value = '';
-    document.getElementById('productPrice').value = '';
-    document.getElementById('productStock').value = '0';
     document.getElementById('productCategory').value = '';
     document.getElementById('productAvailability').value = 'ready_stock';
+    document.getElementById('variantList').innerHTML = '';
 
   } catch (error) {
-    message.textContent = 'Gagal menyimpan produk: ' + error.message;
+    if (productId) {
+      await supabaseClient.from('product_variants')
+        .delete().eq('product_id', productId);
+      await supabaseClient.from('products')
+        .delete().eq('id', productId);
+    }
+
+    if (filePath) {
+      await supabaseClient.storage
+        .from('product-images').remove([filePath]);
+    }
+
+    message.textContent = 'Gagal menyimpan: ' + error.message;
   }
 }
 
