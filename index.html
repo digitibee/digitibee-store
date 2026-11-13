@@ -480,40 +480,58 @@
 
   <div class="content-panel">
 
-    <form id="testimonialForm" hidden>
+    
+<form id="testimonialForm" class="chat-testimonial" hidden>
 
-      <label for="testimonialName">Nama atau inisial</label>
-      <input
-        type="text"
-        id="testimonialName"
-        placeholder="Contoh: A***"
-        required
-      >
+  <div class="chat-header">
+    <span class="chat-heart">♡</span>
+    <div>
+      <strong>Share Your Sweet Story</strong>
+      <small>Cerita manismu bersama Digitibee 🩷</small>
+    </div>
+  </div>
 
-      <label for="testimonialMessage">Ceritamu</label>
-      <textarea
-        id="testimonialMessage"
-        placeholder="Ceritakan pengalaman belanjamu di Digitibee..."
-        rows="5"
-        required
-      ></textarea>
+  <div class="chat-body">
 
-      <label for="testimonialPhoto">Foto (opsional)</label>
+    <label for="testimonialName">Nama atau inisial</label>
+    <input
+      type="text"
+      id="testimonialName"
+      placeholder="Tulis nama atau inisialmu..."
+      required
+    >
+
+    <label for="testimonialMessage">Pesanmu</label>
+    <textarea
+      id="testimonialMessage"
+      placeholder="Ceritakan pengalaman manismu di Digitibee..."
+      rows="4"
+      required
+    ></textarea>
+
+    <div class="chat-bottom">
+      <label for="testimonialPhoto" class="photo-upload">
+        ♡ Tambah Foto
+      </label>
       <input
         type="file"
         id="testimonialPhoto"
         accept="image/*"
       >
 
-      <button type="submit" class="share-story-button">
-        kirim
+      <button type="submit" class="send-story">
+        <span>➤</span>
       </button>
+    </div>
 
-      <button type="button"
-        onclick="document.getElementById('testimonialForm').hidden = true;">
-        Batal
-      </button>
-    </form>
+    <button type="button" class="cancel-story"
+      onclick="document.getElementById('testimonialForm').hidden = true;">
+      Batal
+    </button>
+
+  </div>
+</form>
+
 
     <div id="testimonialList">
       <p class="empty-message">Memuat testimoni...</p>
