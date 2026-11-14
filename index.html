@@ -503,8 +503,7 @@
         <img src="home.PNG" alt="Home"> Home
       </a>
 
-      <a href="#testimoni" class="nav-item"
-   onclick="alert('NAVBAR BISA DIKLIK'); showPage('testimoni');">
+      <a href="#testimoni" class="nav-item" onclick="showPage('testimoni')">
         <img src="testimoni.PNG" alt="Testimoni"> Testimoni
       </a>
 
@@ -724,50 +723,59 @@
       </div>
     </section>
 
+    <!-- ADMIN / KONTAK -->
+    <section class="store-page" id="admin">
+      <button class="back-home" onclick="showPage('home')">← KEMBALI KE HOME</button>
 
-<!-- ADMIN / KONTAK -->
-<section class="store-page" id="admin">
-  <button class="back-home" onclick="showPage('home')">← KEMBALI KE HOME</button>
-
-  <div class="page-heading">
-    <h2>Ada pertanyaan atau butuh bantuan? Hubungi admin Digitibee, kami siap membantu!</h2>
-  </div>
-
-  <div class="content-panel">
-
-    <a class="contact-card" id="groupWhatsappLink"
-      href="#" target="_blank" rel="noopener noreferrer"
-      style="display:none;">
-      <div class="contact-icon">👥</div>
-      <div>
-        <h3>Grup WhatsApp Digitibee</h3>
-        <p>Gabung komunitas Digitibee →</p>
+      <div class="page-heading">
+        <h2>Ada pertanyaan atau butuh bantuan? Hubungi admin digitibee, kami siap membantu!</h2>
       </div>
-    </a>
 
-    <a class="contact-card" id="adminWhatsappLink"
-      href="#" target="_blank" rel="noopener noreferrer"
-      style="display:none;">
-      <div class="contact-icon">💬</div>
-      <div>
-        <h3>WhatsApp Admin</h3>
-        <p>Hubungi kami melalui WhatsApp →</p>
+      <div class="content-panel">
+        <a class="contact-card" href="https://www.instagram.com/digitibee/"
+          target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon">📸</div>
+          <div>
+            <h3>Instagram Digitibee</h3>
+            <p>Kunjungi akun Instagram kami untuk melihat testimoni →</p>
+          </div>
+        </a>
+
+        <a class="contact-card" href="https://wa.me/message/YELJW322HY22G1"
+          target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon">💬</div>
+          <div>
+            <h3>WhatsApp Admin</h3>
+            <p>Hubungi kami melalui WhatsApp →</p>
+          </div>
+        </a>
       </div>
-    </a>
+    </section>
 
-    <a class="contact-card" id="adminInstagramLink"
-      href="#" target="_blank" rel="noopener noreferrer"
-      style="display:none;">
-      <div class="contact-icon">📸</div>
-      <div>
-        <h3>Instagram Digitibee</h3>
-        <p>Kunjungi akun Instagram kami →</p>
-      </div>
-    </a>
+  </main>
+</div>
 
-  </div>
-</section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://seyhvhsllxzneobfgywd.supabase.co";
+const SUPABASE_KEY = "sb_publishable_-L_jnYqLdJm3MGRXWIbNLQ_8cqrPpxO";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const WHATSAPP_ADMIN = "https://wa.me/message/YELJW322HY22G1";
+
+let cart = [];
+
+try {
+  cart = JSON.parse(localStorage.getItem("digitibeeCart") || "[]");
+  if (!Array.isArray(cart)) cart = [];
+} catch {
+  cart = [];
+}
 
 /* NAVIGASI */
 
