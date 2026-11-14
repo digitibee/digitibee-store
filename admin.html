@@ -1394,6 +1394,7 @@ async function saveContactSettings() {
 ===================================== */
 
 
+
 async function loadTestimonialsForAdmin() {
   const list = document.getElementById('adminTestimonialList');
   const approvedList = document.getElementById('approvedTestimonialList');
@@ -1423,34 +1424,47 @@ async function loadTestimonialsForAdmin() {
 
     count.textContent = (pending || []).length;
 
-    function makeCard(item, buttonText, newStatus, color) {
+    function testimonialContent(item) {
       return `
-        <div style="background:#fff7fb;border:1px solid #f3c6dc;border-radius:14px;padding:15px;margin:15px 0;">
-          <h4>${escapeTestimonialText(item.customer_initials || 'Pelanggan')}</h4>
-          <p>${escapeTestimonialText(item.location || '')}</p>
-          <p>${'⭐'.repeat(Math.max(0, Math.min(5, Number(item.rating) || 0)))}</p>
-          <p>${escapeTestimonialText(item.message || '')}</p>
-          ${item.image_url ? `<img src="${escapeTestimonialAttribute(item.image_url)}" alt="Foto testimoni" style="width:100%;max-width:220px;border-radius:10px;margin:10px 0;">` : ''}
-          <button type="button"
-            onclick="updateTestimonialStatus('${item.id}', '${newStatus}')"
-            style="background:${color};color:white;border:0;border-radius:9px;padding:10px 15px;">
-            ${buttonText}
-          </button>
-        </div>
+        <h4>${escapeTestimonialText(item.customer_initials || 'Pelanggan')}</h4>
+        <p>${escapeTestimonialText(item.location || '')}</p>
+        <p>${'⭐'.repeat(Math.max(0, Math.min(5, Number(item.rating) || 0)))}</p>
+        <p>${escapeTestimonialText(item.message || '')}</p>
+        ${item.image_url ? `<img src="${escapeTestimonialAttribute(item.image_url)}" alt="Foto testimoni" style="width:100%;max-width:220px;border-radius:10px;margin:10px 0;">` : ''}
       `;
     }
 
     list.innerHTML = pending.length
-      ? pending.map(item =>
-          makeCard(item, '✓ SETUJUI', 'approved', '#65b985') +
-          makeCard(item, '✕ TOLAK', 'rejected', '#e78b9b')
-        ).join('')
+      ? pending.map(item => `
+          <div style="background:#fff7fb;border:1px solid #f3c6dc;border-radius:14px;padding:15px;margin:15px 0;">
+            ${testimonialContent(item)}
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+              <button type="button"
+                onclick="updateTestimonialStatus('${item.id}', 'approved')"
+                style="background:#65b985;color:white;border:0;border-radius:9px;padding:10px 15px;">
+                ✓ SETUJUI
+              </button>
+              <button type="button"
+                onclick="updateTestimonialStatus('${item.id}', 'rejected')"
+                style="background:#e78b9b;color:white;border:0;border-radius:9px;padding:10px 15px;">
+                ✕ TOLAK
+              </button>
+            </div>
+          </div>
+        `).join('')
       : '';
 
     approvedList.innerHTML = approved.length
-      ? approved.map(item =>
-          makeCard(item, 'SEMBUNYIKAN', 'rejected', '#e78b9b')
-        ).join('')
+      ? approved.map(item => `
+          <div style="background:#fff7fb;border:1px solid #f3c6dc;border-radius:14px;padding:15px;margin:15px 0;">
+            ${testimonialContent(item)}
+            <button type="button"
+              onclick="updateTestimonialStatus('${item.id}', 'rejected')"
+              style="background:#e78b9b;color:white;border:0;border-radius:9px;padding:10px 15px;margin-top:12px;">
+              SEMBUNYIKAN
+            </button>
+          </div>
+        `).join('')
       : '<p>Belum ada testimoni yang disetujui.</p>';
 
   } catch (error) {
@@ -1459,6 +1473,7 @@ async function loadTestimonialsForAdmin() {
     approvedList.innerHTML = '<p>Gagal memuat testimoni yang disetujui.</p>';
   }
 }
+
 
 
 function escapeTestimonialText(value) {
