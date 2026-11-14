@@ -551,7 +551,14 @@
       </a>
 
       <a href="#keranjang" class="nav-item cart-menu"
-   onclick="if (cart.length === 0) return false; showPage('keranjang'); return false;">
+   onclick="
+     if (cart.length === 0) {
+       alert('Keranjangmu masih kosong 🛒 Yuk, pilih produk favoritmu terlebih dahulu!');
+       return false;
+     }
+     showPage('keranjang');
+     return false;
+   ">
   <img src="keranjang.PNG" alt="Keranjang"> Keranjang
 </a>
 
