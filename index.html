@@ -550,9 +550,10 @@
         <img src="testimoni.PNG" alt="Testimoni"> Testimoni
       </a>
 
-      <a href="#keranjang" class="nav-item cart-menu" onclick="showPage('keranjang')">
-        <img src="keranjang.PNG" alt="Keranjang"> Keranjang
-      </a>
+      <a href="#keranjang" class="nav-item cart-menu"
+   onclick="if (cart.length === 0) return false; showPage('keranjang'); return false;">
+  <img src="keranjang.PNG" alt="Keranjang"> Keranjang
+</a>
 
       <a href="#leaderboard" class="nav-item" onclick="showPage('leaderboard')">
         <img src="leaderboard.PNG" alt="Leaderboard"> Leaderboard
@@ -825,6 +826,15 @@ try {
 /* NAVIGASI */
 
 function showPage(pageId) {
+
+  // Keranjang tidak bisa dibuka jika masih kosong
+  if (pageId === "keranjang" && cart.length === 0) {
+    return;
+  }
+
+  document.querySelectorAll(".store-page").forEach(page => {
+    page.classList.remove("active");
+  });
   document.querySelectorAll(".store-page").forEach(page => {
     page.classList.remove("active");
   });
