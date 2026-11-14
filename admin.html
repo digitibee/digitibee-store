@@ -333,6 +333,13 @@ body::before {
       </button>
     </section>
 
+        <section class="menu-card">
+      <h3>PENGATURAN KONTAK</h3>
+      <button onclick="openMenuPage('contactSettingsPage')">
+        KLIK DI SINI
+      </button>
+    </section>
+
     <!-- LOGOUT HANYA DI DASHBOARD -->
     <section class="logout-area">
       <button onclick="logoutAdmin()">LOGOUT</button>
@@ -482,6 +489,52 @@ body::before {
 
   </div>
 
+  <!-- HALAMAN PENGATURAN KONTAK -->
+<div id="contactSettingsPage" style="display:none;">
+
+  <button class="page-button" onclick="backToDashboard()">
+    ← KEMBALI KE DASHBOARD
+  </button>
+
+  <section class="menu-card">
+    <h3>PENGATURAN KONTAK DIGITIBEE 💗</h3>
+
+    <div class="form-group">
+      <label>Link Grup WhatsApp</label>
+      <input
+        type="url"
+        id="groupWhatsapp"
+        placeholder="https://chat.whatsapp.com/..."
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Link WhatsApp Admin</label>
+      <input
+        type="url"
+        id="adminWhatsapp"
+        placeholder="https://wa.me/..."
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Link Instagram Digitibee</label>
+      <input
+        type="url"
+        id="adminInstagram"
+        placeholder="https://instagram.com/..."
+      >
+    </div>
+
+    <button onclick="saveContactSettings()">
+      SIMPAN PENGATURAN
+    </button>
+
+    <p id="contactSettingsMessage" class="message"></p>
+
+  </section>
+</div>
+  
 </main>
 
 <footer id="adminFooter" style="display:none;">
@@ -691,6 +744,10 @@ function openMenuPage(pageId) {
   if (pageId === 'productPage') {
     loadProducts();
   }
+
+  if (pageId === 'contactSettingsPage') {
+  loadContactSettings();
+}
 }
 
 function backToDashboard() {
@@ -1222,9 +1279,87 @@ async function saveProduct() {
   }
 }
 
+/* 14. PENGATURAN KONTAK DIGITIBEE */
 
+async function loadContactSettings() {
+  const message = document.getElementById('contactSettingsMessage');
+
+  message.textContent = 'Memuat pengaturan...';
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('digitibee_settings')
+      .select('setting_key, setting_value');
+
+    if (error) throw error;
+
+    const settings = {};
+    (data || []).forEach(item => {
+      settings[item.setting_key] = item.setting_value || '';
+    });
+
+    document.getElementById('groupWhatsapp').value =
+      settings.group_whatsapp || '';
+
+    document.getElementById('adminWhatsapp').value =
+      settings.admin_whatsapp || '';
+
+    document.getElementById('adminInstagram').value =
+      settings.admin_instagram || '';
+
+    message.textContent = '';
+
+  } catch (error) {
+    console.error('Load contact settings:', error);
+    message.textContent = 'Gagal memuat: ' + error.message;
+  }
+}
+
+async function saveContactSettings() {
+  const message = document.getElementById('contactSettingsMessage');
+
+  const settings = [
+    {
+      setting_key: 'group_whatsapp',
+      setting_value: document.getElementById('groupWhatsapp').value.trim()
+    },
+    {
+      setting_key: 'admin_whatsapp',
+      setting_value: document.getElementById('adminWhatsapp').value.trim()
+    },
+    {
+      setting_key: 'admin_instagram',
+      setting_value: document.getElementById('adminInstagram').value.trim()
+    }
+  ];
+
+  for (const item of settings) {
+    if (item.setting_value &&
+        !/^https:\/\/\S+$/i.test(item.setting_value)) {
+      message.textContent = 'Gunakan link lengkap yang diawali https://';
+      return;
+    }
+  }
+
+  message.textContent = 'Menyimpan pengaturan...';
+
+  try {
+    const { error } = await supabaseClient
+      .from('digitibee_settings')
+      .upsert(settings, { onConflict: 'setting_key' });
+
+    if (error) throw error;
+
+    message.textContent = 'Pengaturan berhasil disimpan! 💗';
+
+  } catch (error) {
+    console.error('Save contact settings:', error);
+    message.textContent = 'Gagal menyimpan: ' + error.message;
+  }
+}
+  
 /* =====================================
-   14. MULAI PERIKSA SESSION
+   15. MULAI PERIKSA SESSION
 ===================================== */
 
 checkAdminSession();
