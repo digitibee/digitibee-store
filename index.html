@@ -1387,13 +1387,12 @@ if (photo) {
     const { error: insertError } = await supabaseClient
       .from("testimonials")
       .insert([{
-        customer_initials: name,
-        location: location || null,
-        message: message,
-        rating: rating,
-        image_url: imageUrl,
-        status: "pending"
-      }]);
+  customer_initials: name,
+  location: location || null,
+  message: message,
+  image_url: imageUrl,
+  status: "pending"
+}]);
 
     if (insertError) throw insertError;
 
