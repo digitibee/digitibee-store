@@ -89,9 +89,9 @@ body::before {
     align-items: center;
     justify-content: space-around;
     gap: 8px;
-    background: #fffafd !important;
-    border: 4px solid #f4a5c5 !important;
-    border-radius: 35px;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0;
     box-shadow: none !important;
 }
 
