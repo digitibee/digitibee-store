@@ -446,7 +446,7 @@
   margin: 18px 0;
   box-shadow: 0 4px 12px rgba(210,100,150,.12);
 
-  width: 50%;
+  width: 65%;
   margin-left: auto;
   margin-right: 0;
 }
@@ -1262,57 +1262,6 @@ testimonialPhoto.addEventListener("change", function () {
   photoPreview.appendChild(image);
   photoPreview.style.display = "block";
 });
-
-  
-/* OTOMATIS BARINGKAN FOTO PORTRAIT */
-
-async function makeTestimonialLandscape(file) {
-  const image = new Image();
-  const objectUrl = URL.createObjectURL(file);
-
-  try {
-    await new Promise((resolve, reject) => {
-      image.onload = resolve;
-      image.onerror = reject;
-      image.src = objectUrl;
-    });
-
-    // Foto landscape dibiarkan seperti aslinya
-    if (image.naturalHeight <= image.naturalWidth) {
-      return file;
-    }
-
-    // Foto portrait diputar 90 derajat
-    const canvas = document.createElement('canvas');
-    canvas.width = image.naturalHeight;
-    canvas.height = image.naturalWidth;
-
-    const ctx = canvas.getContext('2d');
-
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(Math.PI / 2);
-
-    ctx.drawImage(
-      image,
-      -image.naturalWidth / 2,
-      -image.naturalHeight / 2
-    );
-
-    const blob = await new Promise(resolve => {
-      canvas.toBlob(resolve, file.type, 0.9);
-    });
-
-    if (!blob) throw new Error('Gagal mengatur foto.');
-
-    return new File([blob], file.name, {
-      type: blob.type,
-      lastModified: Date.now()
-    });
-
-  } finally {
-    URL.revokeObjectURL(objectUrl);
-  }
-}
 
 /* KIRIM TESTIMONI */
 
