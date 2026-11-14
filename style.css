@@ -81,14 +81,15 @@ body::before {
 
 .navbar-wrapper .since-label {
     display: inline-block;
-    background: #ffffff !important;
-    color: #d95791;
-    padding: 9px 28px;
-    border: 3px solid #f6b2cf !important;
-    border-radius: 30px;
+    background: transparent !important;
+    color: #a83e70;
+    padding: 8px 0;
+    border: none !important;
+    border-radius: 0;
     font-weight: bold;
+    font-size: 20px;
     margin-bottom: 12px;
-    box-shadow: 0 4px 0 #e9a0bd !important;
+    box-shadow: none !important;
 }
 
 .navbar-wrapper .navbar {
