@@ -841,39 +841,20 @@ footer {
         height: 55px;
     }
 
-/* NAVIGASI BAWAH DIGITIBEE */
-@media (max-width: 768px) {
-    .navbar-wrapper {
-        position: static !important;
-    }
+   /* PINDAHKAN MENU NAVIGASI KE BAWAH */
+body .navbar-wrapper .navbar {
+    position: fixed !important;
+    top: auto !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+    z-index: 99999 !important;
 
-    .navbar-wrapper .navbar {
-        position: fixed !important;
-        top: auto !important;
-        bottom: calc(10px + env(safe-area-inset-bottom)) !important;
-        left: 10px !important;
-        right: 10px !important;
-
-        width: auto !important;
-        max-width: 600px !important;
-        height: 75px !important;
-        min-height: 75px !important;
-        margin: 0 auto !important;
-
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        justify-content: space-around !important;
-        align-items: center !important;
-
-        z-index: 99999 !important;
-        background: #fffafd !important;
-        border: 3px solid #f4a5c5 !important;
-        border-radius: 25px !important;
-    }
-
-    body {
-        padding-bottom: 100px !important;
-    }
+    background: #fffafd !important;
+    border: 3px solid #f4a5c5 !important;
+    border-radius: 28px !important;
 }
 }
