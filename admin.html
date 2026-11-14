@@ -1373,6 +1373,92 @@ async function saveContactSettings() {
 }
   
 /* =====================================
+   14A. KELOLA TESTIMONI
+===================================== */
+
+async function loadTestimonialsForAdmin() {
+  const list = document.getElementById('adminTestimonialList');
+  const count = document.getElementById('pendingTestimonialCount');
+
+  list.innerHTML = '<p>Memuat testimoni...</p>';
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('testimonials')
+      .select('id, customer_initials, location, message, rating, image_url, created_at')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    count.textContent = (data || []).length;
+
+    if (!data || data.length === 0) {
+      list.innerHTML = '<p style="text-align:center;padding:20px;">Belum ada testimoni yang menunggu persetujuan. 💗</p>';
+      return;
+    }
+
+    list.innerHTML = data.map(item => `
+      <div style="background:#fff7fb;border:1px solid #f3c6dc;border-radius:14px;padding:15px;margin:15px 0;">
+        <h4>${escapeTestimonialText(item.customer_initials || 'Pelanggan')}</h4>
+        <p>${escapeTestimonialText(item.location || '')}</p>
+        <p>${'⭐'.repeat(Math.max(0, Math.min(5, Number(item.rating) || 0)))}</p>
+        <p>${escapeTestimonialText(item.message || '')}</p>
+        ${item.image_url ? `<img src="${escapeTestimonialAttribute(item.image_url)}" alt="Foto testimoni" style="width:100%;max-width:220px;border-radius:10px;margin:10px 0;">` : ''}
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+          <button type="button" onclick="updateTestimonialStatus('${item.id}', 'approved')" style="background:#65b985;color:white;border:0;border-radius:9px;padding:10px 15px;">
+            ✓ SETUJUI
+          </button>
+          <button type="button" onclick="updateTestimonialStatus('${item.id}', 'rejected')" style="background:#e78b9b;color:white;border:0;border-radius:9px;padding:10px 15px;">
+            ✕ TOLAK
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+  } catch (error) {
+    console.error('Load testimonials:', error);
+    list.innerHTML = '<p>Gagal memuat testimoni: ' + escapeTestimonialText(error.message) + '</p>';
+  }
+}
+
+function escapeTestimonialText(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+function escapeTestimonialAttribute(value) {
+  return escapeTestimonialText(value);
+}
+
+async function updateTestimonialStatus(id, status) {
+  const action = status === 'approved' ? 'menyetujui' : 'menolak';
+
+  if (!confirm('Yakin ingin ' + action + ' testimoni ini?')) return;
+
+  try {
+    const { error } = await supabaseClient
+      .from('testimonials')
+      .update({ status: status })
+      .eq('id', id);
+
+    if (error) throw error;
+
+    alert('Status testimoni berhasil diperbarui! 💗');
+    loadTestimonialsForAdmin();
+
+  } catch (error) {
+    console.error('Update testimonial:', error);
+    alert('Gagal memperbarui testimoni: ' + error.message);
+  }
+}
+
+/* =====================================
    15. MULAI PERIKSA SESSION
 ===================================== */
 
