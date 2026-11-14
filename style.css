@@ -79,19 +79,6 @@ body::before {
     border-radius: 25px;
 }
 
-.navbar-wrapper .since-label {
-    display: inline-block;
-    background: transparent !important;
-    color: #a83e70;
-    padding: 8px 0;
-    border: none !important;
-    border-radius: 0;
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 12px;
-    box-shadow: none !important;
-}
-
 .navbar-wrapper .navbar {
     width: 100%;
     max-width: 1000px;
