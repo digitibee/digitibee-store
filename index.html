@@ -489,15 +489,34 @@
   margin-top: 10px;
 }
 
-    /* SCROLL KHUSUS TESTIMONI PELANGGAN */
+/* AREA TESTIMONI */
+#testimoni .content-panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 10px auto !important;
+  width: 100%;
+}
+
+/* DAFTAR TESTIMONI MEMANJANG */
 #testimonialList {
-  max-height: 400px;
+  height: 55vh;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  padding: 5px 10px;
-  scrollbar-width: thin;
-  scrollbar-color: #e9a5c4 #fff0f7;
+  padding: 10px;
+}
+
+/* FOTO DI SISI KANAN */
+#testimoni .testimonial-photo {
+  display: block;
+  width: 110px;
+  height: 110px;
+  max-height: 110px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin: 10px 0 10px auto;
 }
     
   </style>
