@@ -501,7 +501,8 @@
 
 /* DAFTAR TESTIMONI MEMANJANG */
 #testimonialList {
-  height: 55vh;
+  height: 68vh;
+  min-height: 68vh;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -511,11 +512,12 @@
 /* FOTO DI SISI KANAN */
 #testimoni .testimonial-photo {
   display: block;
-  width: 110px;
-  height: 110px;
-  max-height: 110px;
-  object-fit: cover;
-  border-radius: 15px;
+  width: auto;
+  max-width: 130px;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 12px;
   margin: 10px 0 10px auto;
 }
     
