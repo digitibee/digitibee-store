@@ -461,19 +461,30 @@ body::before {
 
   </div>
 
-  <!-- HALAMAN TESTIMONI -->
-  <div id="testimonialPage" style="display:none;">
+  
+<!-- HALAMAN TESTIMONI -->
+<div id="testimonialPage" style="display:none;">
 
-    <button class="page-button" onclick="backToDashboard()">
-      ← KEMBALI KE DASHBOARD
-    </button>
+  <button class="page-button" type="button" onclick="backToDashboard()">
+    ← KEMBALI KE DASHBOARD
+  </button>
 
-    <section class="menu-card">
-      <h3>TESTIMONI</h3>
-      <p>Halaman pengelolaan testimoni akan dibuat pada tahap berikutnya.</p>
-    </section>
+  <section class="menu-card">
+    <h3>KELOLA TESTIMONI</h3>
+    <p>Periksa testimoni pelanggan sebelum ditampilkan di halaman toko.</p>
 
-  </div>
+    <div style="margin:15px 0; padding:15px; background:#fff0f6; border-radius:12px;">
+      <strong>Testimoni Menunggu Persetujuan</strong>
+      <h2 id="pendingTestimonialCount" style="color:#d85b91; margin:8px 0;">0</h2>
+      <small>Jumlah testimoni yang belum disetujui</small>
+    </div>
+
+    <div id="adminTestimonialList">
+      <p>Memuat daftar testimoni...</p>
+    </div>
+  </section>
+
+</div>
 
   <!-- HALAMAN LEADERBOARD -->
   <div id="leaderboardPage" style="display:none;">
@@ -742,12 +753,15 @@ function openMenuPage(pageId) {
   target.style.display = 'block';
 
   if (pageId === 'productPage') {
-    loadProducts();
-  }
-
-  if (pageId === 'contactSettingsPage') {
-  loadContactSettings();
+  loadProducts();
 }
+
+if (pageId === 'testimonialPage') {
+  loadTestimonialsForAdmin();
+}
+
+if (pageId === 'contactSettingsPage') {
+  loadContactSettings();
 }
 
 function backToDashboard() {
