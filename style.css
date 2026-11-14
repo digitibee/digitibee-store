@@ -360,7 +360,7 @@ body::before {
     background: transparent;
     border: none;
     color: #df5599;
-    font-size: 19px;
+    font-size: 24px;
     font-weight: bold;
     text-decoration: underline;
     text-underline-offset: 5px;
@@ -661,7 +661,7 @@ footer {
     }
 
     .navbar-wrapper .since-label {
-        padding: 9px 28px;
+        padding: 11px 28px;
     }
 
    .navbar-wrapper .since-label {
