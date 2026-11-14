@@ -843,7 +843,7 @@ footer {
 
    /* KHUSUS JUDUL HALAMAN ADMIN / KONTAK */
 #admin .page-heading h2 {
-    font-size: 22px !important;
-    line-height: 1.4;
+    font-size: 15px !important;
+    line-height: 1.2;
 }
 }
