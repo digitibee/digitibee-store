@@ -840,4 +840,10 @@ footer {
         width: 55px;
         height: 55px;
     }
+
+   /* KHUSUS JUDUL HALAMAN ADMIN / KONTAK */
+#admin .page-heading h2 {
+    font-size: 22px !important;
+    line-height: 1.4;
+}
 }
