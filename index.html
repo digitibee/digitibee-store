@@ -527,7 +527,7 @@
 
         /* KHUSUS JUDUL KONTAK */
     #admin .page-heading h2 {
-      font-size: 15px !important;
+      font-size: 18px !important;
       line-height: 1.4 !important;
     }
     
@@ -678,16 +678,6 @@
               placeholder="Ceritakan pengalaman manismu di Digitibee..."
               rows="4" maxlength="1000" required></textarea>
 
-            <label for="testimonialRating">Penilaianmu</label>
-            <select id="testimonialRating" required>
-              <option value="">Pilih penilaian</option>
-              <option value="5">⭐⭐⭐⭐⭐ Sangat puas</option>
-              <option value="4">⭐⭐⭐⭐ Puas</option>
-              <option value="3">⭐⭐⭐ Cukup puas</option>
-              <option value="2">⭐⭐ Kurang puas</option>
-              <option value="1">⭐ Tidak puas</option>
-            </select>
-
             <div class="chat-bottom">
               <div class="chat-attachment">
                 <label for="testimonialPhoto" class="photo-upload">+</label>
@@ -778,7 +768,7 @@
       <div class="contact-icon">📸</div>
       <div>
         <h3>Instagram Digitibee</h3>
-        <p>Kunjungi akun Instagram kami untuk melihat testimoni →</p>
+        <p>Kunjungi akun Instagram untuk melihat testimoni →</p>
       </div>
     </a>
 
@@ -788,8 +778,8 @@
       target="_blank" rel="noopener noreferrer">
       <div class="contact-icon">💬</div>
       <div>
-        <h3>WhatsApp Admin</h3>
-        <p>Hubungi kami melalui WhatsApp →</p>
+        <h3>Admin Digitibee</h3>
+        <p>Hubungi admin melalui WhatsApp →</p>
       </div>
     </a>
 
@@ -799,8 +789,8 @@
       target="_blank" rel="noopener noreferrer">
       <div class="contact-icon">👥</div>
       <div>
-        <h3>Grup WhatsApp Digitibee</h3>
-        <p>Yuk gabung komunitas Digitibee! →</p>
+        <h3>Grup Digitibee </h3>
+        <p>Gabung grup untuk melihat info! →</p>
       </div>
     </a>
 
@@ -914,9 +904,9 @@ async function loadProducts() {
       label.className = "availability-label";
 
       const labels = {
-        ready_stock: "READY STOCK",
-        pre_order: "PRE-ORDER",
-        sold_out: "SOLD OUT"
+        ready_stock: "ready stock",
+        pre_order: "pre-ordee",
+        sold_out: "sold out"
       };
 
       label.textContent = labels[availability] || availability;
@@ -1181,11 +1171,6 @@ async function loadTestimonials() {
         bubble.appendChild(image);
       }
 
-      const stars = document.createElement("div");
-      const rating = Math.min(5, Math.max(0, Number(item.rating) || 0));
-      stars.textContent = "⭐".repeat(rating);
-      bubble.appendChild(stars);
-
       const message = document.createElement("p");
       message.className = "testimonial-message";
       message.textContent = item.message || "";
@@ -1429,7 +1414,7 @@ async function loadLeaderboard() {
 
     if (!data || data.length === 0) {
       container.innerHTML =
-        '<p class="empty-message">Belum ada data leaderboard.</p>';
+        '<p class="empty-message">Belum ada data leaderboard</p>';
       return;
     }
 
