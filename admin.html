@@ -1445,6 +1445,7 @@ async function loadTestimonialsForAdmin() {
           makeCard(item, '✓ SETUJUI', 'approved', '#65b985') +
           makeCard(item, '✕ TOLAK', 'rejected', '#e78b9b')
         ).join('')
+      : '<p>Belum ada testimoni yang menunggu persetujuan. 💗</p>';
 
     approvedList.innerHTML = approved.length
       ? approved.map(item =>
