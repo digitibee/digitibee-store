@@ -1273,14 +1273,13 @@ document.getElementById("testimonialForm")
   const name = document.getElementById("testimonialName").value.trim();
   const location = document.getElementById("testimonialLocation").value.trim();
   const message = document.getElementById("testimonialMessage").value.trim();
-  const rating = Number(document.getElementById("testimonialRating").value);
   const photo = document.getElementById("testimonialPhoto").files[0];
 
   const button = document.getElementById("sendStoryButton");
   const status = document.getElementById("testimonialStatus");
 
-  if (!name || !message || !rating) {
-    alert("Lengkapi nama, pesan, dan penilaian terlebih dahulu.");
+  if (!name || !message) {
+  alert("Lengkapi nama dan pesan terlebih dahulu.");
     return;
   }
 
@@ -1305,7 +1304,7 @@ document.getElementById("testimonialForm")
 
     
 if (photo) {
-  const landscapePhoto = await makeTestimonialLandscape(photo);
+  const landscapePhoto = photo;
 
   const extension = landscapePhoto.type
     .split("/")[1].replace("jpeg", "jpg");
