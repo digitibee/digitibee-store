@@ -840,21 +840,4 @@ footer {
         width: 55px;
         height: 55px;
     }
-
-   /* PINDAHKAN MENU NAVIGASI KE BAWAH */
-body .navbar-wrapper .navbar {
-    position: fixed !important;
-    top: auto !important;
-    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
-    left: 10px !important;
-    right: 10px !important;
-    width: auto !important;
-    max-width: 600px !important;
-    margin: 0 auto !important;
-    z-index: 99999 !important;
-
-    background: #fffafd !important;
-    border: 3px solid #f4a5c5 !important;
-    border-radius: 28px !important;
-}
 }
