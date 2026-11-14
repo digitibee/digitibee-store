@@ -787,60 +787,6 @@ function showPage(pageId) {
   if (pageId === "testimoni") loadTestimonials();
   if (pageId === "keranjang") renderCart();
   if (pageId === "leaderboard") loadLeaderboard();
-  if (pageId === "admin") loadContactLinks();
-}
-
-    
-/* MEMUAT LINK KONTAK DARI SUPABASE */
-
-async function loadContactLinks() {
-  const { data, error } = await supabaseClient
-    .from("digitibee_settings")
-    .select("setting_key, setting_value")
-    .in("setting_key", [
-      "group_whatsapp",
-      "admin_whatsapp",
-      "admin_instagram"
-    ]);
-
-  if (error) {
-    console.error("Gagal memuat link kontak:", error);
-    return;
-  }
-
-  const settings = {};
-
-  (data || []).forEach(item => {
-    settings[item.setting_key] = item.setting_value || "";
-  });
-
-  const links = [
-    {
-      id: "groupWhatsappLink",
-      url: settings.group_whatsapp
-    },
-    {
-      id: "adminWhatsappLink",
-      url: settings.admin_whatsapp
-    },
-    {
-      id: "adminInstagramLink",
-      url: settings.admin_instagram
-    }
-  ];
-
-  links.forEach(item => {
-    const element = document.getElementById(item.id);
-
-    if (!element) return;
-
-    if (item.url && /^https:\/\/\S+$/i.test(item.url)) {
-      element.href = item.url;
-      element.style.display = "flex";
-    } else {
-      element.style.display = "none";
-    }
-  });
 }
 
 function formatRupiah(value) {
