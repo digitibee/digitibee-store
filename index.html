@@ -518,15 +518,22 @@
 }
 
 /* FOTO DI SISI KANAN */
-  #testimoni .testimonial-photo {
+ #testimoni .testimonial-photo {
   display: block;
   width: 100%;
-  max-width: 100%;
-  height: 420px;
+  max-width: 220px;
+  height: auto;
+  max-height: 260px;
+  object-fit: contain;
+  border-radius: 15px;
+  margin: 10px 0 10px auto;
+}
+
+  #testimoni .testimonial-photo.portrait {
+  width: 220px;
+  height: 260px;
   object-fit: cover;
   object-position: center;
-  border-radius: 15px;
-  margin: 10px auto;
 }
 
         /* KHUSUS JUDUL KONTAK */
@@ -1145,7 +1152,7 @@ function closeTestimonialForm() {
   document.getElementById("testimonialForm").hidden = true;
   document.getElementById("testimonialList").hidden = false;
 }
-
+  
 async function loadTestimonials() {
   const container = document.getElementById("testimonialList");
 
@@ -1190,13 +1197,20 @@ async function loadTestimonials() {
       bubble.appendChild(header);
 
       if (item.image_url) {
-        const image = document.createElement("img");
-        image.className = "testimonial-photo";
-        image.src = item.image_url;
-        image.alt = "Foto testimoni pelanggan";
-        image.loading = "lazy";
-        bubble.appendChild(image);
-      }
+  const image = document.createElement("img");
+  image.className = "testimonial-photo";
+  image.src = item.image_url;
+  image.alt = "Foto testimoni pelanggan";
+  image.loading = "lazy";
+
+  image.onload = function() {
+    if (image.naturalHeight > image.naturalWidth) {
+      image.classList.add("portrait");
+    }
+  };
+
+  bubble.appendChild(image);
+}
 
       const message = document.createElement("p");
       message.className = "testimonial-message";
