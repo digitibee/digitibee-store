@@ -664,6 +664,10 @@ footer {
         padding: 9px 28px;
     }
 
+   .navbar-wrapper .since-label {
+    font-size: 10px !important;
+}
+
     .nav-item {
         font-size: 10px;
     }
