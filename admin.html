@@ -1317,25 +1317,37 @@ async function saveProduct() {
   }
 
   
+
 async function deleteProduct() {
   const productId = editingProductId;
   const message = document.getElementById('productMessage');
 
   if (!productId) {
-    message.textContent = 'Pilih produk yang akan dihapus melalui EDIT PRODUK.';
+    message.textContent = 'Pilih produk yang akan dihapus.';
     return;
   }
 
-  const productName = document.getElementById('productName').value.trim();
+  const productName =
+    document.getElementById('productName').value.trim();
 
   if (!confirm(
-    `Yakin ingin menghapus produk "${productName}" beserta seluruh variasinya?`
+    `Yakin ingin menghapus "${productName}" beserta seluruh variasi dan fotonya?`
   )) return;
 
   message.textContent = 'Sedang menghapus produk...';
 
   try {
-    // Hapus seluruh variasi produk
+    // Ambil alamat foto produk
+    const { data: product, error: fetchError } =
+      await supabaseClient
+        .from('products')
+        .select('image_url')
+        .eq('id', productId)
+        .single();
+
+    if (fetchError) throw fetchError;
+
+    // Hapus seluruh variasi
     const { error: variantError } = await supabaseClient
       .from('product_variants')
       .delete()
@@ -1351,20 +1363,52 @@ async function deleteProduct() {
 
     if (productError) throw productError;
 
-    alert('Produk dan seluruh variasinya berhasil dihapus! 💗');
+    // Hapus foto dari Storage
+    let photoWarning = '';
+
+    if (product.image_url) {
+      const marker =
+        '/storage/v1/object/public/product-images/';
+
+      const markerIndex = product.image_url.indexOf(marker);
+
+      if (markerIndex !== -1) {
+        const imagePath = decodeURIComponent(
+          product.image_url
+            .substring(markerIndex + marker.length)
+            .split('?')[0]
+        );
+
+        const { error: imageError } = await supabaseClient
+          .storage
+          .from('product-images')
+          .remove([imagePath]);
+
+        if (imageError) {
+          photoWarning =
+            ' Produk terhapus, tetapi foto lama gagal dihapus: ' +
+            imageError.message;
+        }
+      }
+    }
 
     editingProductId = null;
+
     document.getElementById('addProductPage').style.display = 'none';
     document.getElementById('productPage').style.display = 'block';
 
     await loadProducts();
 
+    alert(
+      'Produk dan seluruh variasinya berhasil dihapus!' +
+      photoWarning
+    );
+
   } catch (error) {
     console.error('Delete product error:', error);
-    message.textContent = 'Gagal menghapus produk: ' + error.message;
+    message.textContent =
+      'Gagal menghapus produk: ' + error.message;
   }
-}
-
 }
 
 /* 14. PENGATURAN KONTAK DIGITIBEE */
