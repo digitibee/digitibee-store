@@ -1264,14 +1264,15 @@ function openProductModal(product, variants) {
     option.className = "modal-variant" + (index === 0 ? " selected" : "");
 
     option.innerHTML = `
-      <div>
-        <strong>${variant.name}</strong>
-        <p>${variant.duration || "Tanpa Durasi"}</p>
-        <p>${formatRupiah(variant.price)} · Stok ${variant.stock}</p>
-      </div>
-      <input type="radio" name="modalVariant"
-        ${index === 0 ? "checked" : ""}>
-    `;
+  <div class="variant-left">
+    <input type="radio" name="modalVariant" ${index === 0 ? "checked" : ""}>
+    <div>
+      <strong>${variant.name} ${variant.duration || ""}</strong>
+      <p>${variant.stock} tersedia</p>
+    </div>
+  </div>
+  <strong class="variant-price">${formatRupiah(variant.price)}</strong>
+`;
 
     option.querySelector("input").addEventListener("change", () => {
       modalSelectedVariant = variant;
