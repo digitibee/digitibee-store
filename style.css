@@ -261,7 +261,7 @@ body::before {
 .products {
     text-align: center;
     padding: 55px 30px;
-    background: transparent;
+    background: transparent !important;
     border-radius: 30px;
     margin: 20px 0 40px;
 }
