@@ -1315,6 +1315,56 @@ async function saveProduct() {
     message.textContent =
       'Gagal menyimpan produk: ' + error.message;
   }
+
+  
+async function deleteProduct() {
+  const productId = editingProductId;
+  const message = document.getElementById('productMessage');
+
+  if (!productId) {
+    message.textContent = 'Pilih produk yang akan dihapus melalui EDIT PRODUK.';
+    return;
+  }
+
+  const productName = document.getElementById('productName').value.trim();
+
+  if (!confirm(
+    `Yakin ingin menghapus produk "${productName}" beserta seluruh variasinya?`
+  )) return;
+
+  message.textContent = 'Sedang menghapus produk...';
+
+  try {
+    // Hapus seluruh variasi produk
+    const { error: variantError } = await supabaseClient
+      .from('product_variants')
+      .delete()
+      .eq('product_id', productId);
+
+    if (variantError) throw variantError;
+
+    // Hapus produk
+    const { error: productError } = await supabaseClient
+      .from('products')
+      .delete()
+      .eq('id', productId);
+
+    if (productError) throw productError;
+
+    alert('Produk dan seluruh variasinya berhasil dihapus! 💗');
+
+    editingProductId = null;
+    document.getElementById('addProductPage').style.display = 'none';
+    document.getElementById('productPage').style.display = 'block';
+
+    await loadProducts();
+
+  } catch (error) {
+    console.error('Delete product error:', error);
+    message.textContent = 'Gagal menghapus produk: ' + error.message;
+  }
+}
+
 }
 
 /* 14. PENGATURAN KONTAK DIGITIBEE */
