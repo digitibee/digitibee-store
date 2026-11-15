@@ -908,4 +908,34 @@ footer {
     font-size: 15px !important;
     line-height: 1.2;
 }
+
+   /* UKURAN PRICELIST DI HP */
+@media (max-width: 600px) {
+  .catalog-search {
+    padding: 7px 13px;
+    gap: 8px;
+    margin-bottom: 12px;
+    border-width: 2px;
+  }
+
+  .catalog-search span {
+    font-size: 18px;
+  }
+
+  .catalog-search input {
+    font-size: 13px;
+  }
+
+  .category-filters {
+    gap: 8px;
+    padding: 3px 0 8px;
+    margin-bottom: 8px;
+  }
+
+  .category-btn {
+    padding: 8px 15px;
+    font-size: 12px;
+    border-width: 2px;
+  }
+}
 }
