@@ -1322,11 +1322,10 @@ async function saveProduct() {
         .remove([uploadedFilePath]);
     }
 
-    message.textContent =
+        message.textContent =
       'Gagal menyimpan produk: ' + error.message;
   }
-
-  
+}
 
 async function deleteProduct() {
   const productId = editingProductId;
