@@ -1206,10 +1206,17 @@ function openProductModal(product, variants) {
     </div>
 
     <div class="modal-section">
-      <label for="modalNote">Catatan tambahan</label>
-      <textarea id="modalNote"
-        placeholder="Tulis catatan jika ada..."></textarea>
-    </div>
+  <label for="modalNote"
+    style="display:block; margin-bottom:10px;">
+    Catatan Tambahan (Opsional):
+  </label>
+
+  <textarea
+    id="modalNote"
+    placeholder="Tuliskan email / catatan lain jika diperlukan"
+    style="display:block; width:100%; min-height:75px; box-sizing:border-box;"
+  ></textarea>
+</div>
 
     <div class="modal-footer">
       <div>
