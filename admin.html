@@ -440,10 +440,14 @@ body::before {
   batal
 </button>
 
-<button onclick="deleteProduct()" class="delete-product-btn">
-  hapus
+<button
+  id="deleteProductButton"
+  onclick="deleteProduct()"
+  class="delete-product-btn"
+  style="display:none;"
+>
+  HAPUS PRODUK
 </button>
-
 
       <p id="productMessage" class="message"></p>
 
@@ -809,6 +813,9 @@ function openProductPage() {
 function resetProductForm() {
   editingProductId = null;
 
+      document.getElementById('deleteProductButton').style.display =
+  'none';
+
   document.getElementById('productFormTitle').textContent =
     'TAMBAH PRODUK';
 
@@ -1051,6 +1058,9 @@ async function editProduct(productId) {
 
     document.getElementById('productFormTitle').textContent =
       'EDIT PRODUK';
+
+    document.getElementById('deleteProductButton').style.display =
+  'inline-block';
 
     document.getElementById('productName').value = product.name || '';
     document.getElementById('productDescription').value =
