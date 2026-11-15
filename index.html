@@ -101,6 +101,7 @@
 }
 
 .product-modal-header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,18 +109,21 @@
   border-bottom: 2px solid #ffd6e7;
 }
 
-.product-modal-header button {
-  border: none;
-  background: transparent;
-  color: #ed5a9c;
-  font-size: 16px;
-  font-weight: bold;
+.product-modal-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  color: #59152f;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
 }
 
-.product-modal-header h2 {
-  color: #59152f;
-  font-size: 18px;
-  text-align: center;
+.product-modal-header button {
+  position: relative;
+  z-index: 1;
 }
 
     /* ISI POPUP PRODUK */
@@ -1210,9 +1214,6 @@ function openProductModal(product, variants) {
   title.textContent = product.name;
 
   content.innerHTML = `
-    <div class="modal-product-title">
-  <h3>${product.name}</h3>
-</div>
 
 <div class="modal-product-info">
   ${product.image_url
