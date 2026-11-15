@@ -422,14 +422,11 @@ body::before {
         + TAMBAH VARIASI
       </button>
 
-      <div class="form-group">
-        <label>Ketersediaan</label>
-        <select id="productAvailability">
-          <option value="ready_stock">READY STOCK</option>
-          <option value="pre_order">PRE-ORDER</option>
-          <option value="sold_out">SOLD OUT</option>
-        </select>
-      </div>
+      <input
+  type="hidden"
+  id="productAvailability"
+  value="ready_stock"
+>
 
       
 <button onclick="saveProduct()">
