@@ -1562,10 +1562,8 @@ priceInfo.appendChild(priceLabel);
 priceInfo.appendChild(priceValue);
 priceArea.appendChild(priceInfo);
 
-card.appendChild(priceArea);
-
 const chooseButton = document.createElement("button");
-chooseButton.className = "pink-button";
+chooseButton.className = "catalog-choose-button";
 chooseButton.textContent =
   availability === "sold_out" ? "STOK HABIS" : "PILIH";
 
@@ -1575,7 +1573,8 @@ chooseButton.addEventListener("click", () => {
   openProductModal(product, variants);
 });
 
-card.appendChild(chooseButton);
+priceArea.appendChild(chooseButton);
+card.appendChild(priceArea);
 container.appendChild(card);
     }
   } catch (error) {
