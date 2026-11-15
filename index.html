@@ -970,6 +970,16 @@ let catalogSearchText = "";
   function filterCatalogProducts() {
   loadProducts();
 }
+
+  function showAllCatalogProducts() {
+  selectedCategory = "all";
+  catalogSearchText = "";
+
+  document.getElementById("catalogSearch").value = "";
+
+  renderCategoryFilters();
+  loadProducts();
+}
   
 async function loadProducts() {
   const container = document.getElementById("catalogList");
@@ -1006,9 +1016,18 @@ const filteredProducts = allCatalogProducts.filter(product => {
 container.innerHTML = "";
 
     if (filteredProducts.length === 0) {
-      container.innerHTML = '<p class="empty-message">Belum ada produk tersedia.</p>';
-      return;
-    }
+  container.innerHTML = `
+    <div class="catalog-empty-state">
+      <div class="catalog-empty-icon">🔍</div>
+      <h3>Aplikasi tidak ditemukan</h3>
+      <p>Coba gunakan kata kunci lain atau pilih tab Semua.</p>
+      <button onclick="showAllCatalogProducts()">
+        Tampilkan Semua
+      </button>
+    </div>
+  `;
+  return;
+}
 
     for (const product of filteredProducts) {
       const { data: variants, error: variantError } = await supabaseClient
