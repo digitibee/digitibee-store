@@ -1035,7 +1035,7 @@ footer {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 10px;
+    gap: 8px;
 }
 
 /* KARTU VARIAN */
@@ -1046,8 +1046,8 @@ footer {
     justify-content: space-between;
     gap: 10px;
     width: 100%;
-    min-height: 76px;
-    padding: 15px 16px;
+    min-height: 60px;
+    padding: 12px 16px;
     margin: 0;
     box-sizing: border-box;
     border: 2px solid #f0e5eb;
