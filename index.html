@@ -928,9 +928,22 @@ let catalogSearchText = "";
 
   container.innerHTML = "";
 
+  const orderedNames = [
+    "Streaming",
+    "Editing",
+    "Music",
+    "Education",
+    "Produktivitas",
+    "Other"
+  ];
+
+  const orderedCategories = orderedNames
+    .map(name => catalogCategories.find(category => category.name === name))
+    .filter(Boolean);
+
   const categories = [
     { id: "all", name: "Semua" },
-    ...catalogCategories
+    ...orderedCategories
   ];
 
   categories.forEach(category => {
