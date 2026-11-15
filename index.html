@@ -1514,9 +1514,21 @@ container.innerHTML = "";
         card.appendChild(img);
       }
 
-      const title = document.createElement("h3");
-      title.textContent = product.name;
-      card.appendChild(title);
+      const category = catalogCategories.find(
+  item => String(item.id) === String(product.category_id)
+);
+
+if (category) {
+  const categoryLabel = document.createElement("div");
+  categoryLabel.className = "catalog-category-label";
+  categoryLabel.textContent = category.name;
+  card.appendChild(categoryLabel);
+}
+
+const title = document.createElement("h3");
+title.className = "catalog-product-name";
+title.textContent = product.name;
+card.appendChild(title);
 
       const description = document.createElement("p");
       description.textContent = product.description || "";
