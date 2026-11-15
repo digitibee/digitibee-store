@@ -1070,4 +1070,81 @@ footer {
     font-size: 17px;
     white-space: nowrap;
 }
+
+   /* PENYESUAIAN PILIH PAKET / VARIAN */
+
+.variant-heading strong {
+    font-size: 15px;
+}
+
+.variant-required {
+    font-size: 11px;
+    padding: 4px 9px;
+}
+
+.modal-variant {
+    padding: 18px;
+    min-height: 85px;
+}
+
+.variant-left {
+    flex: 1;
+    min-width: 0;
+    align-items: center;
+}
+
+.variant-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.variant-info strong {
+    font-size: 15px;
+    color: #4d1934;
+}
+
+.variant-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #ed70b5;
+}
+
+.variant-price {
+    font-size: 16px;
+    color: #ed70b5;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+   @media (max-width: 600px) {
+    .modal-variant {
+        padding: 15px 16px;
+        min-height: 76px;
+        margin: 10px 0;
+        border-radius: 20px;
+    }
+
+    .variant-left {
+        gap: 10px;
+    }
+
+    .variant-left input {
+        width: 20px;
+        height: 20px;
+    }
+
+    .variant-info strong {
+        font-size: 14px;
+    }
+
+    .variant-info p {
+        font-size: 12px;
+    }
+
+    .variant-price {
+        font-size: 15px;
+    }
+}
 }
