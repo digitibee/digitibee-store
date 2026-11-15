@@ -937,5 +937,43 @@ footer {
     font-size: 12px;
     border-width: 2px;
   }
+
+   /* EMPTY STATE PRICELIST DIGITIBEE */
+.catalog-empty-state {
+  background: #fff;
+  border: 2px dashed #f5b5d0;
+  border-radius: 25px;
+  padding: 45px 20px;
+  margin: 25px 0;
+  text-align: center;
+  color: #754b59;
+}
+
+.catalog-empty-icon {
+  font-size: 55px;
+  margin-bottom: 20px;
+}
+
+.catalog-empty-state h3 {
+  color: #713c56;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.catalog-empty-state p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.catalog-empty-state button {
+  background: #ed5a9c;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
 }
 }
