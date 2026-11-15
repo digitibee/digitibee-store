@@ -1264,10 +1264,9 @@ function openProductModal(product, variants) {
     option.innerHTML = `
   <div class="variant-left">
     <input type="radio" name="modalVariant" ${index === 0 ? "checked" : ""}>
-    <div class="variant-info">
-      <strong>${variant.name}</strong>
-      <p>${variant.duration || "Tanpa Durasi"}</p>
-    </div>
+    <strong class="variant-name">
+      ${variant.name} ${variant.duration || ""}
+    </strong>
   </div>
   <strong class="variant-price">${formatRupiah(variant.price)}</strong>
 `;
