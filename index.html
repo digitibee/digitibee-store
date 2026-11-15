@@ -1544,13 +1544,25 @@ card.appendChild(title);
         continue;
       }
 
-const priceTitle = document.createElement("p");
 const lowestPrice = Math.min(...variants.map(v => Number(v.price)));
 
-priceTitle.textContent = "Mulai " + formatRupiah(lowestPrice);
-priceTitle.style.fontWeight = "bold";
-priceTitle.style.color = "#d95791";
-card.appendChild(priceTitle);
+const priceArea = document.createElement("div");
+priceArea.className = "catalog-price-area";
+
+const priceInfo = document.createElement("div");
+
+const priceLabel = document.createElement("small");
+priceLabel.textContent = "Mulai dari";
+
+const priceValue = document.createElement("div");
+priceValue.className = "catalog-starting-price";
+priceValue.textContent = formatRupiah(lowestPrice);
+
+priceInfo.appendChild(priceLabel);
+priceInfo.appendChild(priceValue);
+priceArea.appendChild(priceInfo);
+
+card.appendChild(priceArea);
 
 const chooseButton = document.createElement("button");
 chooseButton.className = "pink-button";
