@@ -75,6 +75,142 @@
       min-width: 0;
     }
 
+    /* POPUP DETAIL PRODUK */
+.product-modal[hidden] {
+  display: none !important;
+}
+
+.product-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(50, 20, 40, .65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.product-modal-content {
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 28px;
+}
+
+.product-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  border-bottom: 2px solid #ffd6e7;
+}
+
+.product-modal-header button {
+  border: none;
+  background: transparent;
+  color: #ed5a9c;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.product-modal-header h2 {
+  color: #59152f;
+  font-size: 18px;
+  text-align: center;
+}
+
+    /* ISI POPUP PRODUK */
+.modal-product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  margin: 18px;
+  background: #fff7fb;
+  border: 2px solid #ffdeeb;
+  border-radius: 20px;
+}
+
+.modal-product-info img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 15px;
+  background: white;
+}
+
+.modal-product-info h3 {
+  color: #59152f;
+  margin: 7px 0;
+}
+
+.modal-section {
+  padding: 0 20px 18px;
+}
+
+.modal-variant {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px;
+  margin: 10px 0;
+  border: 2px solid #f2e3eb;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.modal-variant.selected {
+  border-color: #ed5a9c;
+  background: #fff5fa;
+}
+
+.modal-variant input {
+  accent-color: #ed5a9c;
+  width: 20px;
+  height: 20px;
+}
+
+.modal-variant strong {
+  color: #ed5a9c;
+}
+
+.modal-quantity {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 10px 20px;
+  background: #fff7fb;
+  border: 1px solid #ffdeeb;
+  border-radius: 18px;
+}
+
+.modal-quantity button {
+  border: none;
+  background: #ed5a9c;
+  color: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+}
+
+.modal-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 18px;
+  background: white;
+  border-top: 2px solid #ffdeeb;
+}
+
     .catalog-card img {
       width: 100%;
       height: 145px;
@@ -721,6 +857,22 @@
       </div>
     </section>
 
+        <!-- POPUP DETAIL PRODUK -->
+    <div id="productModal" class="product-modal" hidden>
+      <div class="product-modal-content">
+
+        <div class="product-modal-header">
+          <button type="button" onclick="closeProductModal()">
+            ‹ Kembali
+          </button>
+          <h2 id="modalProductTitle"></h2>
+        </div>
+
+        <div id="modalProductContent"></div>
+
+      </div>
+    </div>
+
     <!-- TESTIMONI -->
     <section class="store-page" id="testimoni">
 
@@ -1008,6 +1160,128 @@ let catalogSearchText = "";
   renderCategoryFilters();
   loadProducts();
 }
+
+  let modalSelectedProduct = null;
+let modalSelectedVariant = null;
+let modalQuantity = 1;
+
+function closeProductModal() {
+  document.getElementById("productModal").hidden = true;
+}
+
+function openProductModal(product, variants) {
+  modalSelectedProduct = product;
+  modalSelectedVariant = variants[0];
+  modalQuantity = 1;
+
+  const modal = document.getElementById("productModal");
+  const title = document.getElementById("modalProductTitle");
+  const content = document.getElementById("modalProductContent");
+
+  title.textContent = product.name;
+
+  content.innerHTML = `
+    <div class="modal-product-info">
+      ${product.image_url
+        ? `<img src="${product.image_url}" alt="">`
+        : ""}
+      <div>
+        <h3>${product.name}</h3>
+        <p>${product.description || ""}</p>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <h3>Pilih Variasi</h3>
+      <div id="modalVariantList"></div>
+    </div>
+
+    <div class="modal-quantity">
+      <strong>Jumlah</strong>
+      <div>
+        <button type="button" id="minusQuantity">−</button>
+        <strong id="modalQuantityValue">1</strong>
+        <button type="button" id="plusQuantity">+</button>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <label for="modalNote">Catatan tambahan</label>
+      <textarea id="modalNote"
+        placeholder="Tulis catatan jika ada..."></textarea>
+    </div>
+
+    <div class="modal-footer">
+      <div>
+        <small>Subtotal</small>
+        <h3 id="modalSubtotal">${formatRupiah(modalSelectedVariant.price)}</h3>
+      </div>
+      <button type="button" class="pink-button" id="modalAddCart">
+        MASUKKAN KERANJANG
+      </button>
+    </div>
+  `;
+
+  const variantList = document.getElementById("modalVariantList");
+
+  variants.forEach((variant, index) => {
+    const option = document.createElement("label");
+    option.className = "modal-variant" + (index === 0 ? " selected" : "");
+
+    option.innerHTML = `
+      <div>
+        <strong>${variant.name}</strong>
+        <p>${variant.duration || "Tanpa Durasi"}</p>
+        <p>${formatRupiah(variant.price)} · Stok ${variant.stock}</p>
+      </div>
+      <input type="radio" name="modalVariant"
+        ${index === 0 ? "checked" : ""}>
+    `;
+
+    option.querySelector("input").addEventListener("change", () => {
+      modalSelectedVariant = variant;
+      document.querySelectorAll(".modal-variant").forEach(item =>
+        item.classList.remove("selected")
+      );
+      option.classList.add("selected");
+      updateModalSubtotal();
+    });
+
+    variantList.appendChild(option);
+  });
+
+  document.getElementById("minusQuantity").onclick = () => {
+    if (modalQuantity > 1) modalQuantity--;
+    updateModalSubtotal();
+  };
+
+  document.getElementById("plusQuantity").onclick = () => {
+    if (modalQuantity < 99) modalQuantity++;
+    updateModalSubtotal();
+  };
+
+  document.getElementById("modalAddCart").onclick = () => {
+    if (
+      product.availability_type === "ready_stock" &&
+      modalQuantity > Number(modalSelectedVariant.stock)
+    ) {
+      alert("Jumlah melebihi stok yang tersedia.");
+      return;
+    }
+
+    addToCart(product, modalSelectedVariant, modalQuantity);
+    closeProductModal();
+  };
+
+  modal.hidden = false;
+}
+
+function updateModalSubtotal() {
+  document.getElementById("modalQuantityValue").textContent = modalQuantity;
+
+  document.getElementById("modalSubtotal").textContent =
+    formatRupiah(modalSelectedVariant.price * modalQuantity);
+}
   
 async function loadProducts() {
   const container = document.getElementById("catalogList");
@@ -1102,59 +1376,27 @@ container.innerHTML = "";
         continue;
       }
 
-      const select = document.createElement("select");
+const priceTitle = document.createElement("p");
+const lowestPrice = Math.min(...variants.map(v => Number(v.price)));
 
-      variants.forEach(variant => {
-        const option = document.createElement("option");
-        option.value = variant.id;
-        option.textContent =
-          `${variant.name} - ${variant.duration || "Tanpa Durasi"} - ${formatRupiah(variant.price)} - Stok ${variant.stock}`;
-        select.appendChild(option);
-      });
+priceTitle.textContent = "Mulai " + formatRupiah(lowestPrice);
+priceTitle.style.fontWeight = "bold";
+priceTitle.style.color = "#d95791";
+card.appendChild(priceTitle);
 
-      card.appendChild(select);
+const chooseButton = document.createElement("button");
+chooseButton.className = "pink-button";
+chooseButton.textContent =
+  availability === "sold_out" ? "STOK HABIS" : "PILIH";
 
-      const quantity = document.createElement("input");
-      quantity.type = "number";
-      quantity.min = "1";
-      quantity.value = "1";
-      quantity.max = "99";
-      quantity.placeholder = "Jumlah";
-      card.appendChild(quantity);
+chooseButton.disabled = availability === "sold_out";
 
-      const addButton = document.createElement("button");
-      addButton.className = "pink-button";
-      addButton.textContent = "TAMBAH KE KERANJANG";
+chooseButton.addEventListener("click", () => {
+  openProductModal(product, variants);
+});
 
-      if (availability === "sold_out") {
-        addButton.disabled = true;
-        addButton.textContent = "STOK HABIS";
-      }
-
-      addButton.addEventListener("click", () => {
-        const variant = variants.find(v => String(v.id) === String(select.value));
-        const amount = Number(quantity.value);
-
-        if (!variant) {
-          alert("Variasi produk tidak ditemukan.");
-          return;
-        }
-
-        if (!Number.isInteger(amount) || amount < 1 || amount > 99) {
-          alert("Masukkan jumlah antara 1 sampai 99.");
-          return;
-        }
-
-        if (availability === "ready_stock" && amount > Number(variant.stock)) {
-          alert("Jumlah melebihi stok yang tersedia.");
-          return;
-        }
-
-        addToCart(product, variant, amount);
-      });
-
-      card.appendChild(addButton);
-      container.appendChild(card);
+card.appendChild(chooseButton);
+container.appendChild(card);
     }
   } catch (error) {
     console.error("Load products:", error);
