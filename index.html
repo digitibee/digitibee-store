@@ -1524,9 +1524,6 @@ container.innerHTML = "";
 
       const availability = product.availability_type || "ready_stock";
 
-      label.textContent = labels[availability] || availability;
-      card.appendChild(label);
-
       if (!variants || variants.length === 0) {
         const noVariant = document.createElement("p");
         noVariant.textContent = "Variasi belum tersedia.";
