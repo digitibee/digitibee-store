@@ -1523,14 +1523,6 @@ container.innerHTML = "";
       card.appendChild(description);
 
       const availability = product.availability_type || "ready_stock";
-      const label = document.createElement("span");
-      label.className = "availability-label";
-
-      const labels = {
-        ready_stock: "ready stock",
-        pre_order: "pre-ordee",
-        sold_out: "sold out"
-      };
 
       label.textContent = labels[availability] || availability;
       card.appendChild(label);
