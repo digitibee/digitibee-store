@@ -1094,6 +1094,34 @@ footer {
     flex-shrink: 0;
 }
 
+   /* JUMLAH PAKET PER VARIAN */
+
+.variant-qty {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+}
+
+.variant-qty button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #ed70b5;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.variant-qty span {
+    min-width: 18px;
+    text-align: center;
+    color: #4d1934;
+    font-weight: bold;
+}
+
 /* TAMPILAN HP */
 
 @media (max-width: 600px) {
