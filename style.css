@@ -938,41 +938,55 @@ footer {
     border-width: 2px;
   }
 
-   /* EMPTY STATE PRICELIST DIGITIBEE */
+   
+/* EMPTY STATE PRICELIST DIGITIBEE */
 .catalog-empty-state {
-  background: #fff;
-  border: 2px dashed #f5b5d0;
-  border-radius: 25px;
-  padding: 45px 20px;
-  margin: 25px 0;
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 145px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  color: #754b59;
+  gap: 7px;
+  padding: 16px;
+  margin: 20px auto;
+  background: white;
+  border: 2px dashed #f5b5d0;
+  border-radius: 20px;
 }
 
 .catalog-empty-icon {
-  font-size: 55px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  line-height: 1;
 }
 
-.catalog-empty-state h3 {
+.catalog-empty-content {
+  width: 100%;
+}
+
+.catalog-empty-content h3 {
   color: #713c56;
-  font-size: 20px;
-  margin-bottom: 12px;
-}
-
-.catalog-empty-state p {
   font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  margin: 5px 0;
 }
 
-.catalog-empty-state button {
+.catalog-empty-content p {
+  color: #754b59;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 4px 0 10px;
+}
+
+.catalog-empty-content button {
   background: #ed5a9c;
   color: white;
   border: none;
-  border-radius: 30px;
-  padding: 13px 25px;
-  font-size: 14px;
+  border-radius: 25px;
+  padding: 9px 19px;
+  font-size: 11px;
   font-weight: bold;
   cursor: pointer;
 }
