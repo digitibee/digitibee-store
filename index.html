@@ -1099,7 +1099,8 @@ function showPage(pageId) {
 }
 
 function formatRupiah(value) {
-  return "Rp" + Number(value || 0).toLocaleString("id-ID");
+  return "Rp" + (Number(value || 0) * 1000)
+    .toLocaleString("id-ID");
 }
 
 /* PRODUK */
