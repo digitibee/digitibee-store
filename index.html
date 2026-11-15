@@ -123,6 +123,36 @@
 }
 
     /* ISI POPUP PRODUK */
+    .modal-product-title {
+  text-align: center;
+  margin: 20px 0 5px;
+}
+
+.modal-product-title h3 {
+  color: #59152f;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.modal-description {
+  flex: 1;
+  min-width: 0;
+}
+
+.modal-description strong {
+  display: block;
+  color: #754b59;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.modal-description p {
+  color: #754b59;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
 .modal-product-info {
   display: flex;
   align-items: center;
@@ -1173,15 +1203,19 @@ function openProductModal(product, variants) {
   title.textContent = product.name;
 
   content.innerHTML = `
-    <div class="modal-product-info">
-      ${product.image_url
-        ? `<img src="${product.image_url}" alt="">`
-        : ""}
-      <div>
-        <h3>${product.name}</h3>
-        <p>${product.description || ""}</p>
-      </div>
-    </div>
+    <div class="modal-product-title">
+  <h3>${product.name}</h3>
+</div>
+
+<div class="modal-product-info">
+  ${product.image_url
+    ? `<img src="${product.image_url}" alt="">`
+    : ""}
+  <div class="modal-description">
+    <strong>Keterangan:</strong>
+    <p>${product.description || ""}</p>
+  </div>
+</div>
 
     <div class="modal-section">
 
