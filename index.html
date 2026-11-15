@@ -1182,9 +1182,8 @@ let catalogSearchText = "";
   loadProducts();
 }
 
-  let modalSelectedProduct = null;
-let modalSelectedVariant = null;
-let modalQuantity = 1;
+let modalSelectedProduct = null;
+let modalSelectedVariants = [];
 
 function closeProductModal() {
   document.getElementById("productModal").hidden = true;
@@ -1192,8 +1191,7 @@ function closeProductModal() {
 
 function openProductModal(product, variants) {
   modalSelectedProduct = product;
-  modalSelectedVariant = variants[0];
-  modalQuantity = 1;
+  modalSelectedVariants = [];
 
   const modal = document.getElementById("productModal");
   const title = document.getElementById("modalProductTitle");
@@ -1225,15 +1223,6 @@ function openProductModal(product, variants) {
 
 </div>
 
-<div class="modal-quantity">
-      <strong>Jumlah Akun</strong>
-      <div>
-        <button type="button" id="minusQuantity">−</button>
-        <strong id="modalQuantityValue">1</strong>
-        <button type="button" id="plusQuantity">+</button>
-      </div>
-    </div>
-
     <div class="modal-section">
   <label for="modalNote"
     style="display:block; margin-bottom:10px;">
@@ -1250,7 +1239,7 @@ function openProductModal(product, variants) {
     <div class="modal-footer">
       <div>
         <small>Subtotal</small>
-        <h3 id="modalSubtotal">${formatRupiah(modalSelectedVariant.price)}</h3>
+       <h3 id="modalSubtotal">Rp0</h3>
       </div>
       <button type="button" class="pink-button" id="modalAddCart">
         MASUKKAN KERANJANG
@@ -1260,62 +1249,106 @@ function openProductModal(product, variants) {
 
   const variantList = document.getElementById("modalVariantList");
 
-  variants.forEach((variant, index) => {
-    const option = document.createElement("label");
-    option.className = "modal-variant" + (index === 0 ? " selected" : "");
+  variants.forEach((variant) => {
+  const option = document.createElement("label");
+  option.className = "modal-variant";
 
-    option.innerHTML = `
-  <div class="variant-left">
-    <input type="radio" name="modalVariant" ${index === 0 ? "checked" : ""}>
-    <strong class="variant-name">
-      ${variant.name} ${variant.duration || ""}
-    </strong>
-  </div>
-`;
+  option.innerHTML = `
+    <div class="variant-left">
+      <input type="checkbox" class="variant-checkbox">
+      <strong class="variant-name">
+        ${variant.name} ${variant.duration || ""}
+      </strong>
+    </div>
+    <div class="variant-qty" hidden>
+      <button type="button" class="variant-minus">−</button>
+      <span>1</span>
+      <button type="button" class="variant-plus">+</button>
+    </div>
+  `;
 
-    option.querySelector("input").addEventListener("change", () => {
-      modalSelectedVariant = variant;
-      document.querySelectorAll(".modal-variant").forEach(item =>
-        item.classList.remove("selected")
+  const checkbox = option.querySelector(".variant-checkbox");
+  const qtyBox = option.querySelector(".variant-qty");
+  const qtyText = qtyBox.querySelector("span");
+  let quantity = 1;
+
+  checkbox.addEventListener("change", () => {
+    qtyBox.hidden = !checkbox.checked;
+    option.classList.toggle("selected", checkbox.checked);
+
+    if (checkbox.checked) {
+      modalSelectedVariants.push({ variant, quantity });
+    } else {
+      modalSelectedVariants = modalSelectedVariants.filter(
+        item => item.variant.id !== variant.id
       );
-      option.classList.add("selected");
-      updateModalSubtotal();
-    });
-
-    variantList.appendChild(option);
-  });
-
-  document.getElementById("minusQuantity").onclick = () => {
-    if (modalQuantity > 1) modalQuantity--;
-    updateModalSubtotal();
-  };
-
-  document.getElementById("plusQuantity").onclick = () => {
-    if (modalQuantity < 99) modalQuantity++;
-    updateModalSubtotal();
-  };
-
-  document.getElementById("modalAddCart").onclick = () => {
-    if (
-      product.availability_type === "ready_stock" &&
-      modalQuantity > Number(modalSelectedVariant.stock)
-    ) {
-      alert("Jumlah melebihi stok yang tersedia.");
-      return;
     }
 
-    addToCart(product, modalSelectedVariant, modalQuantity);
-    closeProductModal();
+    updateModalSubtotal();
+  });
+
+  option.querySelector(".variant-minus").onclick = () => {
+    if (quantity > 1) quantity--;
+    qtyText.textContent = quantity;
+    updateVariantQuantity(variant, quantity);
   };
+
+  option.querySelector(".variant-plus").onclick = () => {
+    if (quantity < 99) quantity++;
+    qtyText.textContent = quantity;
+    updateVariantQuantity(variant, quantity);
+  };
+
+  variantList.appendChild(option);
+});
+
+  document.getElementById("modalAddCart").onclick = () => {
+  if (modalSelectedVariants.length === 0) {
+    alert("Silakan pilih minimal satu paket.");
+    return;
+  }
+
+  for (const item of modalSelectedVariants) {
+    if (
+      product.availability_type === "ready_stock" &&
+      item.quantity > Number(item.variant.stock)
+    ) {
+      alert("Jumlah " + item.variant.name + " melebihi stok yang tersedia.");
+      return;
+    }
+  }
+
+  modalSelectedVariants.forEach(item => {
+    addToCart(product, item.variant, item.quantity);
+  });
+
+  closeProductModal();
+};
 
   modal.hidden = false;
 }
 
+function updateVariantQuantity(variant, quantity) {
+  const selected = modalSelectedVariants.find(
+    item => item.variant.id === variant.id
+  );
+
+  if (selected) {
+    selected.quantity = quantity;
+  }
+
+  updateModalSubtotal();
+}
+
 function updateModalSubtotal() {
-  document.getElementById("modalQuantityValue").textContent = modalQuantity;
+  const subtotal = modalSelectedVariants.reduce(
+    (total, item) =>
+      total + Number(item.variant.price) * item.quantity,
+    0
+  );
 
   document.getElementById("modalSubtotal").textContent =
-    formatRupiah(modalSelectedVariant.price * modalQuantity);
+    formatRupiah(subtotal);
 }
   
 async function loadProducts() {
