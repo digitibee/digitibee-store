@@ -1144,4 +1144,9 @@ footer {
     .variant-price {
         font-size: 14px;
     }
+
+   /* SEMBUNYIKAN DESKRIPSI DI KARTU PRICELIST */
+.catalog-card p {
+  display: none !important;
+}
 }
