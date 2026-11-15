@@ -991,51 +991,69 @@ footer {
   appearance: none;
 }
 
+
 /* PILIH PAKET / VARIAN DIGITIBEE */
+
+.modal-section {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 12px 20px 18px;
+    box-sizing: border-box;
+}
+
+/* JUDUL VARIAN */
 
 .variant-heading {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
-    margin-bottom: 15px;
     width: 100%;
+    margin-bottom: 15px;
 }
 
 .variant-heading strong {
     color: #4d1934;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .variant-required {
     display: inline-block;
-    margin-left: 8px;
-    padding: 5px 12px;
+    padding: 4px 9px;
     border-radius: 12px;
     background: #fff0f7;
     color: #ed70b5;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 11px;
 }
 
-.variant-hint {
-    color: #999;
-    font-size: 14px;
+/* DAFTAR VARIAN */
+
+#modalVariantList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
 }
+
+/* KARTU VARIAN */
 
 .modal-variant {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 18px;
-    margin: 12px 0;
+    gap: 10px;
+    width: 100%;
+    min-height: 76px;
+    padding: 15px 16px;
+    margin: 0;
+    box-sizing: border-box;
     border: 2px solid #f0e5eb;
-    border-radius: 22px;
+    border-radius: 20px;
     background: white;
     cursor: pointer;
-   width: 100%;
-box-sizing: border-box;
 }
 
 .modal-variant.selected {
@@ -1043,99 +1061,9 @@ box-sizing: border-box;
     background: #fff5fa;
 }
 
-.variant-left {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    flex: 1;
-    min-width: 0;
-}
-
-.variant-left input {
-    width: 21px;
-    height: 21px;
-    accent-color: #ed70b5;
-    flex-shrink: 0;
-}
-
-.variant-left strong {
-    color: #4d1934;
-    font-size: 15px;
-}
-
-.variant-left p {
-    margin-top: 5px;
-    color: #ed70b5;
-    font-size: 13px;
-}
-
-.variant-price {
-    color: #ed70b5;
-    font-size: 17px;
-    white-space: nowrap;
-}
-
-   /* PENYESUAIAN PILIH PAKET / VARIAN */
-.variant-heading strong {
-    font-size: 15px;
-}
-
-.variant-required {
-    font-size: 11px;
-    padding: 4px 9px;
-}
-
-.modal-variant {
-    padding: 18px;
-    min-height: 85px;
-}
+/* RADIO DAN NAMA VARIAN */
 
 .variant-left {
-    flex: 1;
-    min-width: 0;
-    align-items: center;
-}
-
-.variant-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-}
-
-.variant-info strong {
-    font-size: 15px;
-    color: #4d1934;
-}
-
-.variant-info p {
-    margin: 0;
-    font-size: 13px;
-    color: #ed70b5;
-}
-
-.variant-price {
-    font-size: 16px;
-    color: #ed70b5;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-   .modal-section {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-   @media (max-width: 600px) {
-    .modal-variant {
-        padding: 15px 16px;
-        min-height: 76px;
-        margin: 10px 0;
-        border-radius: 20px;
-    }
-
-   .variant-left {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -1143,25 +1071,49 @@ box-sizing: border-box;
     min-width: 0;
 }
 
-    .variant-left input {
-        width: 20px;
-        height: 20px;
+.variant-left input {
+    width: 20px;
+    height: 20px;
+    accent-color: #ed70b5;
+    flex-shrink: 0;
+}
+
+.variant-name {
+    color: #4d1934;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* HARGA */
+
+.variant-price {
+    color: #ed70b5;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* TAMPILAN HP */
+
+@media (max-width: 600px) {
+    .modal-section {
+        padding: 12px 20px 18px;
     }
 
-    .variant-info strong {
+    .variant-heading strong {
+        font-size: 15px;
+    }
+
+    .variant-required {
+        font-size: 11px;
+    }
+
+    .variant-name {
+        font-size: 13px;
+    }
+
+    .variant-price {
         font-size: 14px;
     }
-
-    .variant-info p {
-        font-size: 12px;
-    }
-
-      .variant-name {
-    font-size: 15px;
-    color: #4d1934;
-    white-space: nowrap;
-}
-
-}
-}
 }
