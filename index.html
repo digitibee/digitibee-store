@@ -1468,6 +1468,10 @@ function removeCartItem(index) {
   cart.splice(index, 1);
   saveCart();
   renderCart();
+
+  if (cart.length === 0) {
+    showPage("pricelist");
+  }
 }
 
 function renderCart() {
