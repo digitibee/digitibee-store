@@ -1507,14 +1507,20 @@ container.innerHTML = "";
       card.className = "catalog-card";
 
       if (product.image_url) {
-        const img = document.createElement("img");
-        img.src = product.image_url;
-        img.alt = product.name;
-        img.loading = "lazy";
-        card.appendChild(img);
-      }
+  const img = document.createElement("img");
+  img.src = product.image_url;
+  img.alt = product.name;
+  img.loading = "lazy";
+  card.appendChild(img);
+}
 
-      const category = catalogCategories.find(
+// Garis setelah foto
+const line1 = document.createElement("hr");
+line1.className = "catalog-divider";
+card.appendChild(line1);
+
+// Kategori produk
+const category = catalogCategories.find(
   item => String(item.id) === String(product.category_id)
 );
 
@@ -1525,10 +1531,21 @@ if (category) {
   card.appendChild(categoryLabel);
 }
 
+// Garis setelah kategori
+const line2 = document.createElement("hr");
+line2.className = "catalog-divider";
+card.appendChild(line2);
+
+// Nama produk
 const title = document.createElement("h3");
 title.className = "catalog-product-name";
 title.textContent = product.name;
 card.appendChild(title);
+
+// Garis setelah nama produk
+const line3 = document.createElement("hr");
+line3.className = "catalog-divider";
+card.appendChild(line3);
 
       const description = document.createElement("p");
       description.textContent = product.description || "";
