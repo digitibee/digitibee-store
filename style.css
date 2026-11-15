@@ -261,9 +261,10 @@ body::before {
 .products {
     text-align: center;
     padding: 55px 30px;
-    background: rgba(255, 255, 255, 0.82);
+    background: transparent;
     border-radius: 30px;
     margin: 20px 0 40px;
+}
 }
 
 .products h2,
