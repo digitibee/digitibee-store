@@ -285,6 +285,59 @@ body::before {
     gap: 25px;
 }
 
+/* PENCARIAN PRICELIST */
+.catalog-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 3px solid #f5a5c7;
+    border-radius: 40px;
+    padding: 12px 20px;
+    margin-bottom: 25px;
+}
+
+.catalog-search span {
+    font-size: 25px;
+    color: #ed5a9c;
+}
+
+.catalog-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #754b59;
+}
+
+/* TOMBOL KATEGORI */
+.category-filters {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 5px 0 15px;
+    margin-bottom: 15px;
+}
+
+.category-btn {
+    flex-shrink: 0;
+    padding: 12px 25px;
+    border: 3px solid #f5b5d0;
+    border-radius: 30px;
+    background: white;
+    color: #754b59;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.category-btn.active {
+    background: #ed5a9c;
+    color: white;
+    border-color: white;
+}
+
 .product-card {
     background: white;
     padding: 30px 20px;
