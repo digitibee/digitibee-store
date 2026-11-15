@@ -677,7 +677,7 @@
   <input
     type="text"
     id="catalogSearch"
-    placeholder="Cari aplikasi yang ingin dibeli... (Netflix, Canva, dll)"
+    placeholder="Cari aplikasi... (Contoh: Netflix, Canva, dll)"
   >
 </div>
 
@@ -708,14 +708,14 @@
         <form id="testimonialForm" class="chat-testimonial" hidden>
           <div class="chat-body">
 
-            <label for="testimonialName">Nama atau inisial</label>
+            <label for="testimonialName">Nama kamu</label>
             <input type="text" id="testimonialName"
-              placeholder="Tulis nama atau inisialmu..." maxlength="40" required>
-            <label for="testimonialLocation">Lokasi (Opsional)</label>
+              placeholder="Tulis nama kamu..." maxlength="40" required>
+            <label for="testimonialLocation">Lokasi kamu</label>
 <input
   type="text"
   id="testimonialLocation"
-  placeholder="Contoh: Bogor"
+  placeholder="Contoh: Palu"
   maxlength="80"
 >
 
@@ -1018,7 +1018,6 @@ container.innerHTML = "";
     if (filteredProducts.length === 0) {
   container.innerHTML = `
     <div class="catalog-empty-state">
-      <div class="catalog-empty-icon">🔍</div>
       <h3>Aplikasi tidak ditemukan</h3>
       <p>Coba gunakan kata kunci lain atau pilih tab Semua.</p>
       <button onclick="showAllCatalogProducts()">
