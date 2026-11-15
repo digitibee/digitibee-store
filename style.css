@@ -995,11 +995,11 @@ footer {
 
 .variant-heading {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 8px;
     margin-bottom: 15px;
-    flex-wrap: wrap;
+    width: 100%;
 }
 
 .variant-heading strong {
@@ -1121,6 +1121,12 @@ box-sizing: border-box;
     flex-shrink: 0;
 }
 
+   .modal-section {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
    @media (max-width: 600px) {
     .modal-variant {
         padding: 15px 16px;
@@ -1129,9 +1135,13 @@ box-sizing: border-box;
         border-radius: 20px;
     }
 
-    .variant-left {
-        gap: 10px;
-    }
+   .variant-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
 
     .variant-left input {
         width: 20px;
@@ -1146,8 +1156,12 @@ box-sizing: border-box;
         font-size: 12px;
     }
 
-    .variant-price {
-        font-size: 15px;
-    }
+      .variant-name {
+    font-size: 15px;
+    color: #4d1934;
+    white-space: nowrap;
+}
+
+}
 }
 }
