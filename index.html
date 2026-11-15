@@ -530,13 +530,15 @@
 }
 
 #testimoni .testimonial-photo.portrait {
-  width: 220px !important;
+  display: block;
+  width: 100% !important;
   height: 260px !important;
-  max-width: 220px !important;
+  max-width: 100% !important;
   max-height: 260px !important;
   object-fit: cover !important;
   object-position: center !important;
-  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 10px 0;
 }
 
         /* KHUSUS JUDUL KONTAK */
@@ -853,9 +855,6 @@ function showPage(pageId) {
     return;
   }
 
-  document.querySelectorAll(".store-page").forEach(page => {
-    page.classList.remove("active");
-  });
   document.querySelectorAll(".store-page").forEach(page => {
     page.classList.remove("active");
   });
