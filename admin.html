@@ -990,12 +990,6 @@ async function loadProducts() {
       description.textContent = product.description || '';
       card.appendChild(description);
 
-      const availability = document.createElement('p');
-      availability.textContent =
-        (product.availability_type || 'ready_stock')
-          .replace('_', ' ').toUpperCase();
-      card.appendChild(availability);
-
       const variantTitle = document.createElement('strong');
       variantTitle.textContent = 'Variasi Produk';
       card.appendChild(variantTitle);
