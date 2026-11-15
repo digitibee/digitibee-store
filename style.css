@@ -939,55 +939,55 @@ footer {
   }
 
    
-/* EMPTY STATE PRICELIST DIGITIBEE */
+
+/* EMPTY STATE DIGITIBEE */
 .catalog-empty-state {
   grid-column: 1 / -1;
   width: 100%;
-  min-height: 145px;
+  min-height: 125px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 7px;
-  padding: 16px;
-  margin: 20px auto;
+  gap: 5px;
+  padding: 13px;
+  margin: 15px auto;
   background: white;
   border: 2px dashed #f5b5d0;
   border-radius: 20px;
 }
 
 .catalog-empty-icon {
-  font-size: 32px;
+  font-size: 25px;
   line-height: 1;
-}
-
-.catalog-empty-content {
-  width: 100%;
 }
 
 .catalog-empty-content h3 {
   color: #713c56;
-  font-size: 14px;
-  margin: 5px 0;
+  font-size: 12px;
+  margin: 4px 0;
 }
 
 .catalog-empty-content p {
   color: #754b59;
-  font-size: 11px;
-  line-height: 1.5;
-  margin: 4px 0 10px;
+  font-size: 10px;
+  line-height: 1.4;
+  margin: 3px 0 8px;
 }
 
 .catalog-empty-content button {
-  background: #ed5a9c;
-  color: white;
-  border: none;
+  background: #ed5a9c !important;
+  color: white !important;
+  border: none !important;
   border-radius: 25px;
-  padding: 9px 19px;
-  font-size: 11px;
+  padding: 8px 17px;
+  font-size: 10px;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 }
