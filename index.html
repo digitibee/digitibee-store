@@ -1494,116 +1494,78 @@ container.innerHTML = "";
   return;
 }
 
-    
-for (const product of filteredProducts) {
+    for (const product of filteredProducts) {
+      const { data: variants, error: variantError } = await supabaseClient
+        .from("product_variants")
+        .select("id, name, duration, price, stock")
+        .eq("product_id", product.id)
+        .order("created_at", { ascending: true });
 
-  // AMBIL VARIAN PRODUK
-  const { data: variants, error: variantError } = await supabaseClient
-    .from("product_variants")
-    .select("id, name, duration, price, stock")
-    .eq("product_id", product.id)
-    .order("created_at", { ascending: true });
+      if (variantError) throw variantError;
 
-  if (variantError) throw variantError;
+      const card = document.createElement("article");
+      card.className = "catalog-card";
 
-  // KARTU PRODUK
-  const card = document.createElement("article");
-  card.className = "catalog-card";
+      if (product.image_url) {
+        const img = document.createElement("img");
+        img.src = product.image_url;
+        img.alt = product.name;
+        img.loading = "lazy";
+        card.appendChild(img);
+      }
 
-  // LOGO APLIKASI (TETAP DIPERTAHANKAN)
-  if (product.image_url) {
-    const img = document.createElement("img");
-    img.className = "catalog-logo";
-    img.src = product.image_url;
-    img.alt = product.name;
-    img.loading = "lazy";
-    card.appendChild(img);
-  }
+      const title = document.createElement("h3");
+      title.textContent = product.name;
+      card.appendChild(title);
 
-  // GARIS PERTAMA
-  const divider1 = document.createElement("hr");
-  divider1.className = "catalog-divider";
-  card.appendChild(divider1);
+      const description = document.createElement("p");
+      description.textContent = product.description || "";
+      card.appendChild(description);
 
-  // KATEGORI APLIKASI
-  const category = catalogCategories.find(
-    item => String(item.id) === String(product.category_id)
-  );
+      const availability = product.availability_type || "ready_stock";
+      const label = document.createElement("span");
+      label.className = "availability-label";
 
-  const categoryLabel = document.createElement("div");
-  categoryLabel.className = "catalog-category-label";
-  categoryLabel.textContent = category ? category.name : "Other";
-  card.appendChild(categoryLabel);
+      const labels = {
+        ready_stock: "ready stock",
+        pre_order: "pre-ordee",
+        sold_out: "sold out"
+      };
 
-  // GARIS KEDUA
-  const divider2 = document.createElement("hr");
-  divider2.className = "catalog-divider";
-  card.appendChild(divider2);
+      label.textContent = labels[availability] || availability;
+      card.appendChild(label);
 
-  // NAMA PRODUK
-  const title = document.createElement("h3");
-  title.className = "catalog-product-name";
-  title.textContent = product.name;
-  card.appendChild(title);
+      if (!variants || variants.length === 0) {
+        const noVariant = document.createElement("p");
+        noVariant.textContent = "Variasi belum tersedia.";
+        card.appendChild(noVariant);
+        container.appendChild(card);
+        continue;
+      }
 
-  // GARIS KETIGA
-  const divider3 = document.createElement("hr");
-  divider3.className = "catalog-divider";
-  card.appendChild(divider3);
+const priceTitle = document.createElement("p");
+const lowestPrice = Math.min(...variants.map(v => Number(v.price)));
 
-  // PERIKSA VARIAN
-  if (!variants || variants.length === 0) {
-    const noVariant = document.createElement("p");
-    noVariant.textContent = "Variasi belum tersedia.";
-    card.appendChild(noVariant);
-    container.appendChild(card);
-    continue;
-  }
+priceTitle.textContent = "Mulai " + formatRupiah(lowestPrice);
+priceTitle.style.fontWeight = "bold";
+priceTitle.style.color = "#d95791";
+card.appendChild(priceTitle);
 
-  // HARGA TERMURAH
-  const lowestPrice = Math.min(
-    ...variants.map(v => Number(v.price))
-  );
+const chooseButton = document.createElement("button");
+chooseButton.className = "pink-button";
+chooseButton.textContent =
+  availability === "sold_out" ? "STOK HABIS" : "PILIH";
 
-  // AREA HARGA DAN TOMBOL
-  const priceArea = document.createElement("div");
-  priceArea.className = "catalog-price-area";
+chooseButton.disabled = availability === "sold_out";
 
-  const priceInfo = document.createElement("div");
+chooseButton.addEventListener("click", () => {
+  openProductModal(product, variants);
+});
 
-  const startingText = document.createElement("small");
-  startingText.textContent = "Mulai dari";
-  priceInfo.appendChild(startingText);
-
-  const price = document.createElement("div");
-  price.className = "catalog-starting-price";
-  price.textContent = formatRupiah(lowestPrice);
-  priceInfo.appendChild(price);
-
-  priceArea.appendChild(priceInfo);
-
-  // TOMBOL PILIH
-  const chooseButton = document.createElement("button");
-  chooseButton.type = "button";
-  chooseButton.className = "catalog-choose-button";
-  chooseButton.textContent = "Pilih ›";
-
-  // LOGIKA KETERSEDIAAN TETAP BERFUNGSI
-  // TIDAK MENAMPILKAN LABEL READY STOCK / PRE-ORDER / SOLD OUT
-  const availability = product.availability_type || "ready_stock";
-
-  chooseButton.disabled = availability === "sold_out";
-
-  chooseButton.addEventListener("click", () => {
-    openProductModal(product, variants);
-  });
-
-  priceArea.appendChild(chooseButton);
-
-  card.appendChild(priceArea);
-  container.appendChild(card);
-}
-
+card.appendChild(chooseButton);
+container.appendChild(card);
+    }
+  } catch (error) {
     console.error("Load products:", error);
     container.innerHTML = '<p class="empty-message">Gagal memuat produk. Silakan coba lagi.</p>';
     message.textContent = error.message;
