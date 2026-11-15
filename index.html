@@ -1218,14 +1218,12 @@ function openProductModal(product, variants) {
       <strong>Pilih Paket / Varian</strong>
       <span class="variant-required">Wajib</span>
     </div>
-    <span class="variant-hint">Pilih salah satu</span>
-  </div>
 
   <div id="modalVariantList"></div>
 </div>
 
     <div class="modal-quantity">
-      <strong>Jumlah</strong>
+      <strong>Jumlah Akun</strong>
       <div>
         <button type="button" id="minusQuantity">−</button>
         <strong id="modalQuantityValue">1</strong>
@@ -1266,9 +1264,9 @@ function openProductModal(product, variants) {
     option.innerHTML = `
   <div class="variant-left">
     <input type="radio" name="modalVariant" ${index === 0 ? "checked" : ""}>
-    <div>
-      <strong>${variant.name} ${variant.duration || ""}</strong>
-      <p>${variant.stock} tersedia</p>
+    <div class="variant-info">
+      <strong>${variant.name}</strong>
+      <p>${variant.duration || "Tanpa Durasi"}</p>
     </div>
   </div>
   <strong class="variant-price">${formatRupiah(variant.price)}</strong>
