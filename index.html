@@ -1315,6 +1315,10 @@ function openProductModal(product, variants) {
   ${product.image_url
     ? `<img src="${product.image_url}" alt="">`
     : ""}
+  <div class="modal-description">
+    <strong>Keterangan:</strong>
+    <p>${product.description || ""}</p>
+  </div>
 </div>
 
     <div class="modal-section">
