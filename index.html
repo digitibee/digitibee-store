@@ -1013,16 +1013,26 @@
   line-height: 1.5;
 }
 
+
 /* NAVBAR BAWAH AUTO HIDE */
 
 .navbar-wrapper {
+  position: fixed !important;
+  top: auto !important;
+  bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+  left: 50% !important;
+  width: calc(100% - 40px);
+  max-width: 1000px;
+  z-index: 999;
+  transform: translateX(-50%);
   transition: transform 0.3s ease;
   will-change: transform;
 }
 
 .navbar-wrapper.nav-hidden {
-  transform: translateY(150%);
+  transform: translate(-50%, 150%);
 }
+
 
   </style>
 </head>
