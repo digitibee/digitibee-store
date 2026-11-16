@@ -917,19 +917,6 @@
   margin-left: 0;
   margin-right: 0;
 }
-
-.navbar-wrapper {
-  position: fixed;
-  bottom: 20px;
-  top: auto;
-  transition: transform 0.3s ease;
-  will-change: transform;
-  z-index: 999;
-}
-
-.navbar-wrapper.nav-hidden {
-  transform: translateY(150%);
-}
     
   </style>
 </head>
@@ -2182,40 +2169,6 @@ function initializeStore() {
 }
 
 initializeStore();
-
-  
-/* NAVBAR AUTO HIDE */
-
-let lastScrollY = window.scrollY;
-let scrollStopTimer;
-
-const navbar = document.querySelector(".navbar-wrapper");
-
-window.addEventListener("scroll", function () {
-  const currentScrollY = window.scrollY;
-
-  clearTimeout(scrollStopTimer);
-
-  if (currentScrollY <= 50) {
-    navbar.classList.remove("nav-hidden");
-  } 
-  else if (currentScrollY < lastScrollY - 5) {
-    navbar.classList.remove("nav-hidden");
-  } 
-  else if (currentScrollY > lastScrollY + 5) {
-    navbar.classList.add("nav-hidden");
-  }
-
-  lastScrollY = currentScrollY;
-
-  scrollStopTimer = setTimeout(() => {
-    if (window.scrollY > 50) {
-      navbar.classList.add("nav-hidden");
-    }
-  }, 700);
-
-}, { passive: true });
-
 
   /* PENCARIAN PRODUK */
 
