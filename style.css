@@ -1149,4 +1149,46 @@ footer {
 .catalog-card p {
   display: none !important;
 }
+
+
+/* ESTIMASI GARANSI */
+.warranty-section {
+  padding: 15px 18px 30px;
+}
+
+.warranty-card {
+  background: linear-gradient(135deg, #fff0f6, #ffe3ef);
+  border: 1px solid #f5c5d9;
+  border-radius: 20px;
+  padding: 20px;
+  color: #71364f;
+  box-shadow: 0 5px 15px rgba(180, 90, 130, 0.08);
+}
+
+.warranty-card h3 {
+  color: #a94370;
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 15px;
+}
+
+.warranty-card ol {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.warranty-card li {
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.warranty-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  font-weight: 600;
+  margin: 15px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed #dfa5bd;
+}
 }
