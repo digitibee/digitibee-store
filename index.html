@@ -990,6 +990,29 @@
   font-size: inherit;
   text-align: justify;
 }
+
+
+/* CARA ORDER DIGITIBEE */
+
+.order-guide:not(.warranty-section) .step-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.order-guide:not(.warranty-section) .step-content .step-number {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.order-guide:not(.warranty-section) .step-content p {
+  flex: 1;
+  margin: 0;
+  font-weight: 700;
+  text-align: justify;
+  line-height: 1.5;
+}
+
     
   </style>
 </head>
@@ -1052,57 +1075,61 @@
         </div>
       </section>
 
-      <section class="order-guide">
-        <div class="order-card">
-          <div class="order-title">Cara Order di Digitibee</div>
+      
+<section class="order-guide">
+  <div class="order-card">
+    <div class="order-title">Cara Order di Digitibee</div>
 
-          <div class="order-step">
-            <div class="step-icon">🛍️</div>
-            <div class="step-content">
-              <span class="step-number">1</span>
-              <h3>Pilih Produk</h3>
-              <p>Pilih produk yang kamu butuhkan dan tersedia di Digitibee.</p>
-            </div>
-          </div>
+    <div class="order-step">
+      <div class="step-icon">🛍️</div>
+      <div class="step-content">
+        <span class="step-number">1</span>
+        <p>Pilih produk yang kamu butuhkan di katalog pricelist Digitibee.</p>
+      </div>
+    </div>
 
-          <div class="order-step">
-            <div class="step-icon">⚙️</div>
-            <div class="step-content">
-              <span class="step-number">2</span>
-              <h3>Atur Pesananmu</h3>
-              <p>Sesuaikan detail pesanan seperti jenis produk, plan, durasi, beserta jumlahnya.</p>
-            </div>
-          </div>
+    <div class="order-step">
+      <div class="step-icon">⚙️</div>
+      <div class="step-content">
+        <span class="step-number">2</span>
+        <p>Sesuaikan detail pesananmu seperti jenis produk, paket, durasi, beserta jumlahnya.</p>
+      </div>
+    </div>
 
-          <div class="order-step">
-            <div class="step-icon">🛒</div>
-            <div class="step-content">
-              <span class="step-number">3</span>
-              <h3>Cek Keranjang & Masukkan Data</h3>
-              <p>Buka keranjang belanja di bar navigasi atas untuk memeriksa detail pesanan dan kontakmu.</p>
-            </div>
-          </div>
+    <div class="order-step">
+      <div class="step-icon">🛒</div>
+      <div class="step-content">
+        <span class="step-number">3</span>
+        <p>Buka keranjang belanja yang tersedia di bar navigasi bawah untuk memeriksa detail pesanan dan memasukkan datamu.</p>
+      </div>
+    </div>
 
-          <div class="order-step">
-            <div class="step-icon">💬</div>
-            <div class="step-content">
-              <span class="step-number">4</span>
-              <h3>Kirim Pesanan ke WhatsApp Admin</h3>
-              <p>Klik tombol pesan via WhatsApp, pesan otomatis dibuat dan dikirim ke Admin.</p>
-            </div>
-          </div>
+    <div class="order-step">
+      <div class="step-icon">💬</div>
+      <div class="step-content">
+        <span class="step-number">4</span>
+        <p>Klik tombol pesan via WhatsApp lalu pesan akan dibuat secara otomatis dan mengirimnya ke WhatsApp admin.</p>
+      </div>
+    </div>
 
-          <div class="order-step">
-            <div class="step-icon">📦</div>
-            <div class="step-content">
-              <span class="step-number">5</span>
-              <h3>Tunggu Pesanan Diproses & Selesai</h3>
-              <p>Admin akan memproses produkmu jika produk tersedia dan kamu mengirimkan bukti bayar ke admin.</p>
-            </div>
-          </div>
-        </div>
-    
-      </section>
+    <div class="order-step">
+      <div class="step-icon">💳</div>
+      <div class="step-content">
+        <span class="step-number">5</span>
+        <p>Admin akan segera membalas pesanmu dan mengonfirmasi jika produk tersebut tersedia, lalu kamu tinggal membayar serta mengirimkan bukti bayar ke admin.</p>
+      </div>
+    </div>
+
+    <div class="order-step">
+      <div class="step-icon">📦</div>
+      <div class="step-content">
+        <span class="step-number">6</span>
+        <p>Pesanan diproses admin dan akan segera dikirimkan. Kamu jangan lupa mengirim bukti login jika ingin mendapatkan garansi.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
       <!-- ESTIMASI GARANSI -->
       
