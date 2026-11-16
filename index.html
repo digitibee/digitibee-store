@@ -1013,7 +1013,17 @@
   line-height: 1.5;
 }
 
-    
+/* NAVBAR BAWAH AUTO HIDE */
+
+.navbar-wrapper {
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.navbar-wrapper.nav-hidden {
+  transform: translateY(150%);
+}
+
   </style>
 </head>
 
@@ -2272,6 +2282,28 @@ function initializeStore() {
 }
 
 initializeStore();
+
+  /* NAVBAR BAWAH MUNCUL SAAT SCROLL KE ATAS */
+
+let lastScrollY = window.scrollY;
+
+const navbar = document.querySelector(".navbar-wrapper");
+
+window.addEventListener("scroll", function () {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY <= 50) {
+    navbar.classList.remove("nav-hidden");
+  } 
+  else if (currentScrollY > lastScrollY + 5) {
+    navbar.classList.add("nav-hidden");
+  } 
+  else if (currentScrollY < lastScrollY - 5) {
+    navbar.classList.remove("nav-hidden");
+  }
+
+  lastScrollY = currentScrollY;
+}, { passive: true });
 
   /* PENCARIAN PRODUK */
 
