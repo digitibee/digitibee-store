@@ -1730,9 +1730,10 @@ function renderCart() {
 
 /* PESANAN WHATSAPP */
 
+
 function sendOrderWhatsApp() {
   if (cart.length === 0) {
-    alert("Keranjang masih kosong.");
+    alert("Keranjang masih kosong!");
     return;
   }
 
@@ -1741,39 +1742,50 @@ function sendOrderWhatsApp() {
   const note = document.getElementById("customerNote").value.trim();
 
   if (!name || !phone) {
-    alert("Silakan isi nama dan nomor WhatsApp terlebih dahulu.");
+    alert("Mohon isi nama dan nomor WhatsApp terlebih dahulu!");
     return;
   }
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity, 0
-  );
+  const formatRupiah = (angka) =>
+    Number(angka).toLocaleString("id-ID");
 
-  let message = "Halo Admin Digitibee! 💗\n";
-  message += "Saya ingin melakukan pemesanan:\n\n";
-  message += "Nama: " + name + "\n";
-  message += "WhatsApp: " + phone + "\n\n";
-  message += "DAFTAR PESANAN:\n";
+  let message = `Halo Admin Auna & Duna ☺️
+Saya mau order aplikasi premium…
+
+👤 *Data Pemesanan*
+◦ *Nama :* ${name}
+◦ *WhatsApp :* ${phone}
+◦ *Catatan :* ${note || "-"}
+
+📝 *Daftar Pesanan*
+`;
 
   cart.forEach((item, index) => {
-    message += `\n${index + 1}. ${item.productName}\n`;
-    message += `   Variasi: ${item.variantName}\n`;
-    message += `   Durasi: ${item.duration}\n`;
-    message += `   Jumlah: ${item.quantity}\n`;
-    message += `   Harga: ${formatRupiah(item.price)}\n`;
-    message += `   Ketersediaan: ${item.availability}\n`;
-    message += `   Subtotal: ${formatRupiah(item.price * item.quantity)}\n`;
+    const subtotal = Number(item.price) * Number(item.quantity);
+
+    message += `
+${index + 1}. *${item.productName.toUpperCase()}*
+       ⇉ Paket / Varian : ${item.variantName} ${item.duration}
+       ⇉ Jumlah : ${item.quantity} × ${formatRupiah(item.price)} = ${formatRupiah(subtotal)}
+`;
   });
 
-  message += "\nTOTAL: " + formatRupiah(total);
+  const total = cart.reduce(
+    (sum, item) => sum + Number(item.price) * Number(item.quantity),
+    0
+  );
 
-  if (note) message += "\n\nCatatan: " + note;
+  message += `
+💳 *Total Pembayaran : ${formatRupiah(total)}*
 
-  message += "\n\nMohon konfirmasi ketersediaan produk terlebih dahulu. Terima kasih!";
+Mohon dicek ketersediaan produknya serta infoin pembayarannya ya min. Kamsahamnida ♡`;
 
-  const url = WHATSAPP_ADMIN + "?text=" + encodeURIComponent(message);
-  window.open(url, "_blank");
+  const whatsappURL =
+    WHATSAPP_ADMIN + "?text=" + encodeURIComponent(message);
+
+  window.open(whatsappURL, "_blank");
 }
+
 
 /* TESTIMONI */
 
