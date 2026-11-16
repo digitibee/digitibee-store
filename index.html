@@ -1013,7 +1013,6 @@
   line-height: 1.5;
 }
 
-
 /* NAVBAR BAWAH AUTO HIDE */
 
 .navbar-wrapper {
@@ -1030,9 +1029,9 @@
 }
 
 .navbar-wrapper.nav-hidden {
-  transform: translate(-50%, 150%);
+  transform: translate(-50%, calc(100% + 50px)) !important;
+  pointer-events: none;
 }
-
 
   </style>
 </head>
@@ -2293,27 +2292,37 @@ function initializeStore() {
 
 initializeStore();
 
-  /* NAVBAR BAWAH MUNCUL SAAT SCROLL KE ATAS */
+
+/* NAVBAR BAWAH AUTO HIDE */
 
 let lastScrollY = window.scrollY;
+let navbarScrollTimer;
 
 const navbar = document.querySelector(".navbar-wrapper");
 
 window.addEventListener("scroll", function () {
   const currentScrollY = window.scrollY;
 
+  clearTimeout(navbarScrollTimer);
+
   if (currentScrollY <= 50) {
     navbar.classList.remove("nav-hidden");
-  } 
-  else if (currentScrollY > lastScrollY + 5) {
+  } else if (currentScrollY > lastScrollY + 5) {
     navbar.classList.add("nav-hidden");
-  } 
-  else if (currentScrollY < lastScrollY - 5) {
+  } else if (currentScrollY < lastScrollY - 5) {
     navbar.classList.remove("nav-hidden");
   }
 
   lastScrollY = currentScrollY;
+
+  navbarScrollTimer = setTimeout(() => {
+    if (window.scrollY > 50) {
+      navbar.classList.add("nav-hidden");
+    }
+  }, 700);
+
 }, { passive: true });
+
 
   /* PENCARIAN PRODUK */
 
