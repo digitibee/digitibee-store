@@ -1761,14 +1761,13 @@ Saya mau order aplikasi premium…
 `;
 
   cart.forEach((item, index) => {
-    const subtotal = Number(item.price) * Number(item.quantity);
+  const subtotal = Number(item.price) * Number(item.quantity);
 
-    message += `
-${index + 1}. *${item.productName.toUpperCase()}*
-       ⇉ Paket / Varian : ${item.variantName} ${item.duration}
-       ⇉ Jumlah : ${item.quantity} × ${formatRupiah(item.price)} = ${formatRupiah(subtotal)}
+  message += `${index + 1}. *${item.productName.toUpperCase()}*
+    ⇉ Paket : ${item.variantName} ${item.duration}
+    ⇉ Jumlah : ${item.quantity} × ${formatRupiah(item.price)} = ${formatRupiah(subtotal)}
 `;
-  });
+});
 
   const total = cart.reduce(
     (sum, item) => sum + Number(item.price) * Number(item.quantity),
