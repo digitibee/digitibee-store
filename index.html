@@ -1,216 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitibee</title>
+  <link rel="stylesheet" href="style.css?v=6">
 
-<style>
-/* DASAR HALAMAN */
+  <style>
+    .store-page {
+      display: none;
+      animation: pageFade .25s ease;
+    }
 
-.store-page {
-  display: none;
-  animation: pageFade .25s ease;
-}
+    .store-page.active {
+      display: block;
+    }
 
-.store-page.active {
-  display: block;
-}
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-@keyframes pageFade {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    .page-heading {
+      text-align: center;
+      color: #d95791;
+      margin: 25px 0;
+    }
 
-.page-heading {
-  text-align: center;
-  color: #d95791;
-  margin: 25px 0;
-}
+    .page-heading h2 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
 
-.page-heading h2 {
-  font-size: 27px;
-  margin-bottom: 8px;
-}
+    .page-heading p {
+      font-size: 13px;
+      color: #754b59;
+    }
 
-.page-heading p {
-  font-size: 13px;
-  color: #754b59;
-}
+    .content-panel {
+      background: rgba(255,255,255,.92);
+      border: 2px solid #f6b2cf;
+      border-radius: 22px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1000px;
+      box-shadow: 0 5px 15px rgba(210,100,150,.12);
+    }
 
-.content-panel {
-  background: rgba(255,255,255,.92);
-  border: 2px solid #f6b2cf;
-  border-radius: 22px;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 1000px;
-  box-shadow: 0 5px 15px rgba(210,100,150,.12);
-}
+    .back-home {
+      display: inline-block;
+      border: 0;
+      border-radius: 20px;
+      background: #f4a9c8;
+      color: #713c56;
+      padding: 10px 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 8px 0;
+    }
 
-.back-home {
-  display: inline-block;
-  border: 0;
-  border-radius: 20px;
-  background: #f4a9c8;
-  color: #713c56;
-  padding: 10px 17px;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 8px 0;
-}
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
 
-/* KATALOG */
+    .catalog-card {
+      background: white;
+      border: 2px solid #f9c9dd;
+      border-radius: 17px;
+      padding: 13px;
+      box-shadow: 0 4px 12px rgba(210,100,150,.10);
+      min-width: 0;
+    }
 
-.catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 15px;
-}
-
-.catalog-card {
-  background: white;
-  border: 1px solid #f9c9dd;
-  border-radius: 18px;
-  padding: 10px;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 3px 10px rgba(210,100,150,.08);
-}
-
-.catalog-card img {
-  width: 100%;
-  height: 145px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: #fff7fb;
-  margin-bottom: 10px;
-}
-
-.catalog-card h3 {
-  color: #d95791;
-  font-size: 16px;
-  margin-bottom: 7px;
-}
-
-.catalog-card p {
-  font-size: 12px;
-  line-height: 1.5;
-  margin: 5px 0;
-  overflow-wrap: anywhere;
-}
-
-.catalog-card select,
-.catalog-card input,
-.customer-form input,
-.customer-form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #edb8d0;
-  border-radius: 10px;
-  margin: 7px 0;
-  background: white;
-  color: #754b59;
-  font-size: 13px;
-}
-
-.availability-label {
-  display: inline-block;
-  background: #fff0f7;
-  color: #b94e80;
-  padding: 5px 9px;
-  border-radius: 15px;
-  font-size: 10px;
-  font-weight: bold;
-  margin: 7px 0;
-}
-
-/* KATALOG BARU DIGITIBEE */
-
-.catalog-card .catalog-logo {
-  width: 75px;
-  height: 75px;
-  object-fit: contain;
-  display: block;
-  margin: 5px auto;
-  background: transparent;
-  border-radius: 0;
-}
-
-.catalog-divider {
-  border: 0;
-  border-top: 1px dashed #ffd1e3;
-  width: 100%;
-  margin: 2px 0;
-}
-
-.catalog-category-label {
-  display: inline-block;
-  background: transparent;
-  color: #D95791;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .5px;
-  padding: 0;
-  border-radius: 0;
-  text-transform: uppercase;
-  margin: 1px 0 2px;
-}
-
-.catalog-product-name {
-  color: #800000 !important;
-  font-size: 15px !important;
-  font-weight: 900;
-  text-align: left;
-  margin: 0;
-  padding-bottom: 1px;
-  line-height: 1.3;
-  min-height: 36px;
-}
-
-.catalog-price-area {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 8px;
-}
-
-.catalog-price-area > div {
-  min-width: 0;
-}
-
-.catalog-price-area small,
-.catalog-starting-price {
-  color: #d95791;
-  font-size: 16px;
-  font-weight: 800;
-}
-
-.catalog-price-area small {
-  display: block;
-}
-
-.catalog-starting-price {
-  margin-top: 3px;
-}
-
-.catalog-choose-button {
-  background: #FFF0B3;
-  border: 1px solid #F2D46B;
-  color: #9A7410;
-  border-radius: 18px;
-  padding: 7px 12px;
-  font-size: 11px;
-  font-weight: 800;
-  white-space: nowrap;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.catalog-choose-button:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-}
-
-/* POPUP DETAIL PRODUK */
-
+    /* POPUP DETAIL PRODUK */
 .product-modal[hidden] {
   display: none !important;
 }
@@ -268,9 +132,8 @@
   cursor: pointer;
 }
 
-/* ISI POPUP PRODUK */
-
-.modal-product-title {
+    /* ISI POPUP PRODUK */
+    .modal-product-title {
   text-align: center;
   margin: 20px 0 5px;
 }
@@ -280,25 +143,6 @@
   font-size: 22px;
   font-weight: 800;
   margin: 0;
-}
-
-.modal-product-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 20px;
-  margin: 18px;
-  background: #fff7fb;
-  border: 2px solid #ffdeeb;
-  border-radius: 20px;
-}
-
-.modal-product-info img {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  border-radius: 15px;
-  background: white;
 }
 
 .modal-description {
@@ -319,6 +163,24 @@
   line-height: 1.5;
   margin: 0;
 }
+.modal-product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  margin: 18px;
+  background: #fff7fb;
+  border: 2px solid #ffdeeb;
+  border-radius: 20px;
+}
+
+.modal-product-info img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 15px;
+  background: white;
+}
 
 .modal-product-info h3 {
   color: #59152f;
@@ -337,7 +199,7 @@
   font-size: 17px;
 }
 
-#modalNote {
+    #modalNote {
   width: 100%;
   min-height: 90px;
   padding: 16px;
@@ -383,45 +245,87 @@
   border-top: 2px solid #ffdeeb;
 }
 
-#modalAddCart {
+    #modalAddCart {
   padding: 15px 22px;
   font-size: 14px;
   min-width: 190px;
   border-radius: 25px;
 }
 
-/* TOMBOL PINK */
+    .catalog-card img {
+      width: 100%;
+      height: 145px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #fff7fb;
+      margin-bottom: 10px;
+    }
 
-.pink-button {
-  display: inline-block;
-  border: none;
-  background: #d95791;
-  color: white;
-  padding: 11px 15px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 12px;
-  cursor: pointer;
-  text-decoration: none;
-  margin-top: 7px;
-}
+    .catalog-card h3 {
+      color: #d95791;
+      font-size: 16px;
+      margin-bottom: 7px;
+    }
 
-.pink-button:disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
+    .catalog-card p {
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 5px 0;
+      overflow-wrap: anywhere;
+    }
 
-/* PESAN KOSONG */
+    .availability-label {
+      display: inline-block;
+      background: #fff0f7;
+      color: #b94e80;
+      padding: 5px 9px;
+      border-radius: 15px;
+      font-size: 10px;
+      font-weight: bold;
+      margin: 7px 0;
+    }
 
-.empty-message {
-  text-align: center;
-  color: #9b7184;
-  padding: 25px 10px;
-  font-size: 20px;
-}
+    .catalog-card select,
+    .catalog-card input,
+    .customer-form input,
+    .customer-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #edb8d0;
+      border-radius: 10px;
+      margin: 7px 0;
+      background: white;
+      color: #754b59;
+      font-size: 13px;
+    }
 
-/* KOTAK APLIKASI TIDAK DITEMUKAN */
+    .pink-button {
+      display: inline-block;
+      border: none;
+      background: #d95791;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 7px;
+    }
 
+    .pink-button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .empty-message {
+      text-align: center;
+      color: #9b7184;
+      padding: 25px 10px;
+      font-size: 20px;
+    }
+
+    /* KOTAK APLIKASI TIDAK DITEMUKAN */
 .catalog-empty-state {
   background: #fff0f7 !important;
   border: 1px dashed #f2a7c7 !important;
@@ -449,137 +353,129 @@
   font-weight: bold;
 }
 
-/* KERANJANG */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 0;
+      border-bottom: 1px dashed #edbfd3;
+    }
 
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 0;
-  border-bottom: 1px dashed #edbfd3;
-}
+    .cart-item h4 {
+      color: #bd5284;
+      font-size: 14px;
+    }
 
-.cart-item h4 {
-  color: #bd5284;
-  font-size: 14px;
-}
+    .cart-item p {
+      font-size: 12px;
+      margin-top: 5px;
+    }
 
-.cart-item p {
-  font-size: 12px;
-  margin-top: 5px;
-}
+    .cart-item button {
+      background: #f6d6e5;
+      border: none;
+      color: #a43f70;
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 11px;
+    }
 
-.cart-item button {
-  background: #f6d6e5;
-  border: none;
-  color: #a43f70;
-  border-radius: 10px;
-  padding: 8px;
-  font-size: 11px;
-}
+    .cart-total {
+      text-align: right;
+      color: #c34f85;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 17px 0;
+    }
 
-.cart-total {
-  text-align: right;
-  color: #c34f85;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 17px 0;
-}
+    .customer-form {
+      margin-top: 20px;
+    }
 
-.customer-form {
-  margin-top: 20px;
-}
+    .customer-form label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin-top: 12px;
+    }
 
-.customer-form label {
-  display: block;
-  font-weight: bold;
-  font-size: 13px;
-  margin-top: 12px;
-}
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 17px;
+      border: 2px solid #f6c5da;
+      border-radius: 18px;
+      background: white;
+      margin: 12px 0;
+      text-decoration: none;
+      color: #754b59;
+      transition: .2s;
+    }
 
-/* KONTAK ADMIN */
+    .contact-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px #eacbdc;
+    }
 
-.contact-card {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 17px;
-  border: 2px solid #f6c5da;
-  border-radius: 18px;
-  background: white;
-  margin: 12px 0;
-  text-decoration: none;
-  color: #754b59;
-  transition: .2s;
-}
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      background: #fff0f7;
+      font-size: 27px;
+      flex-shrink: 0;
+    }
 
-.contact-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 12px #eacbdc;
-}
+    .contact-card h3 {
+      color: #d95791;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
 
-.contact-icon {
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  background: #fff0f7;
-  font-size: 27px;
-  flex-shrink: 0;
-}
+    .contact-card p {
+      font-size: 12px;
+    }
 
-.contact-card h3 {
-  color: #d95791;
-  font-size: 15px;
-  margin-bottom: 5px;
-}
+    .rank-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      margin: 9px 0;
+      background: white;
+      border: 1px solid #f5c5da;
+      border-radius: 14px;
+      font-size: 13px;
+    }
 
-.contact-card p {
-  font-size: 12px;
-}
+    .rank-number {
+      color: #d95791;
+      font-weight: bold;
+      font-size: 17px;
+      min-width: 35px;
+    }
 
-/* LEADERBOARD */
+    .status-note {
+      font-size: 12px;
+      color: #9b7184;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
 
-.rank-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 14px;
-  margin: 9px 0;
-  background: white;
-  border: 1px solid #f5c5da;
-  border-radius: 14px;
-  font-size: 13px;
-}
+    /* TESTIMONI */
 
-.rank-number {
-  color: #d95791;
-  font-weight: bold;
-  font-size: 17px;
-  min-width: 35px;
-}
+    .testimonial-invite {
+      text-align: center;
+      margin: 20px 0;
+    }
 
-/* CATATAN */
-
-.status-note {
-  font-size: 12px;
-  color: #9b7184;
-  margin-top: 10px;
-  line-height: 1.5;
-}
-
-/* TESTIMONI */
-
-.testimonial-invite {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.share-story-link {
+    .share-story-link {
   background: none;
   border: none;
   color: #d95791;
@@ -589,119 +485,163 @@
   padding: 8px;
 }
 
-.navbar-wrapper .since-label {
-  font-size: 14px !important;
+    .navbar-wrapper .since-label {
+    font-size: 14px !important;
 }
 
-.chat-testimonial[hidden] {
-  display: none !important;
-}
+    .chat-testimonial[hidden] {
+      display: none !important;
+    }
 
-.chat-body label {
-  display: block;
-  color: #bd5284;
-  font-size: 13px;
-  font-weight: bold;
-  margin: 12px 0 5px;
-}
+    .chat-body label {
+      display: block;
+      color: #bd5284;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 12px 0 5px;
+    }
 
-.chat-body input[type="text"],
-.chat-body textarea,
-.chat-body select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 11px;
-  border: 1px solid #edb8d0;
-  border-radius: 12px;
-  color: #754b59;
-  font-family: inherit;
-  font-size: 13px;
-  background: white;
-}
+    .chat-body input[type="text"],
+    .chat-body textarea,
+    .chat-body select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px;
+      border: 1px solid #edb8d0;
+      border-radius: 12px;
+      color: #754b59;
+      font-family: inherit;
+      font-size: 13px;
+      background: white;
+    }
 
-.chat-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-  gap: 12px;
-}
+    .chat-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      gap: 12px;
+    }
 
-.chat-attachment {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    .chat-attachment {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.photo-upload {
-  width: 48px;
-  height: 48px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed #d95791;
-  border-radius: 12px;
-  background: #fff0f7;
-  color: #d95791;
-  font-size: 26px !important;
-  cursor: pointer;
-  margin: 0 !important;
-}
+    .photo-upload {
+      width: 48px;
+      height: 48px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed #d95791;
+      border-radius: 12px;
+      background: #fff0f7;
+      color: #d95791;
+      font-size: 26px !important;
+      cursor: pointer;
+      margin: 0 !important;
+    }
 
-#testimonialPhoto {
-  display: none;
-}
+    #testimonialPhoto {
+      display: none;
+    }
 
-.photo-preview {
-  display: none;
-  width: 48px;
-  height: 48px;
-  overflow: hidden;
-  border-radius: 10px;
-  border: 1px solid #f2b8d1;
-  flex-shrink: 0;
-}
+    .photo-preview {
+      display: none;
+      width: 48px;
+      height: 48px;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid #f2b8d1;
+      flex-shrink: 0;
+    }
 
-.photo-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+    .photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-.send-story {
-  width: 43px;
-  height: 43px;
-  border: none;
-  border-radius: 50%;
-  background: #d95791;
-  color: white;
-  font-size: 21px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
+    .send-story {
+      width: 43px;
+      height: 43px;
+      border: none;
+      border-radius: 50%;
+      background: #d95791;
+      color: white;
+      font-size: 21px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
 
-.send-story:disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
+    .send-story:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
 
-.cancel-story {
-  border: none;
-  background: transparent;
-  color: #a45c7d;
-  padding: 10px 0;
-  cursor: pointer;
-  font-size: 12px;
-}
+    .cancel-story {
+      border: none;
+      background: transparent;
+      color: #a45c7d;
+      padding: 10px 0;
+      cursor: pointer;
+      font-size: 12px;
+    }
 
-.testimonial-status {
-  color: #a45c7d;
-  font-size: 12px;
-  margin-top: 10px;
-}
+    .testimonial-status {
+      color: #a45c7d;
+      font-size: 12px;
+      margin-top: 10px;
+    }
 
-/* TAMPILAN TESTIMONI DIGITIBEE */
+    @media (max-width: 600px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .catalog-card {
+        padding: 9px;
+      }
+
+      .catalog-card img {
+        height: 105px;
+      }
+
+      .catalog-card h3 {
+        font-size: 13px;
+      }
+
+      .catalog-card p {
+        font-size: 10px;
+      }
+
+      .catalog-card select {
+        font-size: 11px;
+        padding: 8px 5px;
+      }
+
+      .pink-button {
+        font-size: 10px;
+        padding: 9px 10px;
+      }
+
+      .content-panel {
+        padding: 12px;
+      }
+
+      .page-heading h2 {
+        font-size: 22px;
+      }
+
+      .cart-item {
+        align-items: flex-start;
+      }
+    }
+    /* TAMPILAN TESTIMONI DIGITIBEE */
 
 .testimonial-bubble {
   background: #fce0ed;
@@ -710,6 +650,7 @@
   padding: 15px;
   margin: 18px 0;
   box-shadow: 0 4px 12px rgba(210,100,150,.12);
+
   width: 65%;
   margin-left: auto;
   margin-right: 0;
@@ -762,7 +703,6 @@
 }
 
 /* AREA TESTIMONI */
-
 #testimoni .content-panel {
   background: transparent !important;
   border: none !important;
@@ -773,7 +713,6 @@
 }
 
 /* AREA PRICELIST */
-
 #pricelist .content-panel {
   background: transparent !important;
   border: none !important;
@@ -781,8 +720,113 @@
   padding: 0 !important;
 }
 
-/* DAFTAR TESTIMONI MEMANJANG */
+    /* KATALOG BARU DIGITIBEE */
 
+.catalog-card {
+  background: white;
+  border: 1px solid #f9c9dd;
+  border-radius: 18px;
+  padding: 10px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 3px 10px rgba(210,100,150,.08);
+}
+
+.catalog-card .catalog-logo {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  display: block;
+  margin: 5px auto 5px;
+  background: transparent;
+}
+
+.catalog-divider {
+  border: 0;
+  border-top: 1px dashed #ffd1e3;
+  width: 100%;
+  margin: 2px 0;
+}
+
+.catalog-category-label {
+  display: inline-block;
+  background: transparent;
+  color: #D95791;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  padding: 0;
+  border-radius: 0;
+  text-transform: uppercase;
+  margin: 1px 0 2px;
+}
+
+.catalog-product-name {
+  color: #800000;
+  font-size: 15px;
+  font-weight: 900;
+  text-align: left;
+  margin: 0;
+  padding-bottom: 1px;
+  line-height: 1.3;
+  min-height: 36px;
+}
+
+
+.catalog-price-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.catalog-price-area > div {
+  min-width: 0;
+}
+
+.catalog-choose-button {
+  background: #FFF0B3;
+  border: 1px solid #F2D46B;
+  color: #9A7410;
+  border-radius: 18px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+
+.catalog-price-area small {
+  display: block;
+  color: #d95791;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.catalog-starting-price {
+  color: #d95791;
+  font-size: 16px;
+  font-weight: 800;
+  margin-top: 3px;
+}
+
+.catalog-choose-button {
+  background: #fff0f7;
+  border: 2px solid #f6b2cf;
+  color: #d95791;
+  border-radius: 22px;
+  padding: 8px 13px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* DAFTAR TESTIMONI MEMANJANG */
 #testimonialList {
   height: 68vh;
   min-height: 68vh;
@@ -793,8 +837,7 @@
 }
 
 /* FOTO DI SISI KANAN */
-
-#testimoni .testimonial-photo {
+ #testimoni .testimonial-photo {
   display: block;
   width: 100%;
   max-width: 220px;
@@ -817,75 +860,13 @@
   margin: 10px 0;
 }
 
-/* KHUSUS JUDUL KONTAK */
-
-#admin .page-heading h2 {
-  font-size: 18px !important;
-  line-height: 1.4 !important;
-}
-
-/* RESPONSIVE MOBILE */
-
-@media (max-width: 600px) {
-  .catalog-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
-  }
-
-  .catalog-card {
-    padding: 9px;
-  }
-
-  .catalog-card img {
-    height: 105px;
-  }
-
-  .catalog-card .catalog-logo {
-    width: 75px;
-    height: 75px;
-  }
-
-  .catalog-card h3 {
-    font-size: 13px;
-  }
-
-  .catalog-card p {
-    font-size: 10px;
-  }
-
-  .catalog-card select {
-    font-size: 11px;
-    padding: 8px 5px;
-  }
-
-  .catalog-price-area small,
-  .catalog-starting-price {
-    font-size: 16px;
-  }
-
-  .catalog-choose-button {
-    font-size: 11px;
-    padding: 7px 9px;
-  }
-
-  .pink-button {
-    font-size: 10px;
-    padding: 9px 10px;
-  }
-
-  .content-panel {
-    padding: 12px;
-  }
-
-  .page-heading h2 {
-    font-size: 22px;
-  }
-
-  .cart-item {
-    align-items: flex-start;
-  }
-}
-</style>
+        /* KHUSUS JUDUL KONTAK */
+    #admin .page-heading h2 {
+      font-size: 18px !important;
+      line-height: 1.4 !important;
+    }
+    
+  </style>
 </head>
 
 <body>
