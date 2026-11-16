@@ -956,6 +956,40 @@
   margin: 0;
   flex-shrink: 0;
 }
+
+    /* MEMUAT PRODUK TETAP SATU BARIS */
+#catalogList .empty-message {
+  grid-column: 1 / -1;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 20px;
+}
+
+    /* SAMAKAN TAMPILAN NOMOR 1–4 */
+.warranty-section .order-step .step-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.warranty-section .order-step .step-content .step-number {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* DESKRIPSI RATA KIRI-KANAN */
+.warranty-section .order-step .step-content p {
+  flex: 1;
+  text-align: justify;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* NOMOR 4 SAMA UKURAN DENGAN NOMOR 1–3 */
+.warranty-section .warranty-closing .step-content p {
+  font-size: inherit;
+  text-align: justify;
+}
     
   </style>
 </head>
