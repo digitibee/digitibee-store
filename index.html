@@ -749,6 +749,16 @@
   margin: 6px 0.5;
 }
 
+/* Garis di bawah foto */
+.line-after-photo {
+  margin: 10px 0 5px;
+}
+
+/* Garis di bawah nama produk */
+.line-after-name {
+  margin: 5px 0 2px;
+}
+
 .catalog-category-label {
   display: inline-block;
   background: transparent;
@@ -770,7 +780,7 @@
   margin: 0;
   padding-bottom: 1px;
   line-height: 1.3;
-  min-height: 36px;
+  min-height: 25px;
 }
 
 
@@ -1533,7 +1543,7 @@ container.innerHTML = "";
 
 // Garis setelah foto
 const line1 = document.createElement("hr");
-line1.className = "catalog-divider";
+line1.className = "catalog-divider line-after-photo";
 card.appendChild(line1);
 
 // Kategori produk
@@ -1554,9 +1564,8 @@ title.className = "catalog-product-name";
 title.textContent = product.name;
 card.appendChild(title);
 
-// Garis setelah nama produk
 const line3 = document.createElement("hr");
-line3.className = "catalog-divider";
+line3.className = "catalog-divider line-after-name";
 card.appendChild(line3);
 
       const description = document.createElement("p");
