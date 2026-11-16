@@ -797,16 +797,21 @@
   min-width: 0;
 }
 
-.catalog-choose-button {
-  background: #FFF0B3;
-  border: 1px solid #F2D46B;
-  color: #9A7410;
+.catalog-card .catalog-choose-button {
+  background: #FFF0B3 !important;
+  border: 1px solid #F2D46B !important;
+  color: #9A7410 !important;
   border-radius: 18px;
   padding: 7px 12px;
   font-size: 11px;
   font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
+}
+
+.catalog-card .catalog-choose-button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
 }
 
 
