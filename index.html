@@ -1546,18 +1546,6 @@ const line1 = document.createElement("hr");
 line1.className = "catalog-divider line-after-photo";
 card.appendChild(line1);
 
-// Kategori produk
-const category = catalogCategories.find(
-  item => String(item.id) === String(product.category_id)
-);
-
-if (category) {
-  const categoryLabel = document.createElement("div");
-  categoryLabel.className = "catalog-category-label";
-  categoryLabel.textContent = category.name;
-  card.appendChild(categoryLabel);
-}
-
 // Nama produk
 const title = document.createElement("h3");
 title.className = "catalog-product-name";
