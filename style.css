@@ -1157,19 +1157,19 @@ footer {
 }
 
 .warranty-card {
-  background: linear-gradient(135deg, #fff0f6, #ffe3ef);
-  border: 1px solid #f5c5d9;
-  border-radius: 20px;
+  background: #fff;
+  border: 4px solid #f5a4c8;
+  border-radius: 28px;
   padding: 20px;
   color: #71364f;
-  box-shadow: 0 5px 15px rgba(180, 90, 130, 0.08);
+  box-shadow: 0 8px 20px rgba(220, 120, 165, 0.18);
 }
 
 .warranty-card h3 {
   color: #a94370;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 800;
-  margin: 0 0 15px;
+  margin: 0 0 18px;
 }
 
 .warranty-card ol {
