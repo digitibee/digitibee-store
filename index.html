@@ -1417,66 +1417,6 @@ const supabaseClient = window.supabase.createClient(
 
 const WHATSAPP_ADMIN = "https://wa.me/message/YELJW322HY22G1";
 
-
-/* POPUP NOTIFIKASI DIGITIBEE */
-
-function showDigitibeePopup({
-  title = "Informasi",
-  message = "",
-  icon = "",
-  confirmText = "Mengerti",
-  cancelText = null,
-  onConfirm = null
-}) {
-  const oldPopup = document.querySelector(".digitibee-popup-overlay");
-  if (oldPopup) oldPopup.remove();
-
-  const overlay = document.createElement("div");
-  overlay.className = "digitibee-popup-overlay";
-
-  const popup = document.createElement("div");
-  popup.className = "digitibee-popup";
-
-  const heading = document.createElement("h3");
-  heading.textContent = title;
-
-  const description = document.createElement("p");
-  description.textContent = message;
-
-  const iconBox = document.createElement("div");
-  iconBox.className = "digitibee-popup-icon";
-  iconBox.textContent = icon;
-
-  const actions = document.createElement("div");
-  actions.className = "digitibee-popup-actions";
-
-  if (cancelText) {
-    const cancelButton = document.createElement("button");
-    cancelButton.className = "secondary";
-    cancelButton.textContent = cancelText;
-    cancelButton.onclick = () => overlay.remove();
-    actions.appendChild(cancelButton);
-  }
-
-  const confirmButton = document.createElement("button");
-  confirmButton.textContent = confirmText;
-  confirmButton.onclick = () => {
-    overlay.remove();
-    if (onConfirm) onConfirm();
-  };
-
-  actions.appendChild(confirmButton);
-
-  popup.append(iconBox, heading, description, actions);
-  overlay.appendChild(popup);
-
-  overlay.addEventListener("click", event => {
-    if (event.target === overlay) overlay.remove();
-  });
-
-  document.body.appendChild(overlay);
-}
-
 let cart = [];
 
 try {
@@ -1709,15 +1649,8 @@ function openProductModal(product, variants) {
 
   document.getElementById("modalAddCart").onclick = () => {
   if (modalSelectedVariants.length === 0) {
-    if (modalSelectedVariants.length === 0) {
-  showDigitibeePopup({
-    title: "Pilih paket dulu, yuk!",
-    message: "Silakan pilih minimal satu paket sebelum memasukkannya ke keranjang.",
-    icon: "",
-    confirmText: "Mengerti"
-  });
-  return;
-}
+    alert("Silakan pilih minimal satu paket.");
+    return;
   }
 
   for (const item of modalSelectedVariants) {
@@ -1725,13 +1658,8 @@ function openProductModal(product, variants) {
       product.availability_type === "ready_stock" &&
       item.quantity > Number(item.variant.stock)
     ) {
-      showDigitibeePopup({
-  title: "Stok tidak mencukupi",
-  message: "Jumlah " + item.variant.name + " melebihi stok yang tersedia.",
-  icon: "",
-  confirmText: "Mengerti"
-});
-return;
+      alert("Jumlah " + item.variant.name + " melebihi stok yang tersedia.");
+      return;
     }
   }
 
@@ -1739,14 +1667,10 @@ return;
     addToCart(product, item.variant, item.quantity);
   });
 
+  alert("Produk berhasil ditambahkan!🩷");
   closeProductModal();
+};
 
-showDigitibeePopup({
-  title: "Yeay, berhasil!",
-  message: "Produk berhasil ditambahkan ke keranjang. 🩷",
-  icon: "",
-  confirmText: "Oke, siap!"
-});
   modal.hidden = false;
 }
 
@@ -1937,29 +1861,15 @@ function addToCart(product, variant, quantity) {
     saveCart();
 }
 
-
 function removeCartItem(index) {
-  const item = cart[index];
-  if (!item) return;
+  cart.splice(index, 1);
+  saveCart();
+  renderCart();
 
-  showDigitibeePopup({
-    title: "Yakin ingin menghapus?",
-    message: "Produk " + item.productName + " akan dihapus dari keranjang.",
-    icon: "",
-    confirmText: "Hapus",
-    cancelText: "Batal",
-    onConfirm: () => {
-      cart.splice(index, 1);
-      saveCart();
-      renderCart();
-
-      if (cart.length === 0) {
-        showPage("pricelist");
-      }
-    }
-  });
+  if (cart.length === 0) {
+    showPage("pricelist");
+  }
 }
-
 
 function renderCart() {
   const container = document.getElementById("cartList");
@@ -2014,28 +1924,18 @@ function renderCart() {
 
 function sendOrderWhatsApp() {
   if (cart.length === 0) {
-  showDigitibeePopup({
-    title: "Keranjang masih kosong",
-    message: "Yuk, pilih produk favoritmu terlebih dahulu!",
-    icon: "",
-    confirmText: "Mengerti"
-  });
-  return false;
-}
+    alert("Keranjang masih kosong!");
+    return;
+  }
 
   const name = document.getElementById("customerName").value.trim();
   const phone = document.getElementById("customerPhone").value.trim();
   const note = document.getElementById("customerNote").value.trim();
 
   if (!name || !phone) {
-  showDigitibeePopup({
-    title: "Data belum lengkap",
-    message: "Mohon isi nama dan nomor WhatsApp terlebih dahulu, ya.",
-    icon: "",
-    confirmText: "Mengerti"
-  });
-  return;
-}
+    alert("Mohon isi nama dan nomor WhatsApp terlebih dahulu!");
+    return;
+  }
 
   const formatRupiah = (angka) =>
     Number(angka).toLocaleString("id-ID");
@@ -2192,24 +2092,14 @@ testimonialPhoto.addEventListener("change", function () {
   }
 
   if (!file.type.startsWith("image/")) {
-    showDigitibeePopup({
-  title: "File tidak sesuai",
-  message: "Silakan pilih file gambar, ya.",
-  icon: "",
-  confirmText: "Mengerti"
-});
+    alert("Silakan pilih file gambar.");
     this.value = "";
     photoPreview.style.display = "none";
     return;
   }
 
   if (file.size > 5 * 1024 * 1024) {
-    showDigitibeePopup({
-  title: "Ukuran foto terlalu besar",
-  message: "Ukuran foto maksimal 5 MB. Silakan pilih foto yang lebih kecil.",
-  icon: "",
-  confirmText: "Mengerti"
-});
+    alert("Ukuran foto maksimal 5 MB.");
     this.value = "";
     photoPreview.style.display = "none";
     return;
@@ -2239,34 +2129,19 @@ document.getElementById("testimonialForm")
   const status = document.getElementById("testimonialStatus");
 
   if (!name || !message) {
-  showDigitibeePopup({
-  title: "Data belum lengkap",
-  message: "Mohon lengkapi nama dan pesan testimoni terlebih dahulu.",
-  icon: "",
-  confirmText: "Mengerti"
-});
+  alert("Lengkapi nama dan pesan terlebih dahulu.");
     return;
   }
 
   const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
   if (photo && !allowedTypes.includes(photo.type)) {
-    showDigitibeePopup({
-  title: "Format foto tidak sesuai",
-  message: "Gunakan foto dengan format JPG, PNG, atau WEBP.",
-  icon: "",
-  confirmText: "Mengerti"
-});
+    alert("Gunakan foto JPG, PNG, atau WEBP.");
     return;
   }
 
   if (photo && photo.size > 5 * 1024 * 1024) {
-    showDigitibeePopup({
-  title: "Ukuran foto terlalu besar",
-  message: "Ukuran foto maksimal 5 MB. Silakan pilih foto yang lebih kecil.",
-  icon: "",
-  confirmText: "Mengerti"
-});
+    alert("Ukuran foto maksimal 5 MB.");
     return;
   }
 
@@ -2335,12 +2210,7 @@ if (photo) {
   } catch (error) {
     console.error("Kirim testimoni:", error);
     status.textContent = "Testimoni belum berhasil dikirim.";
-    showDigitibeePopup({
-  title: "Testimoni belum terkirim",
-  message: "Terjadi kendala saat mengirim testimoni: " + error.message,
-  icon: "",
-  confirmText: "Mengerti"
-});
+    alert("Gagal mengirim testimoni: " + error.message);
 
   } finally {
     button.disabled = false;
