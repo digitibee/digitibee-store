@@ -1191,4 +1191,94 @@ footer {
   padding-top: 12px;
   border-top: 1px dashed #dfa5bd;
 }
+
+
+/* =========================================
+   POPUP NOTIFIKASI ELEGANT PINK DIGITIBEE
+========================================= */
+
+.digitibee-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(65, 35, 50, 0.38);
+}
+
+.digitibee-popup {
+  width: 100%;
+  max-width: 330px;
+  padding: 28px 22px 22px;
+  background: #fffafd;
+  border: 2px solid #f5c4d9;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(130, 65, 95, 0.20);
+  animation: digitibeePopupIn .22s ease;
+}
+
+@keyframes digitibeePopupIn {
+  from {
+    opacity: 0;
+    transform: scale(.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.digitibee-popup-icon {
+  width: 55px;
+  height: 55px;
+  margin: 0 auto 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff0f7;
+  color: #d95791;
+  font-size: 27px;
+}
+
+.digitibee-popup h3 {
+  color: #713c56;
+  font-size: 19px;
+  margin-bottom: 9px;
+}
+
+.digitibee-popup p {
+  color: #896477;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.digitibee-popup-actions {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+}
+
+.digitibee-popup-actions button {
+  flex: 1;
+  border: none;
+  border-radius: 20px;
+  padding: 11px 12px;
+  background: #ed5a9c;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.digitibee-popup-actions button.secondary {
+  background: #fff0f7;
+  color: #a34e76;
+  border: 1px solid #f3c2d7;
+}
+
 }
