@@ -1655,8 +1655,8 @@ function openProductModal(product, variants) {
 
   for (const item of modalSelectedVariants) {
     if (
-      product.availability_type === "ready_stock" &&
-      item.quantity > Number(item.variant.stock)
+      item.variant.requires_confirmation === false &&
+item.quantity > Number(item.variant.stock)
     ) {
       alert("Jumlah " + item.variant.name + " melebihi stok yang tersedia.");
       return;
@@ -1707,7 +1707,12 @@ async function loadProducts() {
   try {
     const { data: products, error } = await supabaseClient
       .from("products")
-      .select("id, category_id, name, description, image_url, availability_type")
+      for (const product of filteredProducts) {
+  const { data: variants, error: variantError } = await supabaseClient
+    .from("product_variants")
+    .select("id, name, duration, price, stock")
+    .eq("product_id", product.id)
+    .order("created_at", { ascending: true });
       .eq("status", "active")
       .order("created_at", { ascending: false });
 
@@ -1854,7 +1859,8 @@ function addToCart(product, variant, quantity) {
       price: Number(variant.price),
       stock: Number(variant.stock),
       availability: product.availability_type || "ready_stock",
-      quantity
+requiresConfirmation: variant.requires_confirmation !== false,
+quantity
     });
   }
 
@@ -2331,6 +2337,618 @@ document.getElementById("catalogSearch")
     catalogSearchText = this.value.trim();
     loadProducts();
   });
+
+<script>
+/* DIGITIBEE - CUSTOMER CHECKOUT UPGRADE */
+(() => {
+  'use strict';
+
+  if (window.digitibeeCustomerUpgrade) return;
+  window.digitibeeCustomerUpgrade = true;
+
+  const $ = id => document.getElementById(id);
+  const form = document.querySelector(
+    '#keranjang .customer-form'
+  );
+
+  if (!form) return;
+
+  /* TAMPILAN */
+  const style = document.createElement('style');
+
+  style.textContent = `
+    .db-field {
+      margin: 12px 0;
+    }
+
+    .db-field label {
+      display: block;
+      margin-bottom: 5px;
+      color: #964970;
+      font-weight: 700;
+    }
+
+    .db-field select,
+    .db-field input,
+    .db-field textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #edb8d0;
+      border-radius: 12px;
+      background: #fff;
+      color: #594653;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .db-help {
+      font-size: 12px;
+      color: #977186;
+      line-height: 1.5;
+    }
+
+    .db-tag {
+      display: inline-block;
+      padding: 4px 8px;
+      margin: 5px 0;
+      border-radius: 15px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .db-tag.ready {
+      background: #e2f8eb;
+      color: #167348;
+    }
+
+    .db-tag.confirm {
+      background: #fff0da;
+      color: #925d19;
+    }
+
+    .db-tag.empty {
+      background: #eee;
+      color: #666;
+    }
+
+    .db-action {
+      display: inline-block;
+      border: 0;
+      border-radius: 15px;
+      padding: 12px 16px;
+      background: #e95498;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .db-action:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .db-result {
+      margin-top: 15px;
+      padding: 15px;
+      border: 1px solid #efc6da;
+      border-radius: 16px;
+      background: #fff4fa;
+    }
+
+    .db-result p {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .db-result .db-action {
+      margin: 5px 5px 0 0;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  /* FORMULIR CUSTOMER */
+  form.innerHTML = `
+    <h3 style="color:#d95791">
+      Data Pemesan 🐝
+    </h3>
+
+    <p class="db-help">
+      Semua kolom bertanda * wajib diisi.
+      Produk dan harga otomatis mengikuti keranjang.
+    </p>
+
+    <div class="db-field">
+      <label for="dbName">Nama pemesan *</label>
+      <input
+        id="dbName"
+        maxlength="70"
+        autocomplete="name"
+        placeholder="Nama kamu"
+      >
+    </div>
+
+    <div class="db-field">
+      <label for="dbChannel">Order melalui *</label>
+      <select id="dbChannel">
+        <option value="wa">WhatsApp</option>
+        <option value="ig">Instagram</option>
+      </select>
+    </div>
+
+    <div class="db-field" id="dbWaField">
+      <label for="dbPhone">Nomor WhatsApp *</label>
+      <input
+        id="dbPhone"
+        type="tel"
+        maxlength="20"
+        placeholder="081234567890"
+        autocomplete="tel"
+      >
+    </div>
+
+    <div class="db-field" id="dbIgField" hidden>
+      <label for="dbInstagram">
+        Username Instagram *
+      </label>
+      <input
+        id="dbInstagram"
+        maxlength="31"
+        placeholder="@username"
+      >
+    </div>
+
+    <div class="db-field">
+      <label for="dbDevice">Nama perangkat *</label>
+      <input
+        id="dbDevice"
+        maxlength="80"
+        placeholder="Contoh: iPhone 15 Pro Max"
+      >
+    </div>
+
+    <div class="db-field">
+      <label for="dbLocation">
+        Lokasi perangkat *
+      </label>
+      <input
+        id="dbLocation"
+        maxlength="80"
+        placeholder="Contoh: Palu, Sulawesi Tengah"
+      >
+    </div>
+
+    <div class="db-field">
+      <label for="dbNote">
+        Catatan (opsional)
+      </label>
+      <textarea
+        id="dbNote"
+        maxlength="300"
+        rows="3"
+        placeholder="Catatan tambahan..."
+      ></textarea>
+    </div>
+
+    <button
+      type="button"
+      class="db-action"
+      id="dbContinue"
+    >
+      Lanjutkan Pesanan
+    </button>
+
+    <p
+      class="db-help"
+      id="dbCheckoutMessage"
+      role="status"
+    >
+      Jika ada variasi yang perlu konfirmasi,
+      pesanan akan diarahkan ke WhatsApp admin dahulu.
+    </p>
+
+    <div
+      class="db-result"
+      id="dbCheckoutResult"
+      hidden
+    ></div>
+  `;
+
+  /* WAJIB ISI KONTAK SESUAI PLATFORM */
+  function syncContact() {
+    const wa = $('dbChannel').value === 'wa';
+
+    $('dbWaField').hidden = !wa;
+    $('dbIgField').hidden = wa;
+
+    $('dbPhone').required = wa;
+    $('dbInstagram').required = !wa;
+  }
+
+  $('dbChannel').addEventListener(
+    'change',
+    syncContact
+  );
+
+  syncContact();
+
+  /* LABEL STATUS DI POPUP VARIASI */
+  const originalModal = window.openProductModal;
+
+  window.openProductModal = function(product, variants) {
+    originalModal(product, variants);
+
+    document.querySelectorAll(
+      '#modalVariantList .modal-variant'
+    ).forEach((row, i) => {
+      const variant = variants[i];
+      if (!variant) return;
+
+      const ready =
+        variant.requires_confirmation === false;
+
+      const empty =
+        ready && Number(variant.stock) <= 0;
+
+      const tag = document.createElement('small');
+
+      tag.className =
+        'db-tag ' +
+        (empty ? 'empty' : ready ? 'ready' : 'confirm');
+
+      tag.textContent = empty
+        ? 'Stok Habis'
+        : ready
+          ? '✓ Ready — Langsung Checkout'
+          : '💬 Konfirmasi WA';
+
+      row.querySelector('.variant-left')
+        ?.appendChild(tag);
+
+      if (empty) {
+        row.querySelector(
+          '.variant-checkbox'
+        ).disabled = true;
+      }
+    });
+  };
+
+  /* LABEL STATUS DI KERANJANG */
+  const originalRenderCart = window.renderCart;
+
+  window.renderCart = function() {
+    originalRenderCart();
+
+    document.querySelectorAll(
+      '#cartList .cart-item'
+    ).forEach((row, index) => {
+      const item = cart[index];
+      if (!item) return;
+
+      const tag = document.createElement('small');
+
+      const known =
+        typeof item.requiresConfirmation === 'boolean';
+
+      tag.className = 'db-tag ' +
+        (!known
+          ? 'empty'
+          : item.requiresConfirmation
+            ? 'confirm'
+            : 'ready');
+
+      tag.textContent = !known
+        ? 'Status akan dicek lagi'
+        : item.requiresConfirmation
+          ? '💬 Konfirmasi WA'
+          : '✓ Ready';
+
+      row.firstElementChild?.appendChild(tag);
+    });
+  };
+
+  /* VALIDASI DATA */
+  const clean = value =>
+    String(value ?? '').replace(/\s+/g, ' ').trim();
+
+  const result = $('dbCheckoutResult');
+  const notice = $('dbCheckoutMessage');
+  const button = $('dbContinue');
+
+  function showResult(title, description) {
+    result.hidden = false;
+    result.replaceChildren();
+
+    const heading = document.createElement('h3');
+    heading.style.color = '#a83e70';
+    heading.textContent = title;
+
+    const p = document.createElement('p');
+    p.textContent = description;
+
+    result.append(heading, p);
+  }
+
+  /* LANJUTKAN PESANAN */
+  button.addEventListener('click', async () => {
+    result.hidden = true;
+
+    if (!cart.length) {
+      alert('Keranjang masih kosong.');
+      return;
+    }
+
+    const name = clean($('dbName').value);
+    const channel = $('dbChannel').value;
+
+    const phone = clean(
+      $('dbPhone').value
+    ).replace(/[\s()-]/g, '');
+
+    const ig = clean($('dbInstagram').value);
+    const device = clean($('dbDevice').value);
+    const location = clean($('dbLocation').value);
+    const note = clean($('dbNote').value);
+
+    if (!name || !device || !location) {
+      alert(
+        'Isi nama, nama perangkat, dan lokasi perangkat.'
+      );
+      return;
+    }
+
+    if (
+      channel === 'wa' &&
+      !/^(?:\+?62|0)8\d{7,12}$/.test(phone)
+    ) {
+      alert('Isi nomor WhatsApp Indonesia yang valid.');
+      return;
+    }
+
+    if (
+      channel === 'ig' &&
+      !/^@?[a-zA-Z0-9._]{1,30}$/.test(ig)
+    ) {
+      alert('Isi username Instagram yang valid.');
+      return;
+    }
+
+    button.disabled = true;
+    notice.textContent =
+      'Memeriksa harga dan status produk terbaru...';
+
+    try {
+      const ids = [
+        ...new Set(cart.map(v => v.variantId))
+      ];
+
+      /* AMBIL DATA TERBARU DARI SUPABASE */
+      const { data: variants, error } =
+        await supabaseClient
+          .from('product_variants')
+          .select(
+            'id,product_id,name,duration,price,stock,requires_confirmation'
+          )
+          .in('id', ids);
+
+      if (error) throw error;
+
+      const byId = new Map(
+        (variants || []).map(v => [
+          String(v.id), v
+        ])
+      );
+
+      const productIds = [
+        ...new Set(
+          (variants || []).map(v => v.product_id)
+        )
+      ];
+
+      const {
+        data: products,
+        error: productsError
+      } = await supabaseClient
+        .from('products')
+        .select('id,name,status')
+        .in('id', productIds);
+
+      if (productsError) throw productsError;
+
+      const byProduct = new Map(
+        (products || []).map(p => [
+          String(p.id), p
+        ])
+      );
+
+      let pricesChanged = false;
+
+      for (const item of cart) {
+        const v = byId.get(
+          String(item.variantId)
+        );
+
+        const p = v && byProduct.get(
+          String(v.product_id)
+        );
+
+        if (!v || !p || p.status !== 'active') {
+          throw new Error(
+            'Ada produk yang tidak tersedia lagi. ' +
+            'Hapus produk tersebut dari keranjang.'
+          );
+        }
+
+        const qty = Number(item.quantity);
+
+        if (
+          !Number.isInteger(qty) ||
+          qty < 1 || qty > 99
+        ) {
+          throw new Error(
+            'Jumlah barang di keranjang tidak valid.'
+          );
+        }
+
+        if (
+          v.requires_confirmation === false &&
+          qty > Number(v.stock)
+        ) {
+          throw new Error(
+            `${p.name} • ${v.name}: stok tidak mencukupi.`
+          );
+        }
+
+        if (Number(item.price) !== Number(v.price)) {
+          pricesChanged = true;
+        }
+
+        item.price = Number(v.price);
+        item.stock = Number(v.stock);
+        item.productName = p.name;
+        item.variantName = v.name;
+        item.duration =
+          v.duration || 'Tanpa Durasi';
+
+        item.requiresConfirmation =
+          v.requires_confirmation !== false;
+      }
+
+      saveCart();
+      renderCart();
+
+      if (pricesChanged) {
+        notice.textContent =
+          'Ada harga yang berubah. Periksa total terbaru, ' +
+          'lalu tekan Lanjutkan lagi.';
+        return;
+      }
+
+      const total = cart.reduce(
+        (sum, x) =>
+          sum + Number(x.price) * Number(x.quantity),
+        0
+      );
+
+      /* VARIAN PERLU KONFIRMASI */
+      if (cart.some(x => x.requiresConfirmation)) {
+        showResult(
+          '💬 Konfirmasi melalui WhatsApp',
+          'Ada variasi yang perlu dicek ke supplier. ' +
+          'Seluruh keranjang ini harus dikonfirmasi ' +
+          'admin sebelum pembayaran.'
+        );
+
+        const lines = [
+          'Halo Admin Digitibee 🐝💗',
+          '',
+          'Aku mau cek ketersediaan produk:',
+          '',
+          `Nama: ${name}`,
+          `Order melalui: ${
+            channel === 'wa' ? 'WhatsApp' : 'Instagram'
+          }`,
+          `${
+            channel === 'wa'
+              ? 'Nomor WhatsApp'
+              : 'Username Instagram'
+          }: ${channel === 'wa' ? phone : ig}`,
+          `Perangkat: ${device}`,
+          `Lokasi perangkat: ${location}`,
+          '',
+          ...cart.map((x, i) =>
+            `${i + 1}. ${clean(x.productName)} | ` +
+            `${clean(x.variantName)} | ` +
+            `${clean(x.duration)} | ` +
+            `${x.quantity} × ${formatRupiah(x.price)} | ` +
+            `${x.requiresConfirmation
+              ? 'Perlu Konfirmasi'
+              : 'Ready'}`
+          ),
+          '',
+          `Total: ${formatRupiah(total)}`,
+          `Catatan: ${note || '-'}`,
+          '',
+          'Mohon cek ketersediaan. Aku akan bayar ' +
+          'lewat website Digitibee setelah disetujui. ' +
+          'Terima kasih!'
+        ];
+
+        const message = lines.join('\n');
+
+        const link = document.createElement('a');
+        link.className = 'db-action';
+        link.textContent = 'Buka WhatsApp Admin';
+
+        link.href =
+          WHATSAPP_ADMIN +
+          '?text=' + encodeURIComponent(message);
+
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+
+        result.appendChild(link);
+
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'db-action';
+        copy.textContent = 'Salin Pesan';
+
+        copy.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(message);
+            copy.textContent = 'Pesan Tersalin ✓';
+          } catch {
+            alert(
+              'Gagal menyalin otomatis. ' +
+              'Coba gunakan browser Safari.'
+            );
+          }
+        });
+
+        result.appendChild(copy);
+
+        notice.textContent =
+          'Jangan bayar sebelum mendapat persetujuan admin.';
+
+      } else {
+        /* SEMUA VARIAN READY */
+        showResult(
+          '✅ Semua Produk Ready',
+          `Detail sudah lengkap. Total ${
+            formatRupiah(total)
+          }. Tahap berikutnya adalah halaman pembayaran ` +
+          'Digitibee yang aman. Pembayaran belum ' +
+          'diaktifkan karena sistem pesanan dan ' +
+          'verifikasi admin belum dibuat.'
+        );
+
+        const pay = document.createElement('button');
+        pay.type = 'button';
+        pay.className = 'db-action';
+        pay.disabled = true;
+        pay.textContent = 'Pembayaran Belum Aktif';
+
+        result.appendChild(pay);
+
+        notice.textContent =
+          'Produk ready tidak perlu konfirmasi ' +
+          'melalui WhatsApp.';
+      }
+
+    } catch (error) {
+      console.error(error);
+
+      notice.textContent =
+        'Tidak dapat melanjutkan: ' + error.message;
+
+    } finally {
+      button.disabled = false;
+    }
+  });
+})();
 </script>
 
 </body>
