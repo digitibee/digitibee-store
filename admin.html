@@ -1750,5 +1750,934 @@ checkAdminSession();
 
 </script>
 
+
+<script>
+/* DIGITIBEE - UPGRADE PRODUK ADMIN */
+(function () {
+  'use strict';
+
+  if (window.digitibeeProdukUpgrade) return;
+  window.digitibeeProdukUpgrade = true;
+
+  const el = id => document.getElementById(id);
+  const rupiah = n =>
+    'Rp' + Number(n || 0).toLocaleString('id-ID');
+
+  /* DESAIN PRODUK MOBILE */
+  const style = document.createElement('style');
+
+  style.textContent = `
+    #productPage .menu-card {
+      padding: 16px;
+    }
+
+    #productPage .menu-card > button[onclick="openAddProduct()"] {
+      background: #e75a9a;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-bottom: 15px;
+    }
+
+    .db-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .db-stat {
+      background: #fff3f9;
+      border: 1px solid #f2cadd;
+      border-radius: 14px;
+      padding: 12px 5px;
+      text-align: center;
+    }
+
+    .db-stat b {
+      display: block;
+      font-size: 21px;
+      color: #ba477d;
+    }
+
+    .db-stat small {
+      font-size: 10px;
+      color: #876078;
+    }
+
+    .db-filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin: 13px 0;
+    }
+
+    .db-filters input {
+      grid-column: 1 / -1;
+    }
+
+    .db-filters input,
+    .db-filters select {
+      min-width: 0;
+      background: #fff;
+      border-radius: 12px;
+      padding: 11px;
+      font-size: 13px;
+    }
+
+    #productList .db-card {
+      background: rgba(255,255,255,.93);
+      border: 1px solid #f1cddd;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 9px 0;
+      box-shadow: 0 3px 12px #ae6b9015;
+    }
+
+    .db-head {
+      display: grid;
+      grid-template-columns: 58px minmax(0,1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .db-img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      background: #fff3fa;
+      border-radius: 12px;
+    }
+
+    .db-info {
+      min-width: 0;
+    }
+
+    .db-info h4 {
+      margin: 0 0 5px;
+      font-size: 15px;
+      color: #94456e;
+      overflow-wrap: anywhere;
+    }
+
+    .db-info p {
+      font-size: 11px;
+      color: #97768a;
+      margin: 4px 0;
+    }
+
+    .db-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 5px;
+    }
+
+    .db-badge {
+      display: inline-block;
+      padding: 4px 7px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .db-ready {
+      background: #def5e8;
+      color: #24764e;
+    }
+
+    .db-confirm {
+      background: #fff0d8;
+      color: #98621b;
+    }
+
+    .db-empty {
+      background: #eeeeee;
+      color: #666666;
+    }
+
+    #productList .db-edit {
+      background: #f9deeb;
+      color: #a73e75;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    #productList details {
+      border-top: 1px solid #f5dfeb;
+      margin-top: 12px;
+      padding-top: 10px;
+    }
+
+    #productList summary {
+      color: #b54b82;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .db-variant {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f8e8f0;
+      font-size: 12px;
+    }
+
+    .db-variant:last-child {
+      border-bottom: none;
+    }
+
+    .db-variant-price {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .db-variant-price strong {
+      display: block;
+      color: #ad3d78;
+    }
+
+    .db-checkout {
+      background: #fff0f7;
+      border: 1px solid #edc3d9;
+      padding: 12px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .db-checkout label {
+      display: block;
+      font-size: 13px;
+      color: #a7477d;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    .db-checkout small {
+      display: block;
+      color: #836476;
+      font-size: 11px;
+      margin-top: 7px;
+      line-height: 1.5;
+    }
+
+    .db-notice {
+      font-size: 12px;
+      color: #a7477d;
+      margin: 8px 0;
+    }
+
+    @media(max-width:360px) {
+      .db-head {
+        grid-template-columns: 48px minmax(0,1fr) auto;
+        gap: 7px;
+      }
+
+      .db-img {
+        width: 48px;
+        height: 48px;
+      }
+
+      #productList .db-edit {
+        padding: 8px;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  /* PILIHAN CHECKOUT DI SETIAP VARIASI */
+  const oldAddVariant = window.addVariantRow;
+
+  window.addVariantRow = function () {
+    oldAddVariant();
+
+    const rows = el('variantList')
+      .querySelectorAll('.variant-row');
+
+    const row = rows[rows.length - 1];
+    if (!row) return;
+
+    const field = document.createElement('div');
+    field.className = 'db-checkout';
+
+    const label = document.createElement('label');
+    label.textContent = 'Metode Pembelian';
+
+    const select = document.createElement('select');
+    select.className = 'db-checkout-mode';
+
+    select.add(new Option(
+      '✅ Ready — Langsung Bayar',
+      'ready'
+    ));
+
+    select.add(new Option(
+      '💬 Perlu Konfirmasi WhatsApp',
+      'confirm'
+    ));
+
+    select.value = 'confirm';
+
+    const help = document.createElement('small');
+    help.textContent =
+      'Atur status untuk variasi ini. Setiap variasi bisa berbeda.';
+
+    field.append(label, select, help);
+
+    const remove = row.querySelector('.remove-variant');
+
+    if (remove) {
+      row.insertBefore(field, remove);
+    } else {
+      row.appendChild(field);
+    }
+  };
+
+  /* MEMUAT STATUS SAAT EDIT PRODUK */
+  const oldEditProduct = window.editProduct;
+
+  window.editProduct = async function (productId) {
+    await oldEditProduct(productId);
+
+    if (editingProductId !== productId) return;
+
+    try {
+      const { data, error } = await supabaseClient
+        .from('product_variants')
+        .select('id, requires_confirmation')
+        .eq('product_id', productId);
+
+      if (error) throw error;
+
+      const statuses = new Map(
+        (data || []).map(v => [
+          String(v.id),
+          v.requires_confirmation
+        ])
+      );
+
+      el('variantList')
+        .querySelectorAll('.variant-row')
+        .forEach(row => {
+          const select =
+            row.querySelector('.db-checkout-mode');
+
+          if (!select) return;
+
+          const needsConfirm =
+            statuses.get(String(row.dataset.variantId));
+
+          select.value =
+            needsConfirm === false ? 'ready' : 'confirm';
+        });
+
+    } catch (error) {
+      el('productMessage').textContent =
+        'Gagal memuat status: ' + error.message;
+    }
+  };
+
+  /* SIMPAN PRODUK DAN METODE PEMBELIAN */
+  window.saveProduct = async function () {
+    const message = el('productMessage');
+    const button = document.querySelector(
+      '#addProductPage button[onclick="saveProduct()"]'
+    );
+
+    const file = el('productImage').files[0];
+    const name = el('productName').value.trim();
+    const description =
+      el('productDescription').value.trim();
+    const category = el('productCategory').value;
+    const availability =
+      el('productAvailability').value;
+
+    const isEditing = editingProductId !== null;
+
+    const rows = [
+      ...el('variantList').querySelectorAll('.variant-row')
+    ];
+
+    const variants = rows.map(row => ({
+      id: row.dataset.variantId || null,
+      name: row.querySelector('.variant-name')
+        .value.trim(),
+      duration: row.querySelector('.variant-duration')
+        .value,
+      rawPrice: row.querySelector('.variant-price')
+        .value.trim(),
+      price: Number(
+        row.querySelector('.variant-price').value
+      ),
+      stock: Number(
+        row.querySelector('.variant-stock').value
+      ),
+      requires_confirmation:
+        row.querySelector('.db-checkout-mode')
+          ?.value !== 'ready'
+    }));
+
+    if (!name || (!isEditing && !file)) {
+      message.textContent =
+        'Nama dan foto produk wajib diisi.';
+      return;
+    }
+
+    if (!category) {
+      message.textContent =
+        'Pilih kategori produk terlebih dahulu.';
+      return;
+    }
+
+    if (file && (
+      !['image/png','image/jpeg','image/webp','image/gif']
+        .includes(file.type) ||
+      file.size > 5 * 1024 * 1024
+    )) {
+      message.textContent =
+        'Gunakan gambar JPG, PNG, WEBP, atau GIF maksimal 5 MB.';
+      return;
+    }
+
+    if (!variants.length || variants.some(v =>
+      !v.name ||
+      v.rawPrice === '' ||
+      !Number.isFinite(v.price) ||
+      v.price < 0 ||
+      !Number.isInteger(v.stock) ||
+      v.stock < 0
+    )) {
+      message.textContent =
+        'Lengkapi variasi, harga, dan stok dengan benar.';
+      return;
+    }
+
+    if (button) button.disabled = true;
+    message.textContent = 'Menyimpan produk...';
+
+    let uploadedPath = null;
+    let imageAttached = false;
+
+    try {
+      let imageUrl = null;
+
+      if (file) {
+        const ext = file.name.split('.').pop()
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, '');
+
+        uploadedPath =
+          Date.now() + '-' +
+          Math.random().toString(36).slice(2) +
+          '.' + ext;
+
+        const { error } = await supabaseClient.storage
+          .from('product-images')
+          .upload(uploadedPath, file, {
+            upsert: false,
+            contentType: file.type
+          });
+
+        if (error) throw error;
+
+        const { data } = supabaseClient.storage
+          .from('product-images')
+          .getPublicUrl(uploadedPath);
+
+        imageUrl = data.publicUrl;
+      }
+
+      let productId = editingProductId;
+
+      if (isEditing) {
+        const updateData = {
+          category_id: category,
+          name,
+          description,
+          price: 0,
+          stock: 0,
+          availability_type: availability
+        };
+
+        if (imageUrl) {
+          updateData.image_url = imageUrl;
+        }
+
+        const { error } = await supabaseClient
+          .from('products')
+          .update(updateData)
+          .eq('id', productId);
+
+        if (error) throw error;
+
+      } else {
+        const { data, error } = await supabaseClient
+          .from('products')
+          .insert({
+            category_id: category,
+            name,
+            description,
+            image_url: imageUrl,
+            price: 0,
+            stock: 0,
+            status: 'active',
+            availability_type: availability
+          })
+          .select('id')
+          .single();
+
+        if (error) throw error;
+        productId = data.id;
+      }
+
+      imageAttached = Boolean(imageUrl);
+
+      const { data: oldVariants, error: oldError } =
+        await supabaseClient
+          .from('product_variants')
+          .select('id')
+          .eq('product_id', productId);
+
+      if (oldError) throw oldError;
+
+      const variantData = variants.map(v => {
+        const item = {
+          product_id: productId,
+          name: v.name,
+          duration: v.duration,
+          price: v.price,
+          stock: v.stock,
+          requires_confirmation:
+            v.requires_confirmation
+        };
+
+        if (v.id) item.id = v.id;
+        return item;
+      });
+
+      const { error: variantError } =
+        await supabaseClient
+          .from('product_variants')
+          .upsert(variantData);
+
+      if (variantError) throw variantError;
+
+      const currentIds = new Set(
+        variants.filter(v => v.id)
+          .map(v => String(v.id))
+      );
+
+      const removedIds = (oldVariants || [])
+        .map(v => v.id)
+        .filter(id => !currentIds.has(String(id)));
+
+      if (removedIds.length) {
+        const { error } = await supabaseClient
+          .from('product_variants')
+          .delete()
+          .in('id', removedIds);
+
+        if (error) throw error;
+      }
+
+      editingProductId = null;
+
+      el('productImage').value = '';
+      el('addProductPage').style.display = 'none';
+      el('productPage').style.display = 'block';
+
+      await window.loadProducts();
+
+      const notice = el('dbNotice');
+      if (notice) {
+        notice.textContent =
+          'Produk berhasil disimpan! 💗';
+      }
+
+    } catch (error) {
+      console.error(error);
+
+      if (uploadedPath && !imageAttached) {
+        try {
+          await supabaseClient.storage
+            .from('product-images')
+            .remove([uploadedPath]);
+        } catch (_) {}
+      }
+
+      message.textContent =
+        'Gagal menyimpan: ' + error.message +
+        '. Periksa kembali data produk.';
+
+    } finally {
+      if (button) button.disabled = false;
+    }
+  };
+
+  /* PENCARIAN DAN FILTER PRODUK */
+  function prepareControls() {
+    if (el('dbFilters')) return;
+
+    const list = el('productList');
+    const parent = list.parentElement;
+
+    const stats = document.createElement('div');
+    stats.id = 'dbStats';
+    stats.className = 'db-stats';
+
+    const filters = document.createElement('div');
+    filters.id = 'dbFilters';
+    filters.className = 'db-filters';
+
+    filters.innerHTML = `
+      <input
+        id="dbSearch"
+        type="search"
+        placeholder="🔍 Cari produk atau variasi..."
+      >
+
+      <select id="dbStatusFilter">
+        <option value="all">Semua Produk</option>
+        <option value="ready">Ada Varian Ready</option>
+        <option value="confirm">Perlu Konfirmasi</option>
+      </select>
+
+      <select id="dbSort">
+        <option value="newest">Terbaru</option>
+        <option value="az">Nama A-Z</option>
+        <option value="price">Harga Termurah</option>
+      </select>
+    `;
+
+    const notice = document.createElement('p');
+    notice.id = 'dbNotice';
+    notice.className = 'db-notice';
+
+    parent.insertBefore(stats, list);
+    parent.insertBefore(filters, list);
+    parent.insertBefore(notice, list);
+
+    el('dbSearch').addEventListener(
+      'input', renderCards
+    );
+
+    el('dbStatusFilter').addEventListener(
+      'change', renderCards
+    );
+
+    el('dbSort').addEventListener(
+      'change', renderCards
+    );
+  }
+
+  let productCache = [];
+
+  function makeText(tag, content, className = '') {
+    const node = document.createElement(tag);
+    node.className = className;
+    node.textContent = String(content);
+    return node;
+  }
+
+  function renderCards() {
+    const list = el('productList');
+
+    const search = (el('dbSearch')?.value || '')
+      .toLowerCase().trim();
+
+    const filter = el('dbStatusFilter')?.value || 'all';
+    const sort = el('dbSort')?.value || 'newest';
+
+    let products = productCache.filter(p => {
+      const text = [
+        p.name,
+        p.description,
+        ...p.variants.flatMap(v => [
+          v.name, v.duration
+        ])
+      ].join(' ').toLowerCase();
+
+      const matchesSearch = text.includes(search);
+
+      const hasReady = p.variants.some(v =>
+        !v.requires_confirmation && Number(v.stock) > 0
+      );
+
+      const hasConfirm = p.variants.some(v =>
+        v.requires_confirmation
+      );
+
+      return matchesSearch && (
+        filter === 'all' ||
+        (filter === 'ready' && hasReady) ||
+        (filter === 'confirm' && hasConfirm)
+      );
+    });
+
+    if (sort === 'az') {
+      products.sort((a, b) =>
+        a.name.localeCompare(b.name, 'id')
+      );
+    }
+
+    if (sort === 'price') {
+      products.sort((a, b) =>
+        a.minPrice - b.minPrice
+      );
+    }
+
+    list.replaceChildren();
+
+    if (!products.length) {
+      list.textContent =
+        'Produk tidak ditemukan.';
+      return;
+    }
+
+    products.forEach(product => {
+      const card = document.createElement('article');
+      card.className = 'db-card';
+
+      const head = document.createElement('div');
+      head.className = 'db-head';
+
+      let img;
+
+      if (product.image_url &&
+          /^https:\/\//i.test(product.image_url)) {
+        img = document.createElement('img');
+        img.src = product.image_url;
+        img.alt = product.name;
+        img.className = 'db-img';
+        img.loading = 'lazy';
+      } else {
+        img = makeText('div', '🐝', 'db-img');
+      }
+
+      const info = document.createElement('div');
+      info.className = 'db-info';
+
+      info.appendChild(
+        makeText('h4', product.name)
+      );
+
+      info.appendChild(makeText(
+        'p',
+        product.variants.length + ' variasi • ' +
+        (product.variants.length
+          ? 'Mulai ' + rupiah(product.minPrice)
+          : 'Belum ada harga')
+      ));
+
+      const badges = document.createElement('div');
+      badges.className = 'db-badges';
+
+      if (product.variants.some(v =>
+        !v.requires_confirmation && v.stock > 0
+      )) {
+        badges.appendChild(
+          makeText('span', '✓ Ready',
+            'db-badge db-ready')
+        );
+      }
+
+      if (product.variants.some(v =>
+        v.requires_confirmation
+      )) {
+        badges.appendChild(
+          makeText('span', '💬 Konfirmasi WA',
+            'db-badge db-confirm')
+        );
+      }
+
+      if (!product.variants.some(v =>
+        v.requires_confirmation || v.stock > 0
+      )) {
+        badges.appendChild(
+          makeText('span', 'Stok Kosong',
+            'db-badge db-empty')
+        );
+      }
+
+      info.appendChild(badges);
+
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'db-edit';
+      edit.textContent = '✎ Edit';
+
+      edit.onclick = () => window.editProduct(product.id);
+
+      head.append(img, info, edit);
+      card.appendChild(head);
+
+      if (product.variants.length) {
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+
+        summary.textContent =
+          'Lihat ' + product.variants.length + ' variasi';
+
+        details.appendChild(summary);
+
+        product.variants.forEach(v => {
+          const row = document.createElement('div');
+          row.className = 'db-variant';
+
+          const left = document.createElement('div');
+
+          left.appendChild(makeText(
+            'strong',
+            v.name + ' • ' + (v.duration || '-')
+          ));
+
+          left.appendChild(document.createElement('br'));
+
+          left.appendChild(makeText(
+            'span',
+            v.requires_confirmation
+              ? '💬 Konfirmasi WA'
+              : v.stock > 0
+                ? '✓ Ready'
+                : 'Stok Kosong',
+            'db-badge ' +
+            (v.requires_confirmation
+              ? 'db-confirm'
+              : v.stock > 0
+                ? 'db-ready'
+                : 'db-empty')
+          ));
+
+          const right = document.createElement('div');
+          right.className = 'db-variant-price';
+
+          right.appendChild(
+            makeText('strong', rupiah(v.price))
+          );
+
+          right.appendChild(
+            makeText('small', 'Stok: ' + v.stock)
+          );
+
+          row.append(left, right);
+          details.appendChild(row);
+        });
+
+        card.appendChild(details);
+      }
+
+      list.appendChild(card);
+    });
+  }
+
+  /* LOAD PRODUK RINGKAS */
+  window.loadProducts = async function () {
+    prepareControls();
+
+    const list = el('productList');
+    list.textContent = 'Memuat produk...';
+
+    try {
+      const { data: products, error } =
+        await supabaseClient
+          .from('products')
+          .select('id,name,description,image_url,created_at')
+          .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (!products || !products.length) {
+        productCache = [];
+        el('dbStats').replaceChildren();
+        list.textContent = 'Belum ada produk.';
+        return;
+      }
+
+      const allVariants = [];
+      const ids = products.map(p => p.id);
+
+      for (let i = 0; i < ids.length; i += 75) {
+        const { data, error: variantError } =
+          await supabaseClient
+            .from('product_variants')
+            .select(
+              'id,product_id,name,duration,price,stock,requires_confirmation'
+            )
+            .in('product_id', ids.slice(i, i + 75));
+
+        if (variantError) throw variantError;
+        allVariants.push(...(data || []));
+      }
+
+      const grouped = new Map();
+
+      allVariants.forEach(v => {
+        const id = String(v.product_id);
+
+        if (!grouped.has(id)) grouped.set(id, []);
+        grouped.get(id).push(v);
+      });
+
+      productCache = products.map(p => {
+        const variants = grouped.get(String(p.id)) || [];
+
+        return {
+          ...p,
+          variants,
+          minPrice: variants.length
+            ? Math.min(...variants.map(v => Number(v.price)))
+            : Infinity
+        };
+      });
+
+      const readyCount = allVariants.filter(v =>
+        !v.requires_confirmation && Number(v.stock) > 0
+      ).length;
+
+      const confirmCount = allVariants.filter(v =>
+        v.requires_confirmation
+      ).length;
+
+      const stats = el('dbStats');
+      stats.replaceChildren();
+
+      [
+        [products.length, 'Total Produk'],
+        [readyCount, 'Varian Ready'],
+        [confirmCount, 'Perlu Konfirmasi']
+      ].forEach(([value, caption]) => {
+        const box = document.createElement('div');
+        box.className = 'db-stat';
+
+        box.appendChild(makeText('b', value));
+        box.appendChild(makeText('small', caption));
+
+        stats.appendChild(box);
+      });
+
+      renderCards();
+
+    } catch (error) {
+      console.error(error);
+
+      list.textContent =
+        'Gagal memuat produk: ' + error.message;
+    }
+  };
+
+})();
+</script>
+
+
 </body>
 </html>
