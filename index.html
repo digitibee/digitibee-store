@@ -1705,9 +1705,7 @@ async function loadProducts() {
   message.textContent = "";
 
   try {
-    const { data: products, error } = await supabaseClient
-      .from("products")
-      for (const product of filteredProducts) {
+  
   const { data: variants, error: variantError } = await supabaseClient
     .from("product_variants")
     .select("id, name, duration, price, stock")
@@ -1749,7 +1747,7 @@ container.innerHTML = "";
     for (const product of filteredProducts) {
       const { data: variants, error: variantError } = await supabaseClient
         .from("product_variants")
-        .select("id, name, duration, price, stock")
+        .select("id, name, duration, price, stock, requires_confirmation")
         .eq("product_id", product.id)
         .order("created_at", { ascending: true });
 
@@ -2332,14 +2330,18 @@ window.addEventListener("scroll", function () {
 
   /* PENCARIAN PRODUK */
 
+
 document.getElementById("catalogSearch")
   .addEventListener("input", function() {
     catalogSearchText = this.value.trim();
     loadProducts();
   });
 
+</script>
+
 <script>
 /* DIGITIBEE - CUSTOMER CHECKOUT UPGRADE */
+
 (() => {
   'use strict';
 
