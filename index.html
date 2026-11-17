@@ -1423,7 +1423,6 @@ const WHATSAPP_ADMIN = "https://wa.me/message/YELJW322HY22G1";
 function showDigitibeePopup({
   title = "Informasi",
   message = "",
-  icon = "♡",
   confirmText = "Mengerti",
   cancelText = null,
   onConfirm = null
@@ -1709,17 +1708,25 @@ function openProductModal(product, variants) {
 
   document.getElementById("modalAddCart").onclick = () => {
   if (modalSelectedVariants.length === 0) {
-    alert("Silakan pilih minimal satu paket.");
-    return;
-  }
+  showDigitibeePopup({
+    title: "Pilih paket dulu, yuk!",
+    message: "Silakan pilih minimal satu paket sebelum memasukkannya ke keranjang.",
+    confirmText: "Mengerti"
+  });
+  return;
+}
 
   for (const item of modalSelectedVariants) {
     if (
       product.availability_type === "ready_stock" &&
       item.quantity > Number(item.variant.stock)
     ) {
-      alert("Jumlah " + item.variant.name + " melebihi stok yang tersedia.");
-      return;
+      showDigitibeePopup({
+  title: "Stok tidak mencukupi",
+  message: "Jumlah " + item.variant.name + " melebihi stok yang tersedia.",
+  confirmText: "Mengerti"
+});
+return;
     }
   }
 
@@ -1727,8 +1734,13 @@ function openProductModal(product, variants) {
     addToCart(product, item.variant, item.quantity);
   });
 
-  alert("Produk berhasil ditambahkan!🩷");
   closeProductModal();
+
+showDigitibeePopup({
+  title: "Yeay, berhasil!",
+  message: "Produk berhasil ditambahkan ke keranjang. 🩷",
+  confirmText: "Oke, siap!"
+});
 };
 
   modal.hidden = false;
@@ -1929,7 +1941,6 @@ function removeCartItem(index) {
   showDigitibeePopup({
     title: "Yakin ingin menghapus?",
     message: "Produk " + item.productName + " akan dihapus dari keranjang.",
-    icon: "♡",
     confirmText: "Hapus",
     cancelText: "Batal",
     onConfirm: () => {
@@ -2001,7 +2012,6 @@ function sendOrderWhatsApp() {
   showDigitibeePopup({
     title: "Keranjang masih kosong",
     message: "Yuk, pilih produk favoritmu terlebih dahulu!",
-    icon: "🛒",
     confirmText: "Mengerti"
   });
   return false;
@@ -2015,7 +2025,6 @@ function sendOrderWhatsApp() {
   showDigitibeePopup({
     title: "Data belum lengkap",
     message: "Mohon isi nama dan nomor WhatsApp terlebih dahulu, ya.",
-    icon: "💌",
     confirmText: "Mengerti"
   });
   return;
@@ -2179,7 +2188,6 @@ testimonialPhoto.addEventListener("change", function () {
     showDigitibeePopup({
   title: "File tidak sesuai",
   message: "Silakan pilih file gambar, ya.",
-  icon: "🖼️",
   confirmText: "Mengerti"
 });
     this.value = "";
@@ -2191,7 +2199,6 @@ testimonialPhoto.addEventListener("change", function () {
     showDigitibeePopup({
   title: "Ukuran foto terlalu besar",
   message: "Ukuran foto maksimal 5 MB. Silakan pilih foto yang lebih kecil.",
-  icon: "📸",
   confirmText: "Mengerti"
 });
     this.value = "";
@@ -2226,7 +2233,6 @@ document.getElementById("testimonialForm")
   showDigitibeePopup({
   title: "Data belum lengkap",
   message: "Mohon lengkapi nama dan pesan testimoni terlebih dahulu.",
-  icon: "💌",
   confirmText: "Mengerti"
 });
     return;
@@ -2238,7 +2244,6 @@ document.getElementById("testimonialForm")
     showDigitibeePopup({
   title: "Format foto tidak sesuai",
   message: "Gunakan foto dengan format JPG, PNG, atau WEBP.",
-  icon: "🖼️",
   confirmText: "Mengerti"
 });
     return;
@@ -2248,7 +2253,6 @@ document.getElementById("testimonialForm")
     showDigitibeePopup({
   title: "Ukuran foto terlalu besar",
   message: "Ukuran foto maksimal 5 MB. Silakan pilih foto yang lebih kecil.",
-  icon: "📸",
   confirmText: "Mengerti"
 });
     return;
@@ -2322,7 +2326,6 @@ if (photo) {
     showDigitibeePopup({
   title: "Testimoni belum terkirim",
   message: "Terjadi kendala saat mengirim testimoni: " + error.message,
-  icon: "♡",
   confirmText: "Mengerti"
 });
 
