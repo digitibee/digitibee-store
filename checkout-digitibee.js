@@ -52,6 +52,46 @@
       background: #eeeeee;
       color: #777777;
     }
+
+    /* STATUS DI BAWAH NAMA PAKET */
+
+.modal-variant .variant-left {
+  display: grid !important;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 10px;
+  row-gap: 5px;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.modal-variant .variant-checkbox {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin: 0;
+}
+
+.modal-variant .variant-name {
+  grid-column: 2;
+  grid-row: 1;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.modal-variant .digitibee-status {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  font-size: 10px;
+  white-space: normal;
+}
+
+.modal-variant .variant-qty {
+  flex-shrink: 0;
+}
   `;
 
   document.head.appendChild(style);
@@ -155,7 +195,7 @@
               "digitibee-status digitibee-confirm";
 
             label.textContent =
-              "💬 Perlu Konfirmasi WhatsApp";
+            "💬 Konfirmasi WA";
 
           } else if (Number(variant.stock) > 0) {
 
