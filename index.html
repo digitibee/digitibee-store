@@ -1331,8 +1331,32 @@
           <label for="customerName">Nama</label>
           <input id="customerName" type="text" placeholder="Masukkan nama kamu">
 
+          <div style="margin:18px 0 12px;">
+  <label style="display:block;margin-bottom:10px;font-weight:700;">
+    Order Melalui
+  </label>
+
+  <div style="display:flex;gap:10px;">
+    <label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border:1.5px solid #e65b9c;border-radius:14px;background:#ffe5f1;font-size:14px;cursor:pointer;">
+      <input type="radio" name="orderChannel" value="whatsapp" checked>
+      WhatsApp
+    </label>
+
+    <label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border:1.5px solid #e65b9c;border-radius:14px;background:#fff;font-size:14px;cursor:pointer;">
+      <input type="radio" name="orderChannel" value="instagram">
+      Instagram
+    </label>
+  </div>
+</div>
+          
           <label for="customerPhone">Nomor WhatsApp</label>
           <input id="customerPhone" type="tel" placeholder="Contoh: 62812xxxx">
+          
+          <label for="customerDevice">Nama Perangkat</label>
+          <input id="customerDevice" type="text" placeholder="Contoh: iPhone 15 Pro Max">
+
+          <label for="customerLocation">Lokasi Perangkat</label>
+          <input id="customerLocation" type="text" placeholder="Contoh: Palu, Sulawesi Tengah">
 
           <label for="customerNote">Catatan Pesanan (Opsional)</label>
           <textarea id="customerNote" placeholder="Tulis catatan jika ada..."></textarea>
@@ -1930,6 +1954,38 @@ function renderCart() {
 /* PESANAN WHATSAPP */
 
 
+function updateOrderChannel() {
+  const isIG = document.querySelector('input[name="orderChannel"]:checked')?.value === "instagram";
+  const contact = document.getElementById("customerPhone");
+  const label = document.querySelector('label[for="customerPhone"]');
+  const button = document.querySelector('button[onclick*="sendOrderWhatsApp"]');
+
+  if (contact) {
+    contact.type = isIG ? "text" : "tel";
+    contact.placeholder = isIG ? "Contoh: @namakamu" : "Contoh: 62812xxxx";
+  }
+
+  if (label) {
+    label.textContent = isIG ? "Username Instagram" : "Nomor WhatsApp";
+  }
+
+  if (button) {
+    button.textContent = isIG
+      ? "LANJUTKAN VIA INSTAGRAM"
+      : "KIRIM PESANAN VIA WHATSAPP";
+  }
+}
+
+document.addEventListener("change", function(event) {
+  if (event.target.name === "orderChannel") {
+    const contact = document.getElementById("customerPhone");
+    if (contact) contact.value = "";
+    updateOrderChannel();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", updateOrderChannel);
+
 function sendOrderWhatsApp() {
   if (cart.length === 0) {
     alert("Keranjang masih kosong!");
@@ -1937,13 +1993,22 @@ function sendOrderWhatsApp() {
   }
 
   const name = document.getElementById("customerName").value.trim();
-  const phone = document.getElementById("customerPhone").value.trim();
+  const contact = document.getElementById("customerPhone").value.trim();
+  const device = document.getElementById("customerDevice").value.trim();
+  const location = document.getElementById("customerLocation").value.trim();
   const note = document.getElementById("customerNote").value.trim();
 
-  if (!name || !phone) {
-    alert("Mohon isi nama dan nomor WhatsApp terlebih dahulu!");
+  const isIG = document.querySelector('input[name="orderChannel"]:checked')?.value === "instagram";
+  const channel = isIG ? "Instagram" : "WhatsApp";
+
+  if (!name || !contact || !device || !location) {
+    alert("Mohon lengkapi nama, kontak, nama perangkat, dan lokasi perangkat!");
     return;
   }
+
+  const contactValue = isIG
+    ? "@" + contact.replace(/^@/, "")
+    : contact;
 
   const formatRupiah = (angka) =>
     Number(angka).toLocaleString("id-ID");
@@ -1953,20 +2018,23 @@ Saya mau order aplikasi premium…
 
 👤 *Data Pemesanan*
 ◦ *Nama :* ${name}
-◦ *WhatsApp :* ${phone}
+◦ *Order Melalui :* ${channel}
+◦ *${channel} :* ${contactValue}
+◦ *Nama Perangkat :* ${device}
+◦ *Lokasi Perangkat :* ${location}
 ◦ *Catatan :* ${note || "-"}
 
 📝 *Daftar Pesanan*
 `;
 
   cart.forEach((item, index) => {
-  const subtotal = Number(item.price) * Number(item.quantity);
+    const subtotal = Number(item.price) * Number(item.quantity);
 
-  message += `${index + 1}. *${item.productName.toUpperCase()}*
+    message += `${index + 1}. *${item.productName.toUpperCase()}*
     ⇉ Paket : ${item.variantName} ${item.duration}
     ⇉ Jumlah : ${item.quantity} × ${formatRupiah(item.price)} = ${formatRupiah(subtotal)}
 `;
-});
+  });
 
   const total = cart.reduce(
     (sum, item) => sum + Number(item.price) * Number(item.quantity),
@@ -1977,6 +2045,30 @@ Saya mau order aplikasi premium…
 💳 *Total Pembayaran : ${formatRupiah(total)}*
 
 Mohon dicek ketersediaan produknya serta infoin pembayarannya ya min. Kamsahamnida ♡`;
+
+  if (isIG) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(message)
+        .then(() => {
+          alert("Detail pesanan berhasil disalin. Tempel pesannya di DM Instagram @digitibee.");
+        })
+        .catch(() => {
+          window.prompt("Salin pesan berikut untuk dikirim ke Instagram:", message);
+        });
+    } else {
+      window.prompt("Salin pesan berikut untuk dikirim ke Instagram:", message);
+    }
+
+    const instagramWindow = window.open(
+      "https://www.instagram.com/digitibee/",
+      "_blank"
+    );
+
+    if (!instagramWindow) {
+      alert("Silakan buka Instagram @digitibee dan kirim detail pesanan melalui DM.");
+    }
+    return;
+  }
 
   const whatsappURL =
     WHATSAPP_ADMIN + "?text=" + encodeURIComponent(message);
