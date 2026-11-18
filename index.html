@@ -1307,6 +1307,44 @@
       </div>
     </section>
 
+    <style>
+/* Area checkout transparan, bukan satu kotak putih besar */
+#keranjang .content-panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+/* Kotak putih khusus produk dan formulir */
+#keranjang .db-white-card {
+  background: #ffffff !important;
+  border: 1px solid #ffd0e4 !important;
+  border-radius: 22px !important;
+  padding: 17px !important;
+  box-shadow: 0 5px 14px rgba(207, 79, 145, 0.12) !important;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+/* Judul Data Pemesan di luar kotak putih */
+#keranjang .db-data-title {
+  color: #d95791;
+  font-size: 18px;
+  font-weight: 900;
+  margin: 23px 4px 12px;
+}
+
+/* Total harga tetap di dalam kotak produk */
+#keranjang .db-white-card #cartTotal {
+  background: transparent !important;
+  border-top: 1px dashed #f0b5d0;
+  padding-top: 13px;
+  margin-top: 13px;
+}
+</style>
+
     <!-- KERANJANG -->
     <section class="store-page" id="keranjang">
 
@@ -1328,14 +1366,26 @@
 
   <div style="height:8px;"></div>
 
+<!-- KOTAK PUTIH PRODUK -->
+<div class="db-white-card">
+
   <div id="cartList">
-          <p class="empty-message">Keranjangmu masih kosong 🛒</p>
-        </div>
+    <p class="empty-message">Keranjangmu masih kosong 🛒</p>
+  </div>
 
-        <div id="cartTotal" class="cart-total">Total: Rp0</div>
+  <div id="cartTotal" class="cart-total">
+    Total: Rp0
+  </div>
 
-        <div class="customer-form">
-          <h3 style="color:#d95791;">Data Pemesan</h3>
+</div>
+
+<!-- JUDUL DI LUAR KOTAK PUTIH -->
+<h3 class="db-data-title">
+  Data Pemesan
+</h3>
+
+<!-- KOTAK PUTIH FORMULIR -->
+<div class="customer-form db-white-card">
 
           <label for="customerName">Nama</label>
           <input id="customerName" type="text" placeholder="Masukkan nama kamu">
@@ -1438,9 +1488,11 @@
   <p class="status-note" style="margin:0;font-size:8px;line-height:1.5;">
     Jika ada paket Konfirmasi WA, pesanan akan diarahkan ke admin terlebih dahulu. Produk Ready bisa lanjut ke pembayaran setelah data lengkap.
   </p>
-</div>
-      </div>
-    </section>
+
+    </div> <!-- Penutup catatan pink -->
+</div> <!-- Penutup kotak formulir -->
+</div> <!-- Penutup content-panel -->
+</section>
 
     <!-- LEADERBOARD -->
     <section class="store-page" id="leaderboard">
