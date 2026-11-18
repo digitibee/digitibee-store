@@ -1331,21 +1331,80 @@
           <label for="customerName">Nama</label>
           <input id="customerName" type="text" placeholder="Masukkan nama kamu">
 
-          <div style="margin:18px 0 12px;">
-  <label style="display:block;margin-bottom:10px;font-weight:700;">
+         <style>
+#db-order-channel .db-choice {
+  position: relative;
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  cursor: pointer;
+  min-width: 0;
+}
+
+#db-order-channel input[type="radio"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none;
+}
+
+#db-order-channel .db-choice-box {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 6px;
+  border: 1.5px solid #e65b9c;
+  border-radius: 14px;
+  background: #fff;
+  color: #80516a;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#db-order-channel input:checked + .db-choice-box {
+  background: #ffe1ef;
+  border-color: #d94e93;
+  color: #c63b80;
+}
+
+#db-order-channel .db-check {
+  display: none;
+}
+
+#db-order-channel input:checked + .db-choice-box .db-check {
+  display: inline;
+}
+</style>
+
+<div id="db-order-channel" style="margin:12px 0 14px;">
+  <div style="font-weight:700;color:#704c5d;margin-bottom:8px;">
     Order Melalui
-  </label>
+  </div>
 
-  <div style="display:flex;gap:10px;">
-    <label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border:1.5px solid #e65b9c;border-radius:14px;background:#ffe5f1;font-size:14px;cursor:pointer;">
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;">
+
+    <label class="db-choice">
       <input type="radio" name="orderChannel" value="whatsapp" checked>
-      WhatsApp
+      <span class="db-choice-box">
+        💬 WhatsApp <span class="db-check">✓</span>
+      </span>
     </label>
 
-    <label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border:1.5px solid #e65b9c;border-radius:14px;background:#fff;font-size:14px;cursor:pointer;">
+    <label class="db-choice">
       <input type="radio" name="orderChannel" value="instagram">
-      Instagram
+      <span class="db-choice-box">
+        📸 Instagram <span class="db-check">✓</span>
+      </span>
     </label>
+
   </div>
 </div>
           
@@ -1365,9 +1424,9 @@
             KIRIM PESANAN VIA WHATSAPP
           </button>
 
+            <span style="color:#d94e93;font-size:22px;">ⓘ</span>
           <p class="status-note">
-            Untuk produk PRE-ORDER, admin akan memeriksa ketersediaan terlebih dahulu.
-            Jangan melakukan pembayaran sebelum mendapat konfirmasi admin.
+            Jika ada paket Konfirmasi WA, pesanan akan diarahkan ke admin terlebih dahulu. Produk Ready bisa lanjut ke pembayaran setelah data lengkap
           </p>
         </div>
       </div>
