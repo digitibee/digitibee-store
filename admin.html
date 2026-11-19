@@ -360,22 +360,25 @@ body::before {
   </div>
 
   <!-- HALAMAN PRODUK -->
-  <div id="productPage" style="display:none;">
+<div id="productPage" style="display:none;">
 
-    <button class="page-button" onclick="backToDashboard()">
-      ← Kembali Ke Dashboard
+  <button class="page-button" onclick="backToDashboard()">
+    ← Kembali Ke Dashboard
+  </button>
+
+  <section class="menu-card">
+
+    <button type="button" onclick="openAddProduct()">
+      + Tambah Produk
     </button>
 
-      <button onclick="openAddProduct()">
-        + Tambah Produk
-      </button>
+    <div id="productList">
+      <p>Daftar produk akan ditampilkan di sini.</p>
+    </div>
 
-      <div id="productList">
-        <p>Daftar produk akan ditampilkan di sini.</p>
-      </div>
-    </section>
+  </section>
 
-  </div>
+</div>
 
   <!-- FORM TAMBAH / EDIT PRODUK -->
   <div id="addProductPage" style="display:none;">
