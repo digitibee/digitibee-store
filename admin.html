@@ -2712,9 +2712,9 @@ checkAdminSession();
     try {
       const { data, error } =
         await supabaseClient.functions.invoke(
-          "digitibee-telegram",
-          { body: { type: "test" } }
-        );
+  "dynamic-handler",
+  { body: { type: "test" } }
+);
 
       if (error) throw error;
       if (!data?.success) {
