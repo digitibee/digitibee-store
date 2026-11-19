@@ -257,10 +257,11 @@
             String(item.variant_id)
           );
 
-          const name =
-            (item.product_name || "Produk") +
-            (variant ? " — " + variant.name : "") +
-            (variant?.duration ? " / " + variant.duration : "");
+          const name = [
+  item.product_name || "Produk",
+  variant?.name,
+  variant?.duration
+].filter(Boolean).join(" ");
 
           row(card, "Paket", name);
           row(
