@@ -1034,6 +1034,8 @@
 }
 
   </style>
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body>
@@ -1561,7 +1563,13 @@
 
           <label for="customerNote">Catatan Pesanan (Opsional)</label>
           <textarea id="customerNote" placeholder="Tulis catatan jika ada..."></textarea>
-
+          <div style="margin:14px 0;max-width:100%;overflow:hidden;">
+  <div
+    class="cf-turnstile"
+    data-sitekey="GANTI_DENGAN_SITE_KEY_KAMU"
+    data-theme="light"
+  ></div>
+</div>
           <button class="pink-button" onclick="sendOrderWhatsApp()">
             KIRIM PESANAN VIA WHATSAPP
           </button>
