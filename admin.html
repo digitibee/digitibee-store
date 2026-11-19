@@ -265,6 +265,61 @@ body::before {
   padding: 5px 10px;
 }
 
+/* RAPIIKAN HALAMAN PESANAN DIGITIBEE */
+#orderPage .menu-card {
+  padding: 18px !important;
+  border-radius: 20px;
+}
+
+#orderPage .menu-card > h3 {
+  margin: 0 0 5px !important;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+#orderPage .dbm-desc {
+  margin: 0 0 15px !important;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#orderPage .dbm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0 !important;
+}
+
+#orderPage #dbmRefresh,
+#orderPage #dbTelegramTest,
+#orderPage #dbOrderList ~ button {
+  width: 100% !important;
+  padding: 12px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-align: center;
+}
+
+#orderPage #dbOrderList,
+#orderPage #dbmList {
+  margin: 12px 0 !important;
+}
+
+#orderPage #dbOrderList > p,
+#orderPage #dbmList > .dbm-empty {
+  background: #fff0f7;
+  border: 1px solid #f2c7dd;
+  border-radius: 15px;
+  padding: 18px 12px;
+  text-align: center;
+  color: #966d83;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 !important;
+}
+    
   </style>
 </head>
 
@@ -2735,6 +2790,7 @@ checkAdminSession();
     }
   });
 })();
+
 </script>
 
   <script src="admin-orders.js.?v=1"></script>
