@@ -1943,7 +1943,7 @@ async function loadProducts() {
   try {
     const { data: products, error } = await supabaseClient
       .from("products")
-      .select("id, category_id, name, description, image_url, availability_type")
+      .select("id, name, duration, price, stock, requires_confirmation")
       .eq("status", "active")
       .order("created_at", { ascending: false });
 
@@ -2090,7 +2090,8 @@ function addToCart(product, variant, quantity) {
       price: Number(variant.price),
       stock: Number(variant.stock),
       availability: product.availability_type || "ready_stock",
-      quantity
+requiresConfirmation: variant.requires_confirmation === true,
+quantity
     });
   }
 
