@@ -265,57 +265,6 @@ body::before {
   padding: 5px 10px;
 }
 
-.variasi-action-wrap {
-  margin-top: 18px;
-}
-
-.variasi-add-row {
-  margin-bottom: 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f3bfd8;
-}
-
-.btn-tambah-variasi {
-  background: transparent;
-  border: none;
-  color: #e67fb0;
-  font-size: 16px;
-  font-weight: 800;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 0;
-}
-
-.variasi-main-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
-
-.btn-action {
-  background: transparent;
-  border: none;
-  color: #d96aa0;
-  font-size: 16px;
-  font-weight: 700;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 0;
-}
-
-.btn-simpan {
-  color: #d96aa0;
-}
-
-.btn-batal {
-  color: #d96aa0;
-}
-
-.btn-hapus {
-  color: #d96aa0;
-}
-
   </style>
 </head>
 
@@ -414,7 +363,7 @@ body::before {
   <div id="productPage" style="display:none;">
 
     <button class="page-button" onclick="backToDashboard()">
-      ← KEMBALI KE DASHBOARD
+      ← Kembali Ke Dashboard
     </button>
 
       <button onclick="openAddProduct()">
@@ -466,27 +415,48 @@ body::before {
         <div id="variantList"></div>
       </div>
 
-<div class="variasi-action-wrap">
-  <!-- Baris khusus tambah variasi -->
-  <div class="variasi-add-row">
-    <button type="button" class="btn-tambah-variasi">
-      + Tambah Variasi
+<div style="margin-top:20px;margin-bottom:20px;">
+
+  <!-- TOMBOL TAMBAH VARIASI -->
+  <div style="margin-bottom:18px;">
+    <button type="button" onclick="addVariantRow()" style="background:#ffe0ee;color:#b54780;border:1px solid #f3bad5;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:800;text-decoration:none;">
+      + TAMBAH VARIASI
     </button>
   </div>
 
-  <!-- Baris khusus aksi form -->
-  <div class="variasi-main-actions">
-    <button type="submit" class="btn-action btn-simpan">Simpan</button>
-    <button type="button" class="btn-action btn-batal">Batal</button>
-    <button type="button" class="btn-action btn-hapus">Hapus</button>
+  <input type="hidden" id="productAvailability" value="ready_stock">
+
+  <!-- PEMISAH -->
+  <div style="border-top:1px solid #f0c5d9;margin-bottom:18px;"></div>
+
+  <!-- TOMBOL SIMPAN, BATAL, HAPUS -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+
+    <button type="button" onclick="saveProduct()" style="background:#d95791;color:white;border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weight:800;text-decoration:none;">
+      SIMPAN
+    </button>
+
+    <button type="button" onclick="backToProductPage()" style="background:#ffe6f1;color:#a84c7d;border:1px solid #f0bdd5;border-radius:11px;padding:12px 18px;font-size:14px;font-weight:800;text-decoration:none;">
+      BATAL
+    </button>
+
+    <button type="button" id="deleteProductButton" onclick="deleteProduct()" class="delete-product-btn" style="display:none;background:#fff0f2;color:#c54b68;border:1px solid #f3b5c3;border-radius:11px;padding:12px 18px;font-size:14px;font-weight:800;text-decoration:none;">
+      HAPUS
+    </button>
+
   </div>
 </div>
+
+      <p id="productMessage" class="message"></p>
+
+    </section>
+  </div>
 
   <!-- HALAMAN PESANAN -->
   <div id="orderPage" style="display:none;">
 
     <button class="page-button" onclick="backToDashboard()">
-      ← Kembali Ke Dashboard
+      ← KEMBALI KE DASHBOARD
     </button>
 
     <section class="menu-card">
