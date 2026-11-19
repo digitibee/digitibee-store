@@ -1,0 +1,315 @@
+/* DIGITIBEE - PESANAN ADMIN
+   Hanya membaca data, tidak mengubah pembayaran.
+*/
+(function () {
+  "use strict";
+
+  const byId = id => document.getElementById(id);
+  const money = n =>
+    "Rp" + Number(n || 0).toLocaleString("id-ID");
+
+  function text(tag, value, className = "") {
+    const el = document.createElement(tag);
+    el.textContent = String(value ?? "");
+    if (className) el.className = className;
+    return el;
+  }
+
+  function row(card, label, value) {
+    const p = document.createElement("p");
+    p.style.cssText =
+      "font-size:13px;line-height:1.6;margin:5px 0;overflow-wrap:anywhere";
+    p.append(
+      text("strong", label + ": "),
+      document.createTextNode(String(value || "-"))
+    );
+    card.appendChild(p);
+  }
+
+  async function getRelated(table, columns, field, ids) {
+    const unique = [...new Set(ids.filter(Boolean))];
+    const result = [];
+
+    for (let i = 0; i < unique.length; i += 50) {
+      const { data, error } = await supabaseClient
+        .from(table)
+        .select(columns)
+        .in(field, unique.slice(i, i + 50));
+
+      if (error) throw error;
+      result.push(...(data || []));
+    }
+    return result;
+  }
+
+  function prepare() {
+    const panel = document.querySelector(
+      "#orderPage .menu-card"
+    );
+    if (!panel || byId("dbOrderList")) return;
+
+    const oldMessage = [...panel.querySelectorAll("p")]
+      .find(p => p.textContent.includes(
+        "Halaman pengelolaan pesanan akan dibuat"
+      ));
+
+    if (oldMessage) oldMessage.remove();
+
+    const refresh = document.createElement("button");
+    refresh.type = "button";
+    refresh.textContent = "↻ REFRESH PESANAN";
+    refresh.style.cssText =
+      "background:#d95791;color:white;border:0;" +
+      "border-radius:12px;padding:11px 15px;" +
+      "font-weight:bold;text-decoration:none;" +
+      "margin:12px 0;";
+
+    refresh.addEventListener("click", loadAdminOrders);
+
+    const list = document.createElement("div");
+    list.id = "dbOrderList";
+
+    // Daftar pesanan berada di atas tombol tes Telegram.
+    const testButton = byId("dbTelegramTest");
+    if (testButton && testButton.parentElement === panel) {
+      panel.insertBefore(refresh, testButton);
+      panel.insertBefore(list, testButton);
+    } else {
+      panel.append(refresh, list);
+    }
+  }
+
+  function makeContact(order) {
+    const channel = String(order.order_channel || "")
+      .toLowerCase();
+    const contact = String(order.contact_value || "")
+      .trim();
+
+    let url = "";
+    let label = "";
+
+    if (channel === "whatsapp") {
+      let number = contact.replace(/\D/g, "");
+      if (number.startsWith("0")) {
+        number = "62" + number.slice(1);
+      }
+      if (!/^[1-9]\d{8,14}$/.test(number)) return null;
+      url = "https://wa.me/" + number;
+      label = "💬 Hubungi WhatsApp";
+    } else if (channel === "instagram") {
+      const username = contact.replace(/^@/, "");
+      if (!/^[A-Za-z0-9._]{1,30}$/.test(username)) {
+        return null;
+      }
+      url = "https://www.instagram.com/" +
+        encodeURIComponent(username) + "/";
+      label = "📸 Buka Instagram";
+    } else {
+      return null;
+    }
+
+    const a = text("a", label);
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.style.cssText =
+      "display:inline-block;margin-top:9px;" +
+      "background:#ffe1ee;color:#a53c76;" +
+      "padding:10px 13px;border-radius:11px;" +
+      "font-weight:bold;font-size:12px;text-decoration:none";
+    return a;
+  }
+
+  async function loadAdminOrders() {
+    prepare();
+
+    const list = byId("dbOrderList");
+    if (!list) return;
+
+    list.replaceChildren(text("p", "Memuat pesanan..."));
+
+    try {
+      const { data: orders, error } = await supabaseClient
+        .from("orders")
+        .select(
+          "id,order_number,customer_id,total_amount," +
+          "payment_status,order_status,created_at," +
+          "order_channel,contact_value,device_name," +
+          "device_location,customer_note,confirmation_required"
+        )
+        .order("created_at", { ascending: false })
+        .limit(100);
+
+      if (error) throw error;
+
+      if (!orders?.length) {
+        list.replaceChildren(text(
+          "p",
+          "Belum ada pesanan. Pesanan customer akan " +
+          "muncul setelah checkout dihubungkan."
+        ));
+        return;
+      }
+
+      const [customers, items] = await Promise.all([
+        getRelated(
+          "customers", "id,full_name", "id",
+          orders.map(o => o.customer_id)
+        ),
+        getRelated(
+          "order_items",
+          "order_id,product_name,variant_id,quantity,price,subtotal",
+          "order_id", orders.map(o => o.id)
+        )
+      ]);
+
+      const variants = await getRelated(
+        "product_variants", "id,name,duration", "id",
+        items.map(i => i.variant_id)
+      );
+
+      const customerMap = new Map(
+        customers.map(c => [String(c.id), c])
+      );
+      const variantMap = new Map(
+        variants.map(v => [String(v.id), v])
+      );
+
+      const itemsByOrder = new Map();
+      for (const item of items) {
+        const key = String(item.order_id);
+        if (!itemsByOrder.has(key)) {
+          itemsByOrder.set(key, []);
+        }
+        itemsByOrder.get(key).push(item);
+      }
+
+      const fragment = document.createDocumentFragment();
+
+      for (const order of orders) {
+        const card = document.createElement("article");
+        card.style.cssText =
+          "background:#fffafd;border:1px solid #f1c4da;" +
+          "border-radius:17px;padding:15px;" +
+          "margin:13px 0;overflow-wrap:anywhere;";
+
+        const title = text(
+          "h3",
+          "🛍️ " + (order.order_number || "Pesanan")
+        );
+        title.style.cssText =
+          "color:#b7467f;font-size:16px;margin:0 0 10px";
+        card.appendChild(title);
+
+        const date = order.created_at
+          ? new Date(order.created_at).toLocaleString("id-ID")
+          : "-";
+        row(card, "Tanggal", date);
+
+        const customer = customerMap.get(
+          String(order.customer_id)
+        );
+        row(card, "Nama", customer?.full_name);
+
+        const channel = String(order.order_channel || "")
+          .toLowerCase();
+
+        row(
+          card,
+          "Order Melalui",
+          channel === "instagram" ? "Instagram" :
+          channel === "whatsapp" ? "WhatsApp" : "-"
+        );
+
+        row(
+          card,
+          channel === "instagram"
+            ? "Username Instagram"
+            : "Nomor WhatsApp",
+          order.contact_value
+        );
+
+        row(card, "Perangkat", order.device_name);
+        row(card, "Lokasi", order.device_location);
+        row(card, "Catatan", order.customer_note);
+
+        const link = makeContact(order);
+        if (link) card.appendChild(link);
+
+        const divider = document.createElement("hr");
+        divider.style.cssText =
+          "border:0;border-top:1px dashed #ebbbd1;margin:15px 0";
+        card.appendChild(divider);
+
+        const productTitle = text("h4", "Detail Produk");
+        productTitle.style.color = "#b7467f";
+        card.appendChild(productTitle);
+
+        const orderItems =
+          itemsByOrder.get(String(order.id)) || [];
+
+        if (!orderItems.length) {
+          card.appendChild(text("p", "Detail item belum tersedia."));
+        }
+
+        for (const item of orderItems) {
+          const variant = variantMap.get(
+            String(item.variant_id)
+          );
+
+          const name =
+            (item.product_name || "Produk") +
+            (variant ? " — " + variant.name : "") +
+            (variant?.duration ? " / " + variant.duration : "");
+
+          row(card, "Paket", name);
+          row(
+            card, "Jumlah / Subtotal",
+            item.quantity + " × " + money(item.price) +
+            " = " + money(item.subtotal)
+          );
+        }
+
+        row(card, "Total", money(order.total_amount));
+        row(
+          card, "Pembayaran",
+          order.payment_status || "pending"
+        );
+        row(
+          card, "Status Pesanan",
+          order.order_status || "pending"
+        );
+        row(
+          card, "Konfirmasi Admin",
+          order.confirmation_required ? "Diperlukan" : "Tidak"
+        );
+
+        fragment.appendChild(card);
+      }
+
+      list.replaceChildren(fragment);
+
+    } catch (error) {
+      console.error("Pesanan Digitibee:", error);
+      list.replaceChildren(text(
+        "p",
+        "Gagal memuat pesanan: " + error.message
+      ));
+    }
+  }
+
+  window.loadAdminOrders = loadAdminOrders;
+
+  // Tetap memakai navigasi admin yang sudah ada.
+  const originalOpen = window.openMenuPage;
+  if (typeof originalOpen === "function") {
+    window.openMenuPage = function (pageId) {
+      originalOpen(pageId);
+      if (pageId === "orderPage") {
+        loadAdminOrders();
+      }
+    };
+  }
+
+  prepare();
+})();
