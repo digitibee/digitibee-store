@@ -2682,6 +2682,60 @@ checkAdminSession();
 })();
 </script>
 
+<script>
+/* TES TELEGRAM DIGITIBEE - ADMIN SAJA */
+(function () {
+  const page = document.getElementById("orderPage");
+  const panel = page?.querySelector(".menu-card");
 
+  if (!panel || document.getElementById("dbTelegramTest")) {
+    return;
+  }
+
+  const button = document.createElement("button");
+  button.id = "dbTelegramTest";
+  button.type = "button";
+  button.textContent = "🐝 TES NOTIFIKASI TELEGRAM";
+
+  button.style.cssText =
+    "background:#d95791;color:white;border:0;" +
+    "border-radius:12px;padding:12px 16px;" +
+    "font-weight:bold;font-size:13px;" +
+    "text-decoration:none;margin:12px 0;";
+
+  panel.appendChild(button);
+
+  button.addEventListener("click", async function () {
+    button.disabled = true;
+    button.textContent = "Mengirim tes...";
+
+    try {
+      const { data, error } =
+        await supabaseClient.functions.invoke(
+          "digitibee-telegram",
+          { body: { type: "test" } }
+        );
+
+      if (error) throw error;
+      if (!data?.success) {
+        throw new Error(data?.error || "Tes belum berhasil");
+      }
+
+      alert("Yeay! Periksa Telegram kamu 💗🐝");
+
+    } catch (error) {
+      console.error("Tes Telegram:", error);
+      alert(
+        "Notifikasi belum berhasil. " +
+        "Periksa Edge Function dan log Supabase."
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent = "🐝 TES NOTIFIKASI TELEGRAM";
+    }
+  });
+})();
+</script>
+  
 </body>
 </html>
