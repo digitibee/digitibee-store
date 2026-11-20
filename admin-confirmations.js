@@ -68,7 +68,20 @@ const { data: response, error } =
     }
   );
 
-if (error) throw error;
+
+if (error) {
+  let message = error.message || "Gagal menghubungi server";
+
+  try {
+    const result = await error.context.json();
+    message = result.error || message;
+  } catch (_) {
+    // Tetap tampilkan pesan awal jika respons tidak berisi JSON.
+  }
+
+  throw new Error(message);
+}
+
 
 if (!response?.success) {
   throw new Error(
