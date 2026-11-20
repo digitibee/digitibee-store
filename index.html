@@ -2283,10 +2283,12 @@ Mohon dicek ketersediaan produknya serta infoin pembayarannya ya min. Kamsahamni
     return;
   }
 
-  const whatsappURL =
-    WHATSAPP_ADMIN + "?text=" + encodeURIComponent(message);
+  
+const whatsappURL =
+  "https://wa.me/6281553352110?text=" +
+  encodeURIComponent(message);
 
-  window.open(whatsappURL, "_blank");
+window.location.href = whatsappURL;
 }
 
 
@@ -2645,6 +2647,7 @@ document.getElementById("catalogSearch")
     loadProducts();
   });
 
+
 </script>
 
 <script src="checkout-digitibee.js?v=2"></script>
@@ -2652,10 +2655,3 @@ document.getElementById("catalogSearch")
 
 </body>
 </html>
-
-</body>
-</html>
-
-</body>
-</html>
-
