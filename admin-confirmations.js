@@ -59,13 +59,25 @@
     );
 
     try {
-      const { data, error } = await supabaseClient
-        .from("digitibee_confirmation_requests")
-        .select(
-          "id,request_code,items,status,created_at"
-        )
-        .order("created_at", { ascending: false })
-        .limit(50);
+      
+const { data: response, error } =
+  await supabaseClient.functions.invoke(
+    "digitibee-confirmation-admin",
+    {
+      body: { action: "list" }
+    }
+  );
+
+if (error) throw error;
+
+if (!response?.success) {
+  throw new Error(
+    response?.error || "Gagal memuat konfirmasi"
+  );
+}
+
+const data = response.requests;
+
 
       if (error) throw error;
 
@@ -127,9 +139,12 @@
                 await supabaseClient.functions.invoke(
                   "digitibee-confirmation-admin",
                   {
-                    body: {
-                      request_id: request.id
-                    }
+                    
+body: {
+  action: "approve",
+  request_id: request.id
+}
+
                   }
                 );
 
