@@ -476,136 +476,147 @@ body::before {
   }
 
   
-/* ==========================================
-   DIGITIBEE - 3 BLOK PESANAN TERPISAH
-========================================== */
+<style>
+/* DIGITIBEE - PERAPIAN FINAL 3 BLOK */
 
-/* Wadah utama tidak lagi menjadi kartu */
-#orderPage > .menu-card {
+/* Ketiga blok utama */
+#orderPage .db-admin-block {
+  background: rgba(255,255,255,.94) !important;
+  border: 2px solid #f4c6df !important;
+  border-radius: 22px !important;
+  padding: 18px !important;
+  margin-bottom: 16px !important;
+  overflow: hidden !important;
+  box-sizing: border-box;
+}
+
+/* Blok Telegram lebih pendek */
+#orderPage .db-admin-block:first-child {
+  padding: 12px 18px !important;
+}
+
+/* Judul dan tombol sejajar */
+#orderPage .db-section-header {
   display: flex !important;
-  flex-direction: column !important;
-  gap: 16px !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  min-height: 42px;
+}
+
+#orderPage .db-section-header h3 {
+  margin: 0 !important;
   padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* BLOK 1: TES TELEGRAM */
-#orderPage #dbTelegramTest {
-  order: 1 !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 24px 14px !important;
-  background: #d95791 !important;
-  color: white !important;
-  border: 12px solid white !important;
-  border-radius: 25px !important;
-  box-shadow: 0 4px 16px #d9579115 !important;
-  font-size: 13px !important;
-  text-decoration: none !important;
-}
-
-/* BLOK 2: DAFTAR PESANAN */
-#orderPage > .menu-card > h3 {
-  order: 2 !important;
-  margin: 0 0 -16px !important;
-  padding: 22px 18px 8px !important;
-  background: white !important;
-  border: 1px solid #f3cddd !important;
-  border-bottom: none !important;
-  border-radius: 24px 24px 0 0 !important;
-  font-size: 19px !important;
-  color: #a64f7c !important;
-}
-
-/* Tombol refresh pesanan */
-#orderPage > .menu-card > button:not(#dbTelegramTest) {
-  order: 3 !important;
-  width: 100% !important;
-  margin: 0 0 -16px !important;
-  padding: 14px !important;
-  background: #fce4ef !important;
-  color: #a44779 !important;
-  border: 18px solid white !important;
-  border-top-width: 12px !important;
-  border-bottom-width: 12px !important;
-  border-radius: 0 !important;
+  color: #a7477d !important;
+  font-size: 15px !important;
   font-weight: 800 !important;
-  text-decoration: none !important;
-}
-
-/* Isi blok pesanan */
-#orderPage #dbOrderList {
-  order: 4 !important;
-  background: white !important;
-  border: 1px solid #f3cddd !important;
-  border-top: none !important;
-  border-radius: 0 0 24px 24px !important;
-  padding: 0 18px 18px !important;
-  margin: 0 !important;
+  line-height: 1.3 !important;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
-#orderPage #dbOrderList > p {
-  background: #fff0f7 !important;
-  border: 1px solid #f3cddd !important;
-  border-radius: 14px !important;
-  padding: 22px 12px !important;
+/* Semua tombol sama warna, bentuk, dan ukuran */
+#orderPage .db-section-header button,
+#orderPage #dbTelegramTest,
+#orderPage #dbOrderList ~ button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
   margin: 0 !important;
-  text-align: center;
-  color: #966d83;
-  line-height: 1.6;
-}
-
-/* BLOK 3: KONFIRMASI WA */
-#orderPage > .menu-card > section {
-  order: 5 !important;
-  display: block !important;
-  width: 100% !important;
-  background: white !important;
-  border: 1px solid #f3cddd !important;
-  border-radius: 24px !important;
-  padding: 20px 18px !important;
-  margin: 0 !important;
-  box-shadow: 0 4px 16px #d9579112 !important;
-}
-
-#orderPage > .menu-card > section > h3 {
-  margin: 0 0 16px !important;
-  font-size: 18px !important;
-  color: #a64f7c !important;
-}
-
-/* Refresh konfirmasi */
-#orderPage > .menu-card > section > button {
-  display: block !important;
-  width: 100% !important;
-  padding: 14px !important;
-  margin: 0 0 15px !important;
-  background: #fce4ef !important;
-  color: #a44779 !important;
-  border: 1px solid #f3cddd !important;
-  border-radius: 13px !important;
-  font-size: 12px !important;
+  padding: 10px 9px !important;
+  background: #ffe4f0 !important;
+  color: #a7477d !important;
+  border: 1px solid #f0bad4 !important;
+  border-radius: 11px !important;
+  font-size: 11px !important;
   font-weight: 800 !important;
+  line-height: 1.2 !important;
   text-decoration: none !important;
+  text-align: center !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
 }
 
-#orderPage #dbConfirmationList > p {
-  background: #fff0f7 !important;
-  border: 1px solid #f3cddd !important;
-  border-radius: 14px !important;
-  padding: 22px 12px !important;
+/* Hilangkan border tambahan pada daftar pesanan */
+#orderPage .db-admin-block #dbOrderList {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 14px 0 0 !important;
+  width: 100% !important;
+}
+
+/* Hilangkan garis dari pembungkus daftar */
+#orderPage .db-admin-block #dbOrderList::before,
+#orderPage .db-admin-block #dbOrderList::after {
+  display: none !important;
+}
+
+/* Kotak informasi pesanan */
+#orderPage #dbOrderList > p {
   margin: 0 !important;
-  text-align: center;
-  color: #966d83;
-  line-height: 1.6;
+  padding: 18px 10px !important;
+  border: 1px solid #f2c7dd !important;
+  border-radius: 15px !important;
+  background: #fff0f7 !important;
+  text-align: center !important;
 }
+
+/* Kotak informasi konfirmasi */
+#orderPage #dbConfirmationList {
+  margin-top: 14px !important;
 }
+
+/* Tampilan iPhone */
+@media (max-width: 430px) {
+  #orderPage .db-admin-block {
+    padding: 14px !important;
+  }
+
+  #orderPage .db-admin-block:first-child {
+    padding: 10px 14px !important;
+  }
+
+  #orderPage .db-section-header h3 {
+    font-size: 14px !important;
+  }
+
+  #orderPage .db-section-header button {
+    font-size: 10px !important;
+    padding: 9px 7px !important;
+  }
+}
+</style>
+
+
+<style>
+/* HILANGKAN GARIS DALAM PESANAN */
+#orderPage .db-admin-block:nth-child(2) {
+  border: 2px solid #f4c6df !important;
+}
+
+#orderPage .db-admin-block:nth-child(2) #dbOrderList {
+  border: 0 !important;
+}
+
+#orderPage .db-admin-block:nth-child(2) > .menu-card,
+#orderPage .db-admin-block:nth-child(2) > section {
+  border: 0 !important;
+}
+
+/* Samakan semua tombol, termasuk Telegram */
+#orderPage .db-admin-block .db-section-header button {
+  background: #ffe4f0 !important;
+  color: #a7477d !important;
+  border: 1px solid #f0bad4 !important;
+  border-radius: 11px !important;
+  box-shadow: none !important;
+}
+</style>
+
 
     
   </style>
