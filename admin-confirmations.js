@@ -31,6 +31,7 @@
     const refresh = element(
       "button", "↻ REFRESH KONFIRMASI"
     );
+    refresh.id = "dbConfirmationRefresh";
     refresh.type = "button";
     refresh.style.cssText =
       "background:#d95791;color:white;border:0;" +
