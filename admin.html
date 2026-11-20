@@ -3083,5 +3083,181 @@ checkAdminSession();
 
   <script src="admin-orders.js.?v=1"></script>
   <script src="admin-confirmations.js?v=1"></script>
+
+  
+<style>
+/* DIGITIBEE - 3 BLOK ADMIN RAPI */
+
+/* Pastikan garis tepi kartu tidak tertutup */
+#orderPage .menu-card {
+  overflow: hidden;
+  border: 2px solid #f4c6df;
+  border-radius: 22px;
+}
+
+/* Header judul + tombol */
+#orderPage .db-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+#orderPage .db-section-header h3 {
+  margin: 0 !important;
+  font-size: clamp(14px, 3.5vw, 19px) !important;
+  line-height: 1.35;
+  min-width: 0;
+  flex: 1;
+  color: #a7477d;
+}
+
+#orderPage .db-section-header button {
+  flex: 0 0 auto;
+  width: auto !important;
+  max-width: 47%;
+  padding: 10px 11px !important;
+  margin: 0 !important;
+  border: 1px solid #f0bad4 !important;
+  border-radius: 11px !important;
+  background: #ffe4f0 !important;
+  color: #a7477d !important;
+  font-size: clamp(10px, 2.5vw, 12px) !important;
+  font-weight: 800 !important;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Tiga blok terpisah */
+#orderPage .db-admin-block {
+  background: rgba(255,255,255,.94);
+  border: 2px solid #f4c6df;
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Hindari garis lama mengganggu */
+#orderPage .db-admin-block .menu-card {
+  border: none;
+}
+
+/* Daftar tetap di dalam tepi kartu */
+#orderPage #dbOrderList,
+#orderPage #dbConfirmationList {
+  width: 100%;
+  min-width: 0;
+  margin: 0 !important;
+}
+
+@media (max-width: 390px) {
+  #orderPage .db-admin-block {
+    padding: 13px;
+  }
+
+  #orderPage .db-section-header {
+    gap: 7px;
+  }
+}
+</style>
+
+<script>
+/* DIGITIBEE - SUSUN 3 BLOK ADMIN */
+(function () {
+  "use strict";
+
+  function arrangeAdminBlocks() {
+    const page = document.getElementById("orderPage");
+    if (!page || page.dataset.blocksArranged === "yes") return;
+
+    const panel = page.querySelector(".menu-card");
+    const telegram = document.getElementById("dbTelegramTest");
+    const orders = document.getElementById("dbOrderList");
+    const confirmations =
+      document.getElementById("dbConfirmationList");
+
+    if (!panel || !telegram || !orders || !confirmations) {
+      return;
+    }
+
+    const orderRefresh = [...panel.querySelectorAll("button")]
+      .find(b => b.textContent.includes("REFRESH PESANAN"));
+
+    const confirmRefresh = [...panel.querySelectorAll("button")]
+      .find(b => b.textContent.includes("REFRESH KONFIRMASI"));
+
+    if (!orderRefresh || !confirmRefresh) return;
+
+    const originalConfirmationSection =
+      confirmations.closest("section");
+
+    const oldHeading = [...panel.querySelectorAll("h3")]
+      .find(h => h.textContent.trim() === "PESANAN");
+
+    function createBlock(title, button, content) {
+      const block = document.createElement("section");
+      block.className = "db-admin-block";
+
+      const header = document.createElement("div");
+      header.className = "db-section-header";
+
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+
+      header.append(heading, button);
+      block.appendChild(header);
+
+      if (content) block.appendChild(content);
+
+      return block;
+    }
+
+    telegram.textContent = "⏰ Tes Notifikasi";
+    orderRefresh.textContent = "↻ Refresh Pesanan";
+    confirmRefresh.textContent = "↻ Refresh Konfirmasi";
+
+    const telegramBlock = createBlock(
+      "🔔 Tes Notifikasi Telegram",
+      telegram
+    );
+
+    const orderBlock = createBlock(
+      "📋 Pesanan",
+      orderRefresh,
+      orders
+    );
+
+    const confirmationBlock = createBlock(
+      "💬 Permintaan Konfirmasi WA",
+      confirmRefresh,
+      confirmations
+    );
+
+    panel.replaceChildren(
+      telegramBlock,
+      orderBlock,
+      confirmationBlock
+    );
+
+    page.dataset.blocksArranged = "yes";
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      arrangeAdminBlocks
+    );
+  } else {
+    arrangeAdminBlocks();
+  }
+})();
+</script>
+
 </body>
 </html>
