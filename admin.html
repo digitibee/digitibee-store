@@ -3354,23 +3354,23 @@ checkAdminSession();
       return block;
     }
 
-    telegram.textContent = "⏰ Tes Notifikasi";
-    orderRefresh.textContent = "↻ Refresh Pesanan";
-    confirmRefresh.textContent = "↻ Refresh Konfirmasi";
+    telegram.textContent = "↻ Tes";
+    orderRefresh.textContent = "↻ Refresh";
+    confirmRefresh.textContent = "↻ Refresh";
 
     const telegramBlock = createBlock(
-      "🔔 Tes Notifikasi Telegram",
+      "🔔 Tes Notifikasi",
       telegram
     );
 
     const orderBlock = createBlock(
-      "📋 Pesanan",
+      "📋 Data Pesanan",
       orderRefresh,
       orders
     );
 
     const confirmationBlock = createBlock(
-      "💬 Permintaan Konfirmasi WA",
+      "💬 Data Konfirmasi WA",
       confirmRefresh,
       confirmations
     );
