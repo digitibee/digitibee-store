@@ -61,9 +61,11 @@
     const location = $("customerLocation")?.value.trim() || "";
     const note = $("customerNote")?.value.trim() || "";
 
-    if (!Array.isArray(window.cart) || !cart.length) {
-      throw new Error("Keranjang masih kosong.");
-    }
+if (typeof cart === "undefined" ||
+    !Array.isArray(cart) ||
+    cart.length === 0) {
+  throw new Error("Keranjang masih kosong.");
+}
 
     if (!name || !contact || !device || !location) {
       throw new Error(
