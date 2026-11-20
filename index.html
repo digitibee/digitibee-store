@@ -1950,10 +1950,10 @@ async function loadProducts() {
 
   try {
     const { data: products, error } = await supabaseClient
-      .from("products")
-      .select("id, name, duration, price, stock, requires_confirmation")
-      .eq("status", "active")
-      .order("created_at", { ascending: false });
+  .from("products")
+  .select("id, category_id, name, description, image_url, availability_type")
+  .eq("status", "active")
+  .order("created_at", { ascending: false });
 
     if (error) throw error;
 
@@ -1987,10 +1987,10 @@ container.innerHTML = "";
 
     for (const product of filteredProducts) {
       const { data: variants, error: variantError } = await supabaseClient
-        .from("product_variants")
-        .select("id, name, duration, price, stock")
-        .eq("product_id", product.id)
-        .order("created_at", { ascending: true });
+  .from("product_variants")
+  .select("id, name, duration, price, stock, requires_confirmation")
+  .eq("product_id", product.id)
+  .order("created_at", { ascending: true });
 
       if (variantError) throw variantError;
 
