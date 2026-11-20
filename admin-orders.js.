@@ -143,13 +143,12 @@
       if (error) throw error;
 
       if (!orders?.length) {
-        list.replaceChildren(text(
-          "p",
-          "Belum ada pesanan. Pesanan customer akan " +
-          "muncul setelah checkout dihubungkan."
-        ));
-        return;
-      }
+  list.replaceChildren(text(
+    "p",
+    "Belum ada pesanan."
+  ));
+  return;
+}
 
       const [customers, items] = await Promise.all([
         getRelated(
