@@ -742,7 +742,50 @@ body::before {
 </style>
 
 
+<style>
+/* DIGITIBEE - TOMBOL LEBIH KECIL, TEKS LEBIH BESAR */
 
+#orderPage .db-section-header {
+  gap: 6px !important;
+}
+
+/* Ketiga tombol dibuat seragam */
+#orderPage .db-admin-block .db-section-header button,
+#orderPage #dbTelegramTest {
+  flex: 0 0 125px !important;
+  width: 125px !important;
+  min-width: 125px !important;
+  max-width: 125px !important;
+
+  min-height: 36px !important;
+  padding: 7px 5px !important;
+
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+
+  background: #ffe4f0 !important;
+  color: #a7477d !important;
+  border: 1px solid #f0bad4 !important;
+  border-radius: 11px !important;
+
+  white-space: normal !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+/* Layar HP */
+@media (max-width: 390px) {
+  #orderPage .db-admin-block .db-section-header button,
+  #orderPage #dbTelegramTest {
+    flex-basis: 115px !important;
+    width: 115px !important;
+    min-width: 115px !important;
+    max-width: 115px !important;
+    font-size: 11px !important;
+  }
+}
+</style>
     
   </style>
 </head>
