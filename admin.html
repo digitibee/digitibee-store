@@ -750,48 +750,63 @@ body::before {
   gap: 6px !important;
 }
 
-/* Tes Telegram, Refresh Pesanan, Refresh Konfirmasi */
-#orderPage #dbTelegramTest,
-#orderPage .db-section-header button,
-#orderPage .db-admin-block button {
-  box-sizing: border-box !important;
 
-  flex: 0 0 110px !important;
+/* =====================================
+   1. TOMBOL TES NOTIFIKASI
+===================================== */
+
+#orderPage #dbTelegramTest {
   width: 110px !important;
   min-width: 110px !important;
   max-width: 110px !important;
+  flex: 0 0 110px !important;
 
   height: 42px !important;
   min-height: 42px !important;
   max-height: 42px !important;
 
-  padding: 4px 6px !important;
-  margin: 0 !important;
-
   background: #ff80ba !important;
-  color: #ffffff !important;
-
-  border: 1px solid #f46ba8 !important;
-  border-radius: 12px !important;
-
+  color: white !important;
   font-size: 12px !important;
-  font-weight: 800 !important;
-  line-height: 1.15 !important;
-
-  text-align: center !important;
-  white-space: normal !important;
 }
 
-/* Layar HP */
-@media (max-width: 390px) {
-  #orderPage #dbTelegramTest,
-  #orderPage .db-section-header button,
-  #orderPage .db-admin-block button {
-    flex-basis: 110px !important;
-    width: 110px !important;
-    min-width: 110px !important;
-    max-width: 110px !important;
-  }
+
+/* =====================================
+   2. TOMBOL REFRESH PESANAN
+===================================== */
+
+#orderPage #dbOrderList {
+  /* Daftar pesanan, bukan tombol */
+}
+
+#orderPage .db-section-header button:not(#dbTelegramTest) {
+  /* Pengaturan umum tombol refresh */
+  background: #ff80ba !important;
+  color: white !important;
+}
+
+
+/* =====================================
+   3. TOMBOL REFRESH KONFIRMASI
+===================================== */
+
+/* Gunakan ID khusus agar tidak
+   memengaruhi tombol lainnya */
+#orderPage #dbConfirmationRefresh {
+  width: 110px !important;
+  min-width: 110px !important;
+  max-width: 110px !important;
+  flex: 0 0 110px !important;
+
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+
+  background: #ff80ba !important;
+  color: white !important;
+  font-size: 12px !important;
+}
+
 }
 
 </style>
