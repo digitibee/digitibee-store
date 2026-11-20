@@ -749,35 +749,42 @@ body::before {
   gap: 6px !important;
 }
 
-/* Ketiga tombol dibuat seragam */
+<style>
+/* SAMAKAN UKURAN DAN WARNA 3 TOMBOL */
 
-#orderPage .db-admin-block .db-section-header button,
-#orderPage #dbTelegramTest {
-  flex: 0 0 100px !important;
-  width: 100px !important;
-  min-width: 100px !important;
-  max-width: 100px !important;
+#orderPage #dbTelegramTest,
+#orderPage #dbOrderList ~ button,
+#orderPage .db-section-header button,
+#orderPage .db-admin-block button {
+  box-sizing: border-box !important;
 
-  height: 38px !important;
-  min-height: 38px !important;
-  padding: 4px !important;
+  flex: 0 0 110px !important;
+  width: 110px !important;
+  min-width: 110px !important;
+  max-width: 110px !important;
 
-  font-size: 13px !important;
-  font-weight: 700 !important;
-}
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
 
-  font-weight: 700 !important;
-  line-height: 1.25 !important;
+  padding: 4px 6px !important;
+  margin: 0 !important;
 
-  background: #ffe4f0 !important;
-  color: #a7477d !important;
-  border: 1px solid #f0bad4 !important;
-  border-radius: 11px !important;
+  background: #ff80ba !important;
+  color: #ffffff !important;
 
-  white-space: normal !important;
+  border: 1px solid #f46ba8 !important;
+  border-radius: 12px !important;
+
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+
   text-align: center !important;
-  box-shadow: none !important;
+  white-space: normal !important;
 }
+</style>
+
 
 /* Layar HP */
 @media (max-width: 390px) {
