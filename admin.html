@@ -319,6 +319,163 @@ body::before {
   line-height: 1.6;
   margin: 0 !important;
 }
+
+
+/* =====================================
+   DIGITIBEE - TAMPILAN PESANAN BARU
+   KHUSUS ADMIN, AMAN UNTUK JS LAMA
+===================================== */
+
+#orderPage {
+  --db-pink: #d95791;
+  --db-dark: #98466f;
+  --db-soft: #fff1f7;
+}
+
+/* Kartu utama */
+#orderPage > .menu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #f4d4e3;
+  border-radius: 22px;
+  padding: 16px !important;
+  box-shadow: 0 5px 20px #b66b8d16;
+}
+
+/* Judul pesanan */
+#orderPage > .menu-card > h3 {
+  order: 2;
+  font-size: 18px !important;
+  color: var(--db-dark);
+  margin: 5px 0 0 !important;
+}
+
+/* Tombol Telegram paling atas */
+#orderPage #dbTelegramTest {
+  order: 1;
+  width: 100% !important;
+  background: var(--db-pink) !important;
+  color: #fff !important;
+  border-radius: 13px !important;
+  padding: 15px 12px !important;
+  margin: 0 0 8px !important;
+  font-size: 13px !important;
+  text-decoration: none !important;
+}
+
+/* Tombol refresh pesanan */
+#orderPage > .menu-card > button:not(#dbTelegramTest) {
+  order: 3;
+  width: 100%;
+  background: #fce4ef !important;
+  color: #a44779 !important;
+  border: 1px solid #f2c7dc !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+  text-decoration: none !important;
+}
+
+/* Daftar pesanan */
+#orderPage #dbOrderList {
+  order: 4;
+  margin: 0 !important;
+  min-width: 0;
+}
+
+#orderPage #dbOrderList > p {
+  background: var(--db-soft);
+  border: 1px solid #f3d0e1;
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+  color: #966d83;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Bagian konfirmasi WA */
+#orderPage > .menu-card > section {
+  order: 5;
+  background: #fff;
+  border: 1px solid #f3d0e1;
+  border-radius: 17px;
+  padding: 15px !important;
+  margin: 5px 0 0 !important;
+  min-width: 0;
+}
+
+/* Judul konfirmasi */
+#orderPage > .menu-card > section > h3 {
+  color: var(--db-dark) !important;
+  font-size: 17px;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+
+/* Tombol refresh konfirmasi */
+#orderPage > .menu-card > section > button {
+  display: block;
+  width: 100%;
+  background: #fce4ef !important;
+  color: #a44779 !important;
+  border: 1px solid #f2c7dc !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  margin: 0 0 12px !important;
+  font-size: 12px !important;
+  text-decoration: none !important;
+}
+
+/* Daftar konfirmasi */
+#orderPage #dbConfirmationList {
+  margin: 0;
+  min-width: 0;
+}
+
+#orderPage #dbConfirmationList > p {
+  background: var(--db-soft);
+  border: 1px solid #f3d0e1;
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+  color: #966d83;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Kartu data */
+#orderPage #dbOrderList article,
+#orderPage #dbConfirmationList article {
+  background: #fffafd;
+  border-radius: 15px;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+/* Tampilan HP */
+@media (max-width: 480px) {
+  #orderPage > .menu-card {
+    padding: 13px !important;
+    gap: 12px;
+  }
+
+  #orderPage > .menu-card > section {
+    padding: 12px !important;
+  }
+
+  #orderPage .page-button {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.5;
+  }
+}
+
     
   </style>
 </head>
