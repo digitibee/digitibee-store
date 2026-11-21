@@ -2941,59 +2941,5 @@ min-height: 58px !important;
 
 </style>
 
-
-<!-- DIGITIBEE - PENGARAH CHECKOUT CUSTOMER V1 -->
-<script>
-(function () {
-  "use strict";
-
-  function isConfirmationProduct(item) {
-    return (
-      item.requires_confirmation === true ||
-      item.requiresConfirmation === true ||
-      item.requires_confirmation === 1 ||
-      item.requiresConfirmation === 1
-    );
-  }
-
-  function getCheckoutType(items) {
-    if (!Array.isArray(items) || items.length === 0) {
-      return "empty";
-    }
-
-    return items.some(isConfirmationProduct)
-      ? "confirmation"
-      : "ready";
-  }
-
-  window.dbGetCheckoutType = getCheckoutType;
-
-  window.dbShowCheckoutRoute = function (items) {
-    const type = getCheckoutType(items);
-
-    if (type === "empty") {
-      alert("Keranjang masih kosong.");
-      return;
-    }
-
-    if (type === "confirmation") {
-      alert(
-        "💬 KONFIRMASI STOK\n\n" +
-        "Pesanan ini mengandung produk Konfirmasi WA.\n" +
-        "Seluruh produk harus disetujui admin " +
-        "sebelum melanjutkan pembayaran."
-      );
-      return;
-    }
-
-    alert(
-      "✅ PRODUK READY\n\n" +
-      "Pesanan dapat dilanjutkan ke Data Pemesan.\n" +
-      "Pembayaran belum diaktifkan."
-    );
-  };
-})();
-</script>
-
 </body>
 </html>
