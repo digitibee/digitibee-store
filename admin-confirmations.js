@@ -171,9 +171,8 @@ body: {
               }
 
               const url =
-               https://digitibee.github.io/digitibee-store/#checkout?token=
-                "#checkout?token=" +
-                encodeURIComponent(data.checkout_token);
+  "https://digitibee.github.io/digitibee-store/#checkout?token=" +
+  encodeURIComponent(data.checkout_token);
 
               const copy = element(
                 "button", "📋 SALIN LINK CHECKOUT"
