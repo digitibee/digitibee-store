@@ -1154,7 +1154,6 @@
 
       <!-- ESTIMASI GARANSI -->
       
-
 <section class="order-guide warranty-section">
   <div class="order-card">
 
@@ -1470,7 +1469,7 @@
 </h3>
 
 <!-- KOTAK PUTIH FORMULIR -->
-<div class="customer-form db-white-card">
+<div id="dbCustomerForm" class="customer-form db-white-card">
 
           <label for="customerName">Nama</label>
           <input id="customerName" type="text" placeholder="Masukkan nama kamu">
@@ -1570,9 +1569,6 @@
     data-theme="light"
   ></div>
 </div>
-          <button class="pink-button" onclick="sendOrderWhatsApp()">
-            KIRIM PESANAN VIA WHATSAPP
-          </button>
 
         <div style="display:flex;align-items:center;gap:8px;background:#ffe8f2;border:1px solid #ffc5df;border-radius:14px;padding:10px;margin-top:15px;">
   <span style="color:#d94e93;font-size:12px;flex-shrink:0;line-height:1;">ⓘ</span>
@@ -1580,8 +1576,21 @@
     Jika ada paket Konfirmasi WA, pesanan akan diarahkan ke admin terlebih dahulu. Produk Ready bisa lanjut ke pembayaran setelah data lengkap.
   </p>
 
-    </div> <!-- Penutup catatan pink -->
+
+</div> <!-- Penutup catatan pink -->
+
 </div> <!-- Penutup kotak formulir -->
+
+<button
+  type="button"
+  class="pink-button"
+  id="dbCheckoutButton"
+  onclick="sendOrderWhatsApp()"
+  style="margin:12px 0 8px;"
+>
+  LANJUT KE CHECKOUT 🔜
+</button>
+
 </div> <!-- Penutup content-panel -->
 </section>
 
@@ -2206,9 +2215,15 @@ function updateOrderChannel() {
   if (needsConfirmation) {
     button.textContent = isIG
       ? "💬 KONFIRMASI STOK VIA INSTAGRAM"
-      : "💬 KONFIRMASI STOK KE ADMIN";
-  } else {
-    button.textContent = "🛒 LANJUT KE CHECKOUT";
+      : "💬 KONFIRMASI STOK VIA WHATSAPP";
+    } else {
+    button.textContent = "LANJUT KE CHECKOUT 🔜";
+  }
+
+  const customerForm = document.getElementById("dbCustomerForm");
+
+  if (customerForm) {
+    customerForm.style.display = needsConfirmation ? "none" : "";
   }
 }
 
@@ -2225,6 +2240,30 @@ document.addEventListener("DOMContentLoaded", updateOrderChannel);
 function sendOrderWhatsApp() {
   if (cart.length === 0) {
     alert("Keranjang masih kosong!");
+    return;
+  }
+
+  const needsConfirmation = cart.some(item =>
+    item.requiresConfirmation === true ||
+    item.requires_confirmation === true
+  );
+
+  if (needsConfirmation) {
+    let message = "Halo Admin Auna & Duna! 🩷\n\n";
+    message += "Saya ingin konfirmasi ketersediaan produk:\n\n";
+
+    cart.forEach((item, index) => {
+      message += `${index + 1}. ${item.productName}\n`;
+      message += `Paket: ${item.variantName} ${item.duration}\n`;
+      message += `Jumlah: ${item.quantity}\n\n`;
+    });
+
+    message += "Mohon konfirmasi stoknya ya, min. Terima kasih! ♡";
+
+    window.location.href =
+      "https://wa.me/6281553352110?text=" +
+      encodeURIComponent(message);
+
     return;
   }
 
@@ -2305,7 +2344,6 @@ Mohon dicek ketersediaan produknya serta infoin pembayarannya ya min. Kamsahamni
     }
     return;
   }
-
   
 const whatsappURL =
   "https://wa.me/6281553352110?text=" +
