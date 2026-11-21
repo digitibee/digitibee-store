@@ -2586,8 +2586,54 @@ async function loadLeaderboard() {
 
 /* HALAMAN AWAL */
 
+
+/* HALAMAN AWAL */
+
 function initializeStore() {
-  const pageId = window.location.hash.replace("#", "");
+  const hash = window.location.hash;
+  const pageId = hash.replace("#", "");
+
+  // Pertahankan link checkout khusus dari admin.
+  // Jangan hapus token atau jalankan checkout dulu.
+  if (hash.startsWith("#checkout?")) {
+    const params = new URLSearchParams(hash.slice("#checkout?".length));
+    const token = params.get("token");
+
+    document.querySelectorAll(".store-page").forEach(page => {
+      page.classList.remove("active");
+    });
+
+    const home = document.getElementById("home");
+    if (home) home.classList.add("active");
+
+    const notice = document.createElement("div");
+    notice.id = "digitibeeCheckoutNotice";
+    notice.setAttribute("role", "status");
+
+    Object.assign(notice.style, {
+      background: "#fff0f7",
+      border: "2px solid #f6b2cf",
+      borderRadius: "18px",
+      padding: "18px",
+      margin: "20px auto",
+      maxWidth: "600px",
+      textAlign: "center",
+      color: "#754b59"
+    });
+
+    const heading = document.createElement("h3");
+    heading.textContent = "💗 Checkout Khusus Digitibee";
+
+    const message = document.createElement("p");
+    message.textContent = /^[0-9a-f]{64}$/.test(token || "")
+      ? "Link checkout terdeteksi. Fitur ini sedang disiapkan dan belum dapat digunakan untuk pembayaran."
+      : "Link checkout tidak valid. Silakan minta link baru kepada admin.";
+
+    notice.append(heading, message);
+    document.querySelector("main")?.prepend(notice);
+
+    return;
+  }
 
   const validPages = [
     "home",
@@ -2606,7 +2652,6 @@ function initializeStore() {
 }
 
 initializeStore();
-
 
 /* NAVBAR BAWAH AUTO HIDE */
 
