@@ -265,294 +265,6 @@ body::before {
   padding: 5px 10px;
 }
 
-/* RAPIIKAN HALAMAN PESANAN DIGITIBEE */
-#orderPage .menu-card {
-  padding: 18px !important;
-  border-radius: 20px;
-}
-
-#orderPage .menu-card > h3 {
-  margin: 0 0 5px !important;
-  font-size: 19px;
-  font-weight: 900;
-}
-
-#orderPage .dbm-desc {
-  margin: 0 0 15px !important;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-#orderPage .dbm-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 12px 0 !important;
-}
-
-#orderPage #dbmRefresh,
-#orderPage #dbTelegramTest,
-#orderPage #dbOrderList ~ button {
-  width: 100% !important;
-  padding: 12px !important;
-  margin: 0 !important;
-  border-radius: 12px !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
-  text-align: center;
-}
-
-#orderPage #dbOrderList,
-#orderPage #dbmList {
-  margin: 12px 0 !important;
-}
-
-#orderPage #dbOrderList > p,
-#orderPage #dbmList > .dbm-empty {
-  background: #fff0f7;
-  border: 1px solid #f2c7dd;
-  border-radius: 15px;
-  padding: 18px 12px;
-  text-align: center;
-  color: #966d83;
-  font-size: 12px;
-  line-height: 1.6;
-  margin: 0 !important;
-}
-
-
-/* =====================================
-   DIGITIBEE - TAMPILAN PESANAN BARU
-   KHUSUS ADMIN, AMAN UNTUK JS LAMA
-===================================== */
-
-#orderPage {
-  --db-pink: #d95791;
-  --db-dark: #98466f;
-  --db-soft: #fff1f7;
-}
-
-/* Kartu utama */
-#orderPage > .menu-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  background: rgba(255,255,255,.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #f4d4e3;
-  border-radius: 22px;
-  padding: 16px !important;
-  box-shadow: 0 5px 20px #b66b8d16;
-}
-
-/* Judul pesanan */
-#orderPage > .menu-card > h3 {
-  order: 2;
-  font-size: 18px !important;
-  color: var(--db-dark);
-  margin: 5px 0 0 !important;
-}
-
-/* Tombol Telegram paling atas */
-#orderPage #dbTelegramTest {
-  order: 1;
-  width: 100% !important;
-  background: var(--db-pink) !important;
-  color: #fff !important;
-  border-radius: 13px !important;
-  padding: 15px 12px !important;
-  margin: 0 0 8px !important;
-  font-size: 13px !important;
-  text-decoration: none !important;
-}
-
-/* Tombol refresh pesanan */
-#orderPage > .menu-card > button:not(#dbTelegramTest) {
-  order: 3;
-  width: 100%;
-  background: #fce4ef !important;
-  color: #a44779 !important;
-  border: 1px solid #f2c7dc !important;
-  border-radius: 12px !important;
-  padding: 12px !important;
-  margin: 0 !important;
-  font-size: 12px !important;
-  text-decoration: none !important;
-}
-
-/* Daftar pesanan */
-#orderPage #dbOrderList {
-  order: 4;
-  margin: 0 !important;
-  min-width: 0;
-}
-
-#orderPage #dbOrderList > p {
-  background: var(--db-soft);
-  border: 1px solid #f3d0e1;
-  border-radius: 14px;
-  padding: 18px 12px;
-  text-align: center;
-  color: #966d83;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-/* Bagian konfirmasi WA */
-#orderPage > .menu-card > section {
-  order: 5;
-  background: #fff;
-  border: 1px solid #f3d0e1;
-  border-radius: 17px;
-  padding: 15px !important;
-  margin: 5px 0 0 !important;
-  min-width: 0;
-}
-
-/* Judul konfirmasi */
-#orderPage > .menu-card > section > h3 {
-  color: var(--db-dark) !important;
-  font-size: 17px;
-  line-height: 1.4;
-  margin: 0 0 12px;
-}
-
-/* Tombol refresh konfirmasi */
-#orderPage > .menu-card > section > button {
-  display: block;
-  width: 100%;
-  background: #fce4ef !important;
-  color: #a44779 !important;
-  border: 1px solid #f2c7dc !important;
-  border-radius: 12px !important;
-  padding: 12px !important;
-  margin: 0 0 12px !important;
-  font-size: 12px !important;
-  text-decoration: none !important;
-}
-
-/* Daftar konfirmasi */
-#orderPage #dbConfirmationList {
-  margin: 0;
-  min-width: 0;
-}
-
-#orderPage #dbConfirmationList > p {
-  background: var(--db-soft);
-  border: 1px solid #f3d0e1;
-  border-radius: 14px;
-  padding: 18px 12px;
-  text-align: center;
-  color: #966d83;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-/* Kartu data */
-#orderPage #dbOrderList article,
-#orderPage #dbConfirmationList article {
-  background: #fffafd;
-  border-radius: 15px;
-  overflow-wrap: anywhere;
-  max-width: 100%;
-}
-
-/* Tampilan HP */
-@media (max-width: 480px) {
-  #orderPage > .menu-card {
-    padding: 13px !important;
-    gap: 12px;
-  }
-
-  #orderPage > .menu-card > section {
-    padding: 12px !important;
-  }
-
-  #orderPage .page-button {
-    max-width: 100%;
-    white-space: normal;
-    line-height: 1.5;
-  }
-
-  /* =====================================
-   3 BLOK PUTIH DIGITIBEE
-===================================== */
-
-/* Pengaturan umum ketiga blok */
-#orderPage .db-admin-block {
-  width: 100%;
-  background: rgba(255,255,255,0.96);
-  border: 2px solid #f4c6df;
-  border-radius: 23px;
-  padding: 18px;
-  margin-bottom: 18px;
-  box-sizing: border-box;
-}
-
-/* 1. BLOK TES NOTIFIKASI */
-#orderPage #dbTelegramBlock {
-  min-height: 75px;
-}
-
-/* 2. BLOK DATA PESANAN */
-#orderPage .db-admin-block:has(#dbOrderList) {
-  min-height: 120px;
-}
-
-/* 3. BLOK KONFIRMASI WA */
-#orderPage .db-admin-block:has(#dbConfirmationList) {
-  min-height: 120px;
-}
-
-/* SELURUH BLOK TES NOTIFIKASI BISA DIKLIK */
-
-#orderPage #dbTelegramBlock {
-  padding: 0 !important;
-  overflow: hidden;
-}
-
-#orderPage #dbTelegramTest {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-
-  width: 100% !important;
-  min-height: 75px;
-  padding: 15px !important;
-  margin: 0 !important;
-
-  background: transparent !important;
-  border: none !important;
-  border-radius: 21px !important;
-
-  color: #a7477d !important;
-  font-size: 18px !important;
-  font-weight: 800 !important;
-  text-align: center;
-  text-decoration: none !important;
-
-  cursor: pointer;
-}
-
-#orderPage #dbTelegramTest:active {
-  background: #fff0f7 !important;
-}
-
-/* Tiga blok putih berdiri sendiri */
-#orderPage .db-admin-block {
-  width: 100% !important;
-  background: rgba(255,255,255,.96) !important;
-  border: 2px solid #f4c6df !important;
-  border-radius: 23px !important;
-  box-shadow: 0 4px 15px rgba(185,85,130,.05) !important;
-  padding: 20px 17px !important;
-  margin: 0 0 18px !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-}
-}
-
 </style>
 </head>
 
@@ -3026,72 +2738,60 @@ checkAdminSession();
 
 </script>
 
-  <script src="admin-orders.js.?v=1"></script>
-  <script src="admin-confirmations.js?v=1"></script>
 
-  
-<style>
-  
+<script src="admin-orders.js.?v=1"></script>
+<script src="admin-confirmations.js?v=1"></script>
+
 <script>
-/* DIGITIBEE - BLOK ADMIN TANPA TOMBOL REFRESH */
+/* DIGITIBEE - 3 BLOK PESANAN TERPISAH */
 (function () {
   "use strict";
 
-  function arrangeAdminBlocks() {
-    const page = document.getElementById("orderPage");
-    if (!page || page.dataset.blocksArranged === "yes") return;
+  const page = document.getElementById("orderPage");
+  if (!page) return;
+
+  function susunBlok() {
+    if (page.dataset.blocksArranged === "yes") return true;
 
     const panel = page.querySelector(".menu-card");
     const telegram = document.getElementById("dbTelegramTest");
     const orders = document.getElementById("dbOrderList");
-    const confirmations =
-      document.getElementById("dbConfirmationList");
+    const confirmations = document.getElementById("dbConfirmationList");
 
     if (!panel || !telegram || !orders || !confirmations) {
-      return;
+      return false;
     }
 
-    const originalConfirmationSection =
-      confirmations.closest("section");
-
-    const oldHeading = [...panel.querySelectorAll("h3")]
-      .find(h => h.textContent.trim() === "PESANAN");
-
-    function createBlock(title, content) {
+    function buatBlok(id, judul, konten) {
       const block = document.createElement("section");
       block.className = "db-admin-block";
+      block.id = id;
 
-      const header = document.createElement("div");
-      header.className = "db-section-header";
+      const title = document.createElement("h3");
+      title.className = "db-block-title";
+      title.textContent = judul;
 
-      const heading = document.createElement("h3");
-      heading.textContent = title;
-
-      header.appendChild(heading);
-      block.appendChild(header);
-
-      if (content) block.appendChild(content);
-
+      block.append(title, konten);
       return block;
     }
 
-    /* Blok Telegram: tombol memenuhi seluruh kotak */
+    // Gunakan tombol Telegram asli agar event klik tetap aktif.
+    telegram.textContent = "🔔 Tes Notifikasi";
+
     const telegramBlock = document.createElement("section");
     telegramBlock.className = "db-admin-block";
     telegramBlock.id = "dbTelegramBlock";
-
-    telegram.textContent = "🔔 Tes Notifikasi";
     telegramBlock.appendChild(telegram);
 
-    /* Blok Pesanan: tanpa tombol refresh */
-    const orderBlock = createBlock(
-      "📋 Data Pesanan",
+    const orderBlock = buatBlok(
+      "dbPesananBlock",
+      "📋 Pesanan",
       orders
     );
 
-    /* Blok Konfirmasi: tanpa tombol refresh */
-    const confirmationBlock = createBlock(
-      "💬 Data Konfirmasi WA",
+    const confirmationBlock = buatBlok(
+      "dbKonfirmasiBlock",
+      "💬 Permintaan Konfirmasi WA",
       confirmations
     );
 
@@ -3102,97 +2802,143 @@ checkAdminSession();
     );
 
     page.dataset.blocksArranged = "yes";
+    return true;
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      arrangeAdminBlocks
-    );
-  } else {
-    arrangeAdminBlocks();
+  if (!susunBlok()) {
+    const observer = new MutationObserver(() => {
+      if (susunBlok()) observer.disconnect();
+    });
+
+    observer.observe(page, {
+      childList: true,
+      subtree: true
+    });
   }
 })();
 </script>
 
+<style>
+/* DIGITIBEE - TAMPILAN PESANAN FINAL */
 
-/* Pastikan garis tepi kartu tidak tertutup */
-#orderPage .menu-card {
-  overflow: hidden;
-  border: 2px solid #f4c6df;
-  border-radius: 22px;
-}
-
-/* Header judul + tombol */
-#orderPage .db-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-#orderPage .db-section-header h3 {
+/* Hilangkan kartu putih paling luar */
+#orderPage > .menu-card {
+  display: block !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
   margin: 0 !important;
-  font-size: clamp(14px, 3.5vw, 19px) !important;
-  line-height: 1.35;
-  min-width: 0;
-  flex: 1;
-  color: #a7477d;
+  overflow: visible !important;
 }
 
-#orderPage .db-section-header button {
-  flex: 0 0 auto;
-  width: auto !important;
-  max-width: 47%;
-  padding: 10px 11px !important;
+/* Ketiga blok terpisah */
+#orderPage .db-admin-block,
+#orderPage > .menu-card > .db-admin-block {
+  display: block !important;
+  position: relative;
+  order: initial !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  background: rgba(255,255,255,.96) !important;
+  border: 2px solid #f4c6df !important;
+  border-radius: 23px !important;
+  padding: 18px 15px !important;
+  margin: 0 0 18px !important;
+  box-shadow: 0 4px 15px rgba(185,85,130,.06) !important;
+  overflow: hidden !important;
+}
+
+/* Blok Telegram pink menyala */
+#orderPage #dbTelegramBlock {
+  background: #ff65ac !important;
+  border: 2px solid #f34b9b !important;
+  padding: 0 !important;
+}
+
+/* Seluruh blok Telegram dapat ditekan */
+#orderPage #dbTelegramBlock #dbTelegramTest {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  order: initial !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 76px !important;
+  min-height: 76px !important;
   margin: 0 !important;
-  border: 1px solid #f0bad4 !important;
-  border-radius: 11px !important;
-  background: #ffe4f0 !important;
-  color: #a7477d !important;
-  font-size: clamp(10px, 2.5vw, 12px) !important;
+  padding: 12px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 21px !important;
+  font-size: 17px !important;
   font-weight: 800 !important;
-  line-height: 1.3;
-  text-align: center;
+  text-align: center !important;
   text-decoration: none !important;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  cursor: pointer !important;
 }
 
-/* Tiga blok terpisah */
-#orderPage .db-admin-block {
-  background: rgba(255,255,255,.94);
-  border: 2px solid #f4c6df;
-  border-radius: 22px;
-  padding: 18px;
-  margin-bottom: 18px;
-  overflow: hidden;
-  min-width: 0;
+#orderPage #dbTelegramBlock #dbTelegramTest:active {
+  background: #e94b94 !important;
 }
 
-/* Hindari garis lama mengganggu */
-#orderPage .db-admin-block .menu-card {
-  border: none;
+#orderPage #dbTelegramBlock #dbTelegramTest:disabled {
+  opacity: .75;
+  cursor: wait !important;
 }
 
-/* Daftar tetap di dalam tepi kartu */
+/* Judul pesanan dan konfirmasi */
+#orderPage .db-block-title {
+  margin: 0 0 15px !important;
+  color: #a7477d !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+}
+
+/* Daftar pesanan dan konfirmasi */
 #orderPage #dbOrderList,
 #orderPage #dbConfirmationList {
-  width: 100%;
-  min-width: 0;
+  display: block !important;
+  order: initial !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 0 !important;
   margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-@media (max-width: 390px) {
+/* Kotak informasi kosong */
+#orderPage #dbOrderList > p,
+#orderPage #dbConfirmationList > p {
+  background: #fff0f7 !important;
+  border: 1px solid #f2c7dd !important;
+  border-radius: 15px !important;
+  padding: 18px 12px !important;
+  margin: 0 !important;
+  color: #966d83 !important;
+  font-size: 13px !important;
+  text-align: center !important;
+}
+
+/* Tampilan iPhone */
+@media (max-width: 480px) {
   #orderPage .db-admin-block {
-    padding: 13px;
+    padding: 16px 12px !important;
   }
 
-  #orderPage .db-section-header {
-    gap: 7px;
+  #orderPage .db-block-title {
+    font-size: 16px !important;
   }
 }
+
 </style>
 
 </body>
