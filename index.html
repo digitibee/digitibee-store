@@ -1462,7 +1462,7 @@
 
 <!-- JUDUL DI LUAR KOTAK PUTIH -->
 
-<h3 class="db-data-title">
+<h3 class="db-data-title" id="dbDataTitle">
   <img src="Orang-digitibee.PNG" alt="Data Pemesan"
        style="width:30px;height:30px;object-fit:contain;flex-shrink:0;">
   <span>Data Pemesan</span>
@@ -2221,9 +2221,13 @@ function updateOrderChannel() {
   }
 
   const customerForm = document.getElementById("dbCustomerForm");
-
   if (customerForm) {
     customerForm.style.display = needsConfirmation ? "none" : "";
+    const dataTitle = document.getElementById("dbDataTitle");
+
+if (dataTitle) {
+  dataTitle.style.display = needsConfirmation ? "none" : "";
+}
   }
 }
 
