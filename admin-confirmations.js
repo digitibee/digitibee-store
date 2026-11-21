@@ -171,7 +171,7 @@ body: {
               }
 
               const url =
-                "https://digitibee.github.io/" +
+               https://digitibee.github.io/digitibee-store/#checkout?token=
                 "#checkout?token=" +
                 encodeURIComponent(data.checkout_token);
 
