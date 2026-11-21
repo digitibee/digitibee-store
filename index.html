@@ -2163,6 +2163,19 @@ function renderCart() {
 
   totalElement.textContent = "Total: " + formatRupiah(total);
 }
+  const checkoutButton = document.querySelector(
+  '#keranjang button[onclick*="sendOrderWhatsApp"]'
+);
+
+if (checkoutButton) {
+  const needsConfirmation = cart.some(
+    item => item.requiresConfirmation === true
+  );
+
+  checkoutButton.textContent = needsConfirmation
+    ? "💬 KONFIRMASI STOK KE ADMIN"
+    : "🛒 LANJUT KE CHECKOUT";
+}
 
 /* PESANAN WHATSAPP */
 
