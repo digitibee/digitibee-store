@@ -2162,43 +2162,53 @@ function renderCart() {
   });
 
   totalElement.textContent = "Total: " + formatRupiah(total);
-}
-  const checkoutButton = document.querySelector(
-  '#keranjang button[onclick*="sendOrderWhatsApp"]'
-);
-
-if (checkoutButton) {
-  const needsConfirmation = cart.some(
-    item => item.requiresConfirmation === true
-  );
-
-  checkoutButton.textContent = needsConfirmation
-    ? "💬 KONFIRMASI STOK KE ADMIN"
-    : "🛒 LANJUT KE CHECKOUT";
+updateOrderChannel();
 }
 
 /* PESANAN WHATSAPP */
 
 
 function updateOrderChannel() {
-  const isIG = document.querySelector('input[name="orderChannel"]:checked')?.value === "instagram";
+  const isIG =
+    document.querySelector(
+      'input[name="orderChannel"]:checked'
+    )?.value === "instagram";
+
   const contact = document.getElementById("customerPhone");
-  const label = document.querySelector('label[for="customerPhone"]');
-  const button = document.querySelector('button[onclick*="sendOrderWhatsApp"]');
+  const label = document.querySelector(
+    'label[for="customerPhone"]'
+  );
+
+  const button = document.querySelector(
+    '#keranjang button[onclick*="sendOrderWhatsApp"]'
+  );
 
   if (contact) {
     contact.type = isIG ? "text" : "tel";
-    contact.placeholder = isIG ? "Contoh: @namakamu" : "Contoh: 62812xxxx";
+    contact.placeholder = isIG
+      ? "Contoh: @namakamu"
+      : "Contoh: 62812xxxx";
   }
 
   if (label) {
-    label.textContent = isIG ? "Username Instagram" : "Nomor WhatsApp";
+    label.textContent = isIG
+      ? "Username Instagram"
+      : "Nomor WhatsApp";
   }
 
-  if (button) {
+  if (!button) return;
+
+    const needsConfirmation = cart.some(item =>
+    item.requiresConfirmation === true ||
+    item.requires_confirmation === true
+  );
+
+  if (needsConfirmation) {
     button.textContent = isIG
-      ? "LANJUTKAN VIA INSTAGRAM"
-      : "KIRIM PESANAN VIA WHATSAPP";
+      ? "💬 KONFIRMASI STOK VIA INSTAGRAM"
+      : "💬 KONFIRMASI STOK KE ADMIN";
+  } else {
+    button.textContent = "🛒 LANJUT KE CHECKOUT";
   }
 }
 
@@ -2599,9 +2609,6 @@ async function loadLeaderboard() {
 
 /* HALAMAN AWAL */
 
-
-/* HALAMAN AWAL */
-
 function initializeStore() {
   const hash = window.location.hash;
   const pageId = hash.replace("#", "");
@@ -2710,61 +2717,6 @@ document.getElementById("catalogSearch")
 
 <script src="checkout-digitibee.js?v=2"></script>
 <script src="digitibee-order-submit.js?v=2"></script>
-
-  
-<!-- DIGITIBEE - PENGARAH CHECKOUT CUSTOMER V1 -->
-<script>
-(function () {
-  "use strict";
-
-  function isConfirmationProduct(item) {
-    return (
-      item.requires_confirmation === true ||
-      item.requiresConfirmation === true ||
-      item.requires_confirmation === 1 ||
-      item.requiresConfirmation === 1
-    );
-  }
-
-  function getCheckoutType(items) {
-    if (!Array.isArray(items) || items.length === 0) {
-      return "empty";
-    }
-
-    return items.some(isConfirmationProduct)
-      ? "confirmation"
-      : "ready";
-  }
-
-  window.dbGetCheckoutType = getCheckoutType;
-
-  window.dbShowCheckoutRoute = function (items) {
-    const type = getCheckoutType(items);
-
-    if (type === "empty") {
-      alert("Keranjang masih kosong.");
-      return;
-    }
-
-    if (type === "confirmation") {
-      alert(
-        "💬 KONFIRMASI STOK\n\n" +
-        "Pesanan ini mengandung produk Konfirmasi WA.\n" +
-        "Seluruh produk harus disetujui admin " +
-        "sebelum melanjutkan pembayaran."
-      );
-      return;
-    }
-
-    alert(
-      "✅ PRODUK READY\n\n" +
-      "Pesanan dapat dilanjutkan ke Data Pemesan.\n" +
-      "Pembayaran belum diaktifkan."
-    );
-  };
-})();
-</script>
-
 
 <!-- DIGITIBEE - PENGARAH CHECKOUT CUSTOMER V1 -->
 <script>
