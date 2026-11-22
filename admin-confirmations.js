@@ -116,9 +116,16 @@ const data = response.requests;
 const header = document.createElement("div");
 header.className = "db-request-header";
 
+
 const title = element(
-  "h4", "Kode: " + request.request_code
+  "h4",
+  "Kode: " + (
+    request.request_number != null
+      ? String(request.request_number).padStart(3, "0")
+      : request.request_code
+  )
 );
+
 title.className = "db-request-code";
 
 const status = element(
