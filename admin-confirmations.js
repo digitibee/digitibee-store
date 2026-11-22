@@ -236,7 +236,63 @@ body: {
             }
           });
 
-          card.appendChild(approve);
+          
+const actions = document.createElement("div");
+actions.className = "db-request-actions";
+
+const reject = element("button", "✕ TOLAK");
+reject.type = "button";
+reject.className = "db-reject-button";
+
+approve.className = "db-approve-button";
+
+reject.addEventListener("click", async () => {
+  if (!confirm("Yakin ingin menolak permintaan ini?")) {
+    return;
+  }
+
+  reject.disabled = true;
+  approve.disabled = true;
+  reject.textContent = "Memproses...";
+
+  try {
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "digitibee-confirmation-admin",
+        {
+          body: {
+            action: "reject",
+            request_id: request.id
+          }
+        }
+      );
+
+    if (error || !data?.success) {
+      let message = data?.error || error?.message ||
+        "Penolakan gagal.";
+
+      if (error?.context) {
+        try {
+          const detail = await error.context.json();
+          message = detail.error || message;
+        } catch (_) {}
+      }
+
+      throw new Error(message);
+    }
+
+    await loadConfirmations();
+
+  } catch (err) {
+    alert("Gagal menolak: " + err.message);
+    reject.disabled = false;
+    approve.disabled = false;
+    reject.textContent = "✕ TOLAK";
+  }
+});
+
+actions.append(approve, reject);
+card.appendChild(actions);
         }
 
         fragment.appendChild(card);
