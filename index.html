@@ -2268,7 +2268,7 @@ document.addEventListener("change", function(event) {
 
 document.addEventListener("DOMContentLoaded", updateOrderChannel);
 
-function sendOrderWhatsApp() {
+async function sendOrderWhatsApp() {
   if (cart.length === 0) {
     alert("Keranjang masih kosong!");
     return;
