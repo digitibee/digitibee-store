@@ -2279,6 +2279,61 @@ async function sendOrderWhatsApp() {
     item.requires_confirmation === true
   );
 
+  const turnstileToken = window.turnstile?.getResponse(
+  document.querySelector(
+    "#dbConfirmationTurnstile .cf-turnstile"
+  )
+);
+
+if (!turnstileToken) {
+  alert("Selesaikan verifikasi keamanan terlebih dahulu.");
+  return;
+}
+
+const button = document.getElementById("dbCheckoutButton");
+button.disabled = true;
+
+try {
+  const { data, error } = await supabaseClient.functions.invoke(
+    "digitibee-confirmation",
+    {
+      body: {
+        request_id: crypto.randomUUID(),
+        turnstile_token: turnstileToken,
+        items: cart.map(item => ({
+          variant_id: item.variantId,
+          quantity: Number(item.quantity)
+        }))
+      }
+    }
+  );
+
+  if (error) throw error;
+  if (!data?.success || !data?.request_code) {
+    throw new Error(data?.error || "Konfirmasi belum berhasil.");
+  }
+
+  sessionStorage.setItem(
+    "digitibeeLastConfirmationCode",
+    data.request_code
+  );
+
+} catch (error) {
+  console.error("Konfirmasi WA:", error);
+  alert(
+    "Permintaan belum berhasil dicatat. Silakan coba lagi."
+  );
+  window.turnstile?.reset(
+    document.querySelector(
+      "#dbConfirmationTurnstile .cf-turnstile"
+    )
+  );
+  return;
+
+} finally {
+  button.disabled = false;
+}
+
   if (needsConfirmation) {
     let message = "Halo Admin Auna & Duna! 🩷\n\n";
     message += "Saya ingin konfirmasi ketersediaan produk:\n\n";
