@@ -112,61 +112,64 @@ const data = response.requests;
           "border-radius:15px;padding:14px;" +
           "margin:12px 0";
 
-        const title = element(
-          "h4", "Kode: " + request.request_code
-        );
-        title.style.color = "#b7467f";
+        // HEADER: KODE PERMINTAAN + BADGE STATUS
+const header = document.createElement("div");
+header.className = "db-request-header";
 
-        card.appendChild(title);
-        card.appendChild(element(
-          "p", "Status: " + request.status
-        ));
+const title = element(
+  "h4", "Kode: " + request.request_code
+);
+title.className = "db-request-code";
+
+const status = element(
+  "span", request.status.toUpperCase()
+);
+status.className =
+  "db-request-status db-status-" + request.status;
+
+header.append(title, status);
+card.appendChild(header);
+
+// GARIS PUTUS-PUTUS
+const separator = document.createElement("div");
+separator.className = "db-request-separator";
+card.appendChild(separator);
 
         const items = Array.isArray(request.items)
           ? request.items : [];
 
-        for (const item of items) {
-  const productName =
-    item.product_name || "Produk tidak diketahui";
+  
+items.forEach((item, index) => {
+  const productName = item.product_name || "Produk";
+  const variantName = item.variant_name || "Varian";
+  const quantity = Number(item.quantity) || 1;
 
-  const variantName =
-    item.variant_name || "Varian tidak diketahui";
+  const row = document.createElement("div");
+  row.className = "db-request-item";
 
-  const duration =
-    item.duration || "";
+  const number = element("span", index + 1);
+  number.className = "db-request-number";
 
-  const quantity =
-    Number(item.quantity) || 1;
+  const line = document.createElement("div");
+  line.className = "db-request-line";
 
-  const detail = document.createElement("div");
+  const info = document.createElement("div");
+  info.className = "db-request-info";
 
-  detail.style.cssText =
-    "background:#fff0f7;" +
-    "border:1px solid #f3c6dc;" +
-    "border-radius:12px;" +
-    "padding:12px;" +
-    "margin:10px 0;";
-
-  const product = element(
-    "strong", "🛍️ " + productName
+  const name = element(
+    "strong",
+    productName + " " + variantName
   );
 
-  product.style.color = "#a7477d";
-
-  detail.appendChild(product);
-
-  detail.appendChild(element(
+  const amount = element(
     "p",
-    "Varian: " + variantName +
-    (duration ? " • " + duration : "")
-  ));
+    "Jumlah Paket: " + quantity
+  );
 
-  detail.appendChild(element(
-    "p", "Jumlah: " + quantity
-  ));
-
-  card.appendChild(detail);
-}
+  info.append(name, amount);
+  row.append(number, line, info);
+  card.appendChild(row);
+});
 
         if (request.status === "pending") {
           const approve = element(
