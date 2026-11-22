@@ -116,16 +116,9 @@ const data = response.requests;
 const header = document.createElement("div");
 header.className = "db-request-header";
 
-
 const title = element(
-  "h4",
-  "Kode: " + (
-    request.request_number != null
-      ? String(request.request_number).padStart(3, "0")
-      : request.request_code
-  )
+  "h4", "Kode: " + request.request_code
 );
-
 title.className = "db-request-code";
 
 const status = element(
@@ -215,17 +208,9 @@ body: {
                 );
               }
 
-              
-const number = Number(data.request_number);
-
-if (!Number.isSafeInteger(number) || number < 1) {
-  throw new Error("Nomor checkout tidak valid.");
-}
-
-const url =
-  "https://digitibee.github.io/digitibee-store/#/checkout/" +
-  String(number).padStart(3, "0");
-
+              const url =
+  "https://digitibee.github.io/digitibee-store/#checkout?token=" +
+  encodeURIComponent(data.checkout_token);
 
               const copy = element(
                 "button", "📋 SALIN LINK CHECKOUT"
