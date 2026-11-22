@@ -2292,11 +2292,13 @@ async function sendOrderWhatsApp() {
 );
 
 const turnstileToken = window.turnstile?.getResponse(
-  confirmationWidget
+  window.dbGetConfirmationTurnstileId?.()
 );
 
 if (!turnstileToken) {
-  window.turnstile?.reset(confirmationWidget);
+  window.turnstile?.reset(
+  window.dbGetConfirmationTurnstileId?.()
+);
 
   alert(
     "Verifikasi keamanan belum selesai atau sudah kedaluwarsa. " +
@@ -2361,6 +2363,8 @@ if (error) {
   (error.message || "Silakan coba lagi.")
 );
   window.turnstile?.reset(
+  window.dbGetConfirmationTurnstileId?.()
+);
     document.querySelector(
       "#dbConfirmationTurnstile .cf-turnstile"
     )
