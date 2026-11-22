@@ -1035,7 +1035,7 @@
 
   </style>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 
 <body>
@@ -2296,9 +2296,7 @@ const turnstileToken = window.turnstile?.getResponse(
 );
 
 if (!turnstileToken) {
-  window.turnstile?.reset(
-  window.dbGetConfirmationTurnstileId?.()
-);
+  window.turnstile?.reset(confirmationWidget);
 
   alert(
     "Verifikasi keamanan belum selesai atau sudah kedaluwarsa. " +
@@ -2363,8 +2361,6 @@ if (error) {
   (error.message || "Silakan coba lagi.")
 );
   window.turnstile?.reset(
-  window.dbGetConfirmationTurnstileId?.()
-);
     document.querySelector(
       "#dbConfirmationTurnstile .cf-turnstile"
     )
@@ -2600,8 +2596,8 @@ testimonialPhoto.addEventListener("change", function () {
     return;
   }
 
-  if (file.size > 100 * 1024 * 1024) {
-    alert("Ukuran foto maksimal 100 MB.");
+  if (file.size > 5 * 1024 * 1024) {
+    alert("Ukuran foto maksimal 5 MB.");
     this.value = "";
     photoPreview.style.display = "none";
     return;
@@ -2643,7 +2639,7 @@ document.getElementById("testimonialForm")
   }
 
   if (photo && photo.size > 5 * 1024 * 1024) {
-    alert("Ukuran foto maksimal 100 MB.");
+    alert("Ukuran foto maksimal 5 MB.");
     return;
   }
 
@@ -2875,6 +2871,69 @@ document.getElementById("catalogSearch")
     catalogSearchText = this.value.trim();
     loadProducts();
   });
+
+<script>
+(function () {
+  let confirmationWidgetId = null;
+
+  function renderConfirmationTurnstile() {
+    const container = document.getElementById(
+      "dbConfirmationTurnstile"
+    );
+
+    const widget = container?.querySelector(".cf-turnstile");
+
+    if (!container || !widget || !window.turnstile) {
+      return;
+    }
+
+    if (confirmationWidgetId !== null) {
+      return;
+    }
+
+    const needsConfirmation = cart.some(item =>
+      item.requiresConfirmation === true ||
+      item.requires_confirmation === true
+    );
+
+    if (!needsConfirmation) {
+      return;
+    }
+
+    container.style.display = "block";
+
+    confirmationWidgetId = window.turnstile.render(widget, {
+      sitekey: widget.dataset.sitekey,
+      theme: "light",
+      "refresh-expired": "auto",
+      "refresh-timeout": "auto"
+    });
+
+    window.dbGetConfirmationTurnstileId = function () {
+      return confirmationWidgetId;
+    };
+  }
+
+  window.dbRenderConfirmationTurnstile =
+    renderConfirmationTurnstile;
+
+  const observer = new MutationObserver(
+    renderConfirmationTurnstile
+  );
+
+  observer.observe(
+    document.getElementById("dbConfirmationTurnstile"),
+    {
+      attributes: true,
+      attributeFilter: ["style"]
+    }
+  );
+
+  window.addEventListener("load", function () {
+    renderConfirmationTurnstile();
+  });
+})();
+</script>
 
 </script>
 
