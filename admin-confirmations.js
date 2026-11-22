@@ -126,12 +126,47 @@ const data = response.requests;
           ? request.items : [];
 
         for (const item of items) {
-          card.appendChild(element(
-            "p",
-            "Varian: " + (item.variant_id || "-") +
-            " | Jumlah: " + (item.quantity || 1)
-          ));
-        }
+  const productName =
+    item.product_name || "Produk tidak diketahui";
+
+  const variantName =
+    item.variant_name || "Varian tidak diketahui";
+
+  const duration =
+    item.duration || "";
+
+  const quantity =
+    Number(item.quantity) || 1;
+
+  const detail = document.createElement("div");
+
+  detail.style.cssText =
+    "background:#fff0f7;" +
+    "border:1px solid #f3c6dc;" +
+    "border-radius:12px;" +
+    "padding:12px;" +
+    "margin:10px 0;";
+
+  const product = element(
+    "strong", "🛍️ " + productName
+  );
+
+  product.style.color = "#a7477d";
+
+  detail.appendChild(product);
+
+  detail.appendChild(element(
+    "p",
+    "Varian: " + variantName +
+    (duration ? " • " + duration : "")
+  ));
+
+  detail.appendChild(element(
+    "p", "Jumlah: " + quantity
+  ));
+
+  card.appendChild(detail);
+}
 
         if (request.status === "pending") {
           const approve = element(
