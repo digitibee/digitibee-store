@@ -2872,6 +2872,68 @@ document.getElementById("catalogSearch")
     loadProducts();
   });
 
+<script>
+(function () {
+  let confirmationWidgetId = null;
+
+  function renderConfirmationTurnstile() {
+    const container = document.getElementById(
+      "dbConfirmationTurnstile"
+    );
+
+    const widget = container?.querySelector(".cf-turnstile");
+
+    if (!container || !widget || !window.turnstile) {
+      return;
+    }
+
+    if (confirmationWidgetId !== null) {
+      return;
+    }
+
+    const needsConfirmation = cart.some(item =>
+      item.requiresConfirmation === true ||
+      item.requires_confirmation === true
+    );
+
+    if (!needsConfirmation) {
+      return;
+    }
+
+    container.style.display = "block";
+
+    confirmationWidgetId = window.turnstile.render(widget, {
+      sitekey: widget.dataset.sitekey,
+      theme: "light",
+      "refresh-expired": "auto",
+      "refresh-timeout": "auto"
+    });
+
+    window.dbGetConfirmationTurnstileId = function () {
+      return confirmationWidgetId;
+    };
+  }
+
+  window.dbRenderConfirmationTurnstile =
+    renderConfirmationTurnstile;
+
+  const observer = new MutationObserver(
+    renderConfirmationTurnstile
+  );
+
+  observer.observe(
+    document.getElementById("dbConfirmationTurnstile"),
+    {
+      attributes: true,
+      attributeFilter: ["style"]
+    }
+  );
+
+  window.addEventListener("load", function () {
+    renderConfirmationTurnstile();
+  });
+})();
+</script>
 
 </script>
 
