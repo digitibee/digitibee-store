@@ -2223,14 +2223,11 @@ function updateOrderChannel() {
   const customerForm = document.getElementById("dbCustomerForm");
   if (customerForm) {
     customerForm.style.display = needsConfirmation ? "none" : "";
-    
-const dataTitle = document.getElementById("dbDataTitle");
+    const dataTitle = document.getElementById("dbDataTitle");
 
 if (dataTitle) {
-  if (needsConfirmation) {
-    dataTitle.style.setProperty("display", "none", "important");
-  } else {
-    dataTitle.style.removeProperty("display");
+  dataTitle.style.display = needsConfirmation ? "none" : "";
+}
   }
 }
 
