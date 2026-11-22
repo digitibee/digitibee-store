@@ -2292,7 +2292,7 @@ async function sendOrderWhatsApp() {
 );
 
 const turnstileToken = window.turnstile?.getResponse(
-  window.dbGetConfirmationTurnstileId?.()
+  confirmationWidget
 );
 
 if (!turnstileToken) {
@@ -2600,8 +2600,8 @@ testimonialPhoto.addEventListener("change", function () {
     return;
   }
 
-  if (file.size > 5 * 1024 * 1024) {
-    alert("Ukuran foto maksimal 5 MB.");
+  if (file.size > 100 * 1024 * 1024) {
+    alert("Ukuran foto maksimal 100 MB.");
     this.value = "";
     photoPreview.style.display = "none";
     return;
