@@ -227,7 +227,14 @@ body: {
               });
 
               card.appendChild(copy);
-              approve.remove();
+
+// Hilangkan kedua tombol setelah berhasil disetujui
+actions.remove();
+
+// Perbarui badge status
+status.textContent = "APPROVED";
+status.className =
+  "db-request-status db-status-approved";
 
             } catch (err) {
               alert(err.message);
