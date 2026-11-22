@@ -1588,6 +1588,18 @@
 
 </div> <!-- Penutup kotak formulir -->
 
+<!-- TURNSTILE KHUSUS KONFIRMASI WA -->
+<div
+  id="dbConfirmationTurnstile"
+  style="display:none;margin:14px 0;max-width:100%;"
+>
+  <div
+    class="cf-turnstile"
+    data-sitekey="0x4AAAAAAGJEvsDFrhjIwWST"
+    data-theme="light"
+  ></div>
+</div>
+        
 <button
   type="button"
   class="pink-button"
@@ -2226,6 +2238,14 @@ function updateOrderChannel() {
     } else {
     button.textContent = "LANJUT KE CHECKOUT 🔜";
   }
+
+  const confirmationTurnstile =
+  document.getElementById("dbConfirmationTurnstile");
+
+if (confirmationTurnstile) {
+  confirmationTurnstile.style.display =
+    needsConfirmation ? "block" : "none";
+}
 
   const customerForm = document.getElementById("dbCustomerForm");
   if (customerForm) {
