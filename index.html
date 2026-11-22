@@ -1418,12 +1418,19 @@
   object-fit: contain;
 }
 
+
 /* JUDUL DATA PEMESAN DENGAN GAMBAR */
 #keranjang .db-data-title {
   display: flex !important;
   align-items: center;
   gap: 10px;
 }
+
+/* SEMBUNYIKAN JUDUL SAAT KONFIRMASI WA */
+#keranjang #dbDataTitle[style*="display: none"] {
+  display: none !important;
+}
+
 </style>
 
     <!-- KERANJANG -->
