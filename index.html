@@ -1035,7 +1035,7 @@
 
   </style>
 
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 
 <body>
@@ -2279,11 +2279,32 @@ async function sendOrderWhatsApp() {
     item.requires_confirmation === true
   );
 
-  const turnstileToken = window.turnstile?.getResponse(
-  document.querySelector(
-    "#dbConfirmationTurnstile .cf-turnstile"
-  )
+  if (!needsConfirmation) {
+  alert(
+    "Checkout produk Ready sedang disiapkan. " +
+    "Pembayaran belum diaktifkan."
+  );
+  return;
+}
+
+  const confirmationWidget = document.querySelector(
+  "#dbConfirmationTurnstile .cf-turnstile"
 );
+
+const turnstileToken = window.turnstile?.getResponse(
+  confirmationWidget
+);
+
+if (!turnstileToken) {
+  window.turnstile?.reset(confirmationWidget);
+
+  alert(
+    "Verifikasi keamanan belum selesai atau sudah kedaluwarsa. " +
+    "Silakan tunggu hingga Cloudflare menampilkan Berhasil!, " +
+    "lalu tekan tombol konfirmasi kembali."
+  );
+  return;
+}
 
 if (!turnstileToken) {
   alert("Selesaikan verifikasi keamanan terlebih dahulu.");
@@ -2453,7 +2474,6 @@ const whatsappURL =
 
 window.location.href = whatsappURL;
 }
-
 
 /* TESTIMONI */
 
