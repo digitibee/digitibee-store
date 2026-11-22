@@ -2245,21 +2245,6 @@ function updateOrderChannel() {
 if (confirmationTurnstile) {
   confirmationTurnstile.style.display =
     needsConfirmation ? "block" : "none";
-
-  if (needsConfirmation) {
-    const widget = confirmationTurnstile.querySelector(".cf-turnstile");
-
-    if (
-      widget &&
-      window.turnstile &&
-      !widget.querySelector("iframe")
-    ) {
-      window.turnstile.render(widget, {
-        sitekey: widget.dataset.sitekey,
-        theme: "light"
-      });
-    }
-  }
 }
 
   const customerForm = document.getElementById("dbCustomerForm");
