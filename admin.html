@@ -3053,5 +3053,164 @@ min-height: 58px !important;
 
 </style>
 
+
+<style>
+/* DIGITIBEE - DESAIN KONFIRMASI FINAL */
+
+/* Kode dan status sejajar */
+#dbConfirmationList .db-request-header {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+#dbConfirmationList .db-request-code {
+  color: #a83f75 !important;
+  font-size: 14px !important;
+  font-weight: 800;
+  margin: 0 !important;
+  overflow-wrap: anywhere;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Badge pending cokelat */
+#dbConfirmationList .db-request-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .3px;
+  white-space: nowrap;
+}
+
+#dbConfirmationList .db-status-pending {
+  background: #b97713;
+  color: #fff;
+}
+
+#dbConfirmationList .db-status-approved {
+  background: #e1f5e8;
+  color: #26754a;
+}
+
+#dbConfirmationList .db-status-rejected {
+  background: #ffe3e8;
+  color: #b43f58;
+}
+
+/* Garis putus-putus */
+#dbConfirmationList .db-request-separator {
+  border: none !important;
+  border-top: 2px dashed #ee91bc !important;
+  height: 0;
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+}
+
+/* Baris produk */
+#dbConfirmationList .db-request-item {
+  display: flex !important;
+  align-items: center;
+  gap: 13px;
+  margin: 15px 0 24px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Nomor produk */
+#dbConfirmationList .db-request-number {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fce3ef;
+  color: #a83f75;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+/* Garis vertikal */
+#dbConfirmationList .db-request-line {
+  width: 2px;
+  height: 45px;
+  flex: 0 0 2px;
+  background: #a83f75;
+}
+
+/* Nama dan jumlah paket */
+#dbConfirmationList .db-request-info {
+  flex: 1;
+  min-width: 0;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#dbConfirmationList .db-request-info strong {
+  display: block;
+  color: #a83f75 !important;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+#dbConfirmationList .db-request-info p {
+  color: #654b5b !important;
+  font-size: 13px;
+  margin: 6px 0 0 !important;
+}
+
+
+/* DUA TOMBOL AKSI BERDAMPINGAN */
+#dbConfirmationList .db-request-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 18px 0 0 !important;
+}
+
+#dbConfirmationList .db-request-actions button {
+  width: 100% !important;
+  min-height: 48px;
+  margin: 0 !important;
+  padding: 11px 8px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+}
+
+#dbConfirmationList .db-approve-button {
+  background: #d95791 !important;
+  color: #fff !important;
+}
+
+#dbConfirmationList .db-reject-button {
+  background: #f8dce6 !important;
+  color: #a9476e !important;
+}
+
+#dbConfirmationList .db-request-actions button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+</style>
+
 </body>
 </html>
