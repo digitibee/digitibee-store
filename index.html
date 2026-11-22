@@ -2308,7 +2308,22 @@ try {
     }
   );
 
-  if (error) throw error;
+if (error) {
+  const response = error.context;
+
+  if (response && typeof response.json === "function") {
+    const detail = await response.json().catch(() => null);
+
+    throw new Error(
+      detail?.error ||
+      detail?.message ||
+      error.message ||
+      "Gagal menghubungi server."
+    );
+  }
+
+  throw error;
+}
   if (!data?.success || !data?.request_code) {
     throw new Error(data?.error || "Konfirmasi belum berhasil.");
   }
@@ -2321,8 +2336,9 @@ try {
 } catch (error) {
   console.error("Konfirmasi WA:", error);
   alert(
-    "Permintaan belum berhasil dicatat. Silakan coba lagi."
-  );
+  "Permintaan belum berhasil dicatat.\n\n" +
+  (error.message || "Silakan coba lagi.")
+);
   window.turnstile?.reset(
     document.querySelector(
       "#dbConfirmationTurnstile .cf-turnstile"
