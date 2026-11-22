@@ -2755,7 +2755,12 @@ function initializeStore() {
 
   // Pertahankan link checkout khusus dari admin.
   // Jangan hapus token atau jalankan checkout dulu.
-  if (hash.startsWith("#checkout?")) {
+  
+if (
+  hash.startsWith("#checkout?") ||
+  /^#\/checkout\/\d+$/.test(hash)
+) {
+
     const params = new URLSearchParams(hash.slice("#checkout?".length));
     const token = params.get("token");
 
