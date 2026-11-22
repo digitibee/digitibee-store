@@ -2790,9 +2790,13 @@ if (
     heading.textContent = "💗 Checkout Khusus Digitibee";
 
     const message = document.createElement("p");
-    message.textContent = /^[0-9a-f]{64}$/.test(token || "")
-      ? "Link checkout terdeteksi. Fitur ini sedang disiapkan dan belum dapat digunakan untuk pembayaran."
-      : "Link checkout tidak valid. Silakan minta link baru kepada admin.";
+    
+const isShortLink = /^#\/checkout\/\d+$/.test(hash);
+const isOldLink = /^[0-9a-f]{64}$/.test(token || "");
+
+message.textContent = isShortLink || isOldLink
+  ? "Link checkout terdeteksi. Fitur ini sedang disiapkan dan belum dapat digunakan untuk pembayaran."
+  : "Link checkout tidak valid. Silakan minta link baru kepada admin.";
 
     notice.append(heading, message);
     document.querySelector("main")?.prepend(notice);
