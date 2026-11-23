@@ -1743,7 +1743,10 @@ function showPage(pageId) {
   loadProducts();
 }
   if (pageId === "testimoni") loadTestimonials();
-  if (pageId === "keranjang") renderCart();
+  if (pageId === "keranjang") {
+  renderCart();
+  updateConfirmationStatus();
+}
   if (pageId === "leaderboard") loadLeaderboard();
 }
 
@@ -2215,6 +2218,49 @@ updateOrderChannel();
 
 /* PESANAN WHATSAPP */
 
+async function updateConfirmationStatus() {
+  const box = document.getElementById("digitibeeOrderStatus");
+  if (!box) return;
+
+  const requestId = localStorage.getItem("digitibeeLastConfirmationId");
+  const requestCode = localStorage.getItem("digitibeeLastConfirmationCode");
+
+  if (!requestId || !requestCode) {
+    box.style.display = "none";
+    return;
+  }
+
+  box.style.display = "block";
+  box.textContent = "⏳ Memeriksa status konfirmasi...";
+
+  try {
+    const { data, error } = await supabaseClient.functions.invoke(
+      "digitibee-confirmation-status",
+      {
+        body: {
+          request_id: requestId,
+          request_code: requestCode
+        }
+      }
+    );
+
+    if (error || !data?.success) {
+      box.textContent = "⚠️ Status belum dapat diperiksa.";
+      return;
+    }
+
+    if (data.status === "approved") {
+      box.textContent = "✅ Telah Disetujui Admin";
+    } else if (data.status === "rejected") {
+      box.textContent = "❌ Ditolak Admin";
+    } else {
+      box.textContent = "⏳ Menunggu Konfirmasi Admin";
+    }
+  } catch (error) {
+    console.error("Cek status:", error);
+    box.textContent = "⚠️ Status belum dapat diperiksa.";
+  }
+}
 
 function updateOrderChannel() {
   const isIG =
@@ -2368,6 +2414,32 @@ localStorage.setItem(
   "digitibeeLastConfirmationId",
   requestId
 );
+
+
+const checkConfirmationStatus = async () => {
+  const savedId = localStorage.getItem("digitibeeLastConfirmationId");
+  const savedCode = localStorage.getItem("digitibeeLastConfirmationCode");
+
+  if (!savedId || !savedCode) return null;
+
+  const { data, error } = await supabaseClient.functions.invoke(
+    "digitibee-confirmation-status",
+    {
+      body: {
+        request_id: savedId,
+        request_code: savedCode
+      }
+    }
+  );
+
+  if (error || !data?.success) return null;
+
+  return data.status;
+};
+
+const latestStatus = await checkConfirmationStatus();
+console.log("Status pesanan:", latestStatus);
+
 
 } catch (error) {
   console.error("Konfirmasi WA:", error);
