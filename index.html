@@ -2349,10 +2349,17 @@ if (error) {
   throw error;
 }
   if (!data?.success || !data?.request_code) {
-    throw new Error(data?.error || "Konfirmasi belum berhasil.");
-  }
+  throw new Error(data?.error || "Konfirmasi belum berhasil");
+}
 
+if (data.request_id) {
   localStorage.setItem(
+    "digitibee_request_id",
+    data.request_id
+  );
+}
+
+localStorage.setItem(
   "digitibeeLastConfirmationCode",
   data.request_code
 );
