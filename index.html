@@ -2267,8 +2267,34 @@ if (checkoutButton) {
   checkoutButton.style.display = hideConfirmation ? "none" : "";
 }
 
-    if (data.status === "approved") {
-      box.textContent = "✅ Telah Disetujui Admin";
+    
+if (data.status === "approved") {
+  box.innerHTML = "";
+
+  const message = document.createElement("div");
+  message.textContent = "✅ Telah Disetujui Admin";
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.textContent = "LANJUT KE PENGISIAN DATA 🩷";
+  nextButton.className = "pink-button";
+  nextButton.style.cssText = `
+    display:block;
+    margin:12px auto 0;
+    padding:12px 18px;
+  `;
+
+  nextButton.onclick = () => {
+    document.getElementById("dbCustomerForm").style.display = "";
+    document.getElementById("dbDataTitle").style.display = "";
+    document.getElementById("dbConfirmationTurnstile").style.display = "none";
+
+    document.getElementById("dbDataTitle")
+      .scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  box.append(message, nextButton);
+
     } else if (data.status === "rejected") {
       box.textContent = "❌ Ditolak Admin";
     } else {
