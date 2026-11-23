@@ -2251,6 +2251,21 @@ async function updateConfirmationStatus() {
     (data?.error || error?.message || "Status belum dapat diperiksa.");
   return;
 }
+    
+const hideConfirmation =
+  data.status === "pending" ||
+  data.status === "approved";
+
+const verification = document.getElementById("dbConfirmationTurnstile");
+const checkoutButton = document.getElementById("dbCheckoutButton");
+
+if (verification) {
+  verification.style.display = hideConfirmation ? "none" : "block";
+}
+
+if (checkoutButton) {
+  checkoutButton.style.display = hideConfirmation ? "none" : "";
+}
 
     if (data.status === "approved") {
       box.textContent = "✅ Telah Disetujui Admin";
