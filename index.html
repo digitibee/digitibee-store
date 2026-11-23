@@ -2245,9 +2245,12 @@ async function updateConfirmationStatus() {
     );
 
     if (error || !data?.success) {
-      box.textContent = "⚠️ Status belum dapat diperiksa.";
-      return;
-    }
+  console.error("Status error:", error, data);
+  box.textContent =
+    "⚠️ " +
+    (data?.error || error?.message || "Status belum dapat diperiksa.");
+  return;
+}
 
     if (data.status === "approved") {
       box.textContent = "✅ Telah Disetujui Admin";
