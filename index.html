@@ -2557,9 +2557,22 @@ async function validateCustomerData() {
   );
 
   if (!confirmationId || !requestCode || !accessKey) {
-    alert("Akses konfirmasi belum tersedia. Silakan buat permintaan konfirmasi baru.");
-    return;
+  const restart = confirm(
+    "Konfirmasi lama tidak dapat digunakan.\n\n" +
+    "Ajukan konfirmasi baru?"
+  );
+
+  if (restart) {
+    localStorage.removeItem("digitibeeLastConfirmationId");
+    localStorage.removeItem("digitibeeLastConfirmationCode");
+    localStorage.removeItem("digitibeeCustomerAccessKey");
+    localStorage.removeItem("digitibee_request_id");
+
+    window.location.reload();
   }
+
+  return;
+}
 
   const widget = document.querySelector(
     "#dbCustomerForm .cf-turnstile"
