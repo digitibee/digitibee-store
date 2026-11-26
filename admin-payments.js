@@ -40,12 +40,7 @@
           contact_value,
           order_channel,
           customers(full_name),
-          order_items(
-  product_name,
-  quantity,
-  subtotal,
-  product_variants(name,duration)
-)
+          order_items(product_name,quantity,subtotal)
         `)
         .eq("order_status", "payment_review")
         .eq("payment_status", "pending")
@@ -72,7 +67,7 @@
           overflow-wrap:anywhere;
         `;
 
-      card.innerHTML = `
+card.innerHTML = `
   <div style="
     background:linear-gradient(160deg,#ffe1ef,#fffafd);
     border:1px solid #f2b9d5;
@@ -126,10 +121,78 @@
     margin:16px 0;
   ">
 
+  <section style="
+    background:#fffafd;
+    border:1px solid #efbfd5;
+    border-radius:15px;
+    overflow:hidden;
+    margin-bottom:16px;
+  ">
+
+    <h3 style="
+      background:#ffe1ef;
+      color:#a83f75;
+      padding:13px;
+      margin:0;
+      font-size:15px;
+    ">
+      💳 Informasi Pembayaran
+    </h3>
+
+    <div style="padding:13px;">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:8px;
+        font-size:13px;
+      ">
+        <span>Metode Pembayaran</span>
+
+        <strong style="
+          background:#fce1ee;
+          color:#b54780;
+          padding:7px 12px;
+          border-radius:9px;
+        ">
+          ${escape(order.payment_method)}
+        </strong>
+      </div>
+
+      <hr style="
+        border:0;
+        border-top:1px solid #efbfd5;
+        margin:14px 0;
+      ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:8px;
+        font-size:13px;
+      ">
+        <strong>Total Pembayaran</strong>
+
+        <strong style="
+          background:#fce1ee;
+          color:#d95791;
+          padding:8px 10px;
+          border-radius:9px;
+          font-size:17px;
+        ">
+          ${rupiah(order.total_amount)}
+        </strong>
+      </div>
+
+    </div>
+  </section>
+
   <div style="
     display:grid;
-    grid-template-columns:1fr 1fr 1.2fr;
-    gap:7px;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   ">
 
     <button type="button"
@@ -137,10 +200,10 @@
       style="
         background:#d95791;
         color:white;
-        border:1px solid #d95791;
-        border-radius:11px;
-        padding:12px 4px;
-        font-size:12px;
+        border:none;
+        border-radius:12px;
+        padding:14px;
+        font-size:14px;
         font-weight:800;
         text-decoration:none;
       ">
@@ -152,37 +215,18 @@
       style="
         background:#f9dce9;
         color:#a7477d;
-        border:1px solid #f9dce9;
-        border-radius:11px;
-        padding:12px 4px;
-        font-size:12px;
+        border:none;
+        border-radius:12px;
+        padding:14px;
+        font-size:14px;
         font-weight:800;
         text-decoration:none;
       ">
       ✕ Tolak
     </button>
 
-    <button type="button"
-      class="detail-payment"
-      style="
-        background:#fff7fb;
-        color:#b54780;
-        border:1px solid #d95791;
-        border-radius:11px;
-        padding:12px 4px;
-        font-size:12px;
-        font-weight:800;
-        text-decoration:none;
-      ">
-      Lihat Detail
-    </button>
-
   </div>
 `;
-
-card.querySelector(".detail-payment").onclick = () => {
-  showPaymentDetail(order, card);
-};
 
         card.querySelector(".verify-payment").onclick =
           () => updatePayment(order.id, true, card);
