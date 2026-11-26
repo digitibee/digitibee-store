@@ -2342,8 +2342,11 @@ async function updateConfirmationStatus() {
     return;
   }
 
-  box.style.display = "block";
-  box.textContent = "⏳ Memeriksa status konfirmasi...";
+  document.getElementById("dbCheckoutButton").style.display = "none";
+document.getElementById("dbConfirmationTurnstile").style.display = "none";
+
+box.style.display = "block";
+box.textContent = "⏳ Memeriksa status konfirmasi...";
 
   try {
     const { data, error } = await supabaseClient.functions.invoke(
