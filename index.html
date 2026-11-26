@@ -2620,14 +2620,20 @@ async function restoreDigitibeePayment() {
         order,
         order.order_channel || "whatsapp"
       );
-    } else {
-      document.getElementById("dbPaymentPanel")?.remove();
+    } else if (order.order_status === "payment_review" &&
+           order.payment_status === "pending") {
 
-      status.textContent =
-        order.payment_status === "paid"
-          ? "✅ Pembayaran telah diverifikasi admin"
-          : "Silakan hubungi admin untuk status pesanan.";
-    }
+  document.getElementById("dbPaymentPanel")?.remove();
+
+status.textContent = "⏳ Menunggu Verifikasi Pembayaran";
+
+} else {
+  document.getElementById("dbPaymentPanel")?.remove();
+
+  status.textContent =
+    order.payment_status === "verified"
+      ? "Pembayaran telah diverifikasi admin"
+}
 
     return true;
 
