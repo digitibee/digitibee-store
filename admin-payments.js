@@ -67,56 +67,117 @@
           overflow-wrap:anywhere;
         `;
 
-        card.innerHTML = `
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-            <strong style="color:#a7477d;">
-              #${escape(order.order_number)}
-            </strong>
+      card.innerHTML = `
+  <div style="
+    background:linear-gradient(160deg,#ffe1ef,#fffafd);
+    border:1px solid #f2b9d5;
+    border-radius:18px;
+    padding:18px 12px;
+    text-align:center;
+  ">
 
-            <span style="background:#b97713;color:white;padding:7px 10px;border-radius:20px;font-size:10px;font-weight:bold;">
-              MENUNGGU VERIFIKASI
-            </span>
-          </div>
+    <div style="
+      width:48px;
+      height:48px;
+      background:#fbd5e7;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      margin:0 auto 12px;
+    ">
+      🧾
+    </div>
 
-          <hr style="border:0;border-top:2px dashed #ee91bc;margin:15px 0;">
+    <div style="
+      color:#a83f75;
+      font-size:12px;
+      font-weight:800;
+      overflow-wrap:anywhere;
+      line-height:1.6;
+    ">
+      #${escape(order.order_number)}
+    </div>
 
-          <p><b>Nama:</b> ${escape(order.customers?.full_name)}</p>
-          <p><b>Kontak:</b> ${escape(order.contact_value)}</p>
-          <p><b>Metode:</b> ${escape(order.payment_method)}</p>
+    <div style="
+      display:inline-block;
+      background:#b97713;
+      color:white;
+      border-radius:30px;
+      padding:8px 13px;
+      font-size:10px;
+      font-weight:800;
+      margin-top:12px;
+    ">
+      ◷ MENUNGGU VERIFIKASI
+    </div>
 
-          <div style="margin:15px 0;">
-            ${(order.order_items || []).map(item => `
-              <p>
-                <b>${escape(item.product_name)}</b><br>
-                Jumlah: ${escape(item.quantity)}<br>
-                ${rupiah(item.subtotal)}
-              </p>
-            `).join("")}
-          </div>
+  </div>
 
-          <div style="background:#fff0f7;padding:13px;border-radius:12px;display:flex;justify-content:space-between;gap:8px;">
-            <strong>Total Pembayaran</strong>
-            <strong style="color:#a83f75;">
-              ${rupiah(order.total_amount)}
-            </strong>
-          </div>
+  <hr style="
+    border:0;
+    border-top:2px dashed #ee91bc;
+    margin:16px 0;
+  ">
 
-          <p style="font-size:11px;color:#97768a;line-height:1.6;">
-            ⓘ Periksa bukti pembayaran dan mutasi rekening sebelum melakukan verifikasi.
-          </p>
+  <div style="
+    display:grid;
+    grid-template-columns:1fr 1fr 1.2fr;
+    gap:7px;
+  ">
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px;">
-            <button class="verify-payment"
-              style="background:#d95791;color:white;border-radius:12px;padding:13px;text-decoration:none;">
-              ✓ Verifikasi
-            </button>
+    <button type="button"
+      class="verify-payment"
+      style="
+        background:#d95791;
+        color:white;
+        border:1px solid #d95791;
+        border-radius:11px;
+        padding:12px 4px;
+        font-size:12px;
+        font-weight:800;
+        text-decoration:none;
+      ">
+      ✓ Terima
+    </button>
 
-            <button class="reject-payment"
-              style="background:#f8dce6;color:#a9476e;border-radius:12px;padding:13px;text-decoration:none;">
-              ✕ Tolak
-            </button>
-          </div>
-        `;
+    <button type="button"
+      class="reject-payment"
+      style="
+        background:#f9dce9;
+        color:#a7477d;
+        border:1px solid #f9dce9;
+        border-radius:11px;
+        padding:12px 4px;
+        font-size:12px;
+        font-weight:800;
+        text-decoration:none;
+      ">
+      ✕ Tolak
+    </button>
+
+    <button type="button"
+      class="detail-payment"
+      style="
+        background:#fff7fb;
+        color:#b54780;
+        border:1px solid #d95791;
+        border-radius:11px;
+        padding:12px 4px;
+        font-size:12px;
+        font-weight:800;
+        text-decoration:none;
+      ">
+      Lihat Detail
+    </button>
+
+  </div>
+`;
+
+card.querySelector(".detail-payment").onclick = () => {
+  alert("Halaman detail sedang disiapkan.");
+};
 
         card.querySelector(".verify-payment").onclick =
           () => updatePayment(order.id, true, card);
