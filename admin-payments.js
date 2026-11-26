@@ -69,92 +69,97 @@
 
 card.innerHTML = `
   <div style="
-    background:linear-gradient(160deg,#ffe1ef,#fffafd);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#fff0f7;
     border:1px solid #f2b9d5;
-    border-radius:18px;
-    padding:18px 12px;
-    text-align:center;
+    border-radius:14px;
+    padding:10px;
   ">
 
     <div style="
-      width:48px;
-      height:48px;
+      width:36px;
+      height:36px;
+      flex-shrink:0;
       background:#fbd5e7;
       border-radius:50%;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:24px;
-      margin:0 auto 12px;
+      font-size:20px;
     ">
       🧾
     </div>
 
-    <div style="
-      color:#a83f75;
-      font-size:12px;
-      font-weight:800;
-      overflow-wrap:anywhere;
-      line-height:1.6;
-    ">
-      #${escape(order.order_number)}
-    </div>
+    <div style="flex:1;min-width:0;">
 
-    <div style="
-      display:inline-block;
-      background:#b97713;
-      color:white;
-      border-radius:30px;
-      padding:8px 13px;
-      font-size:10px;
-      font-weight:800;
-      margin-top:12px;
-    ">
-      ◷ MENUNGGU VERIFIKASI
-    </div>
+      <div style="
+        color:#a83f75;
+        font-size:11px;
+        font-weight:800;
+        overflow-wrap:anywhere;
+        line-height:1.4;
+      ">
+        #${escape(order.order_number)}
+      </div>
 
+      <span style="
+        display:inline-block;
+        background:#b97713;
+        color:white;
+        border-radius:20px;
+        padding:6px 9px;
+        font-size:9px;
+        font-weight:800;
+        margin-top:6px;
+      ">
+        ◷ MENUNGGU VERIFIKASI
+      </span>
+
+    </div>
   </div>
 
   <hr style="
     border:0;
     border-top:2px dashed #ee91bc;
-    margin:16px 0;
+    margin:10px 0;
   ">
 
   <section style="
     background:#fffafd;
     border:1px solid #efbfd5;
-    border-radius:15px;
+    border-radius:12px;
     overflow:hidden;
-    margin-bottom:16px;
+    margin-bottom:10px;
   ">
 
     <h3 style="
       background:#ffe1ef;
       color:#a83f75;
-      padding:13px;
+      padding:9px 10px;
       margin:0;
-      font-size:15px;
+      font-size:13px;
     ">
       💳 Informasi Pembayaran
     </h3>
 
-    <div style="padding:13px;">
+    <div style="padding:9px 10px;">
 
       <div style="
         display:flex;
         justify-content:space-between;
         align-items:center;
         gap:8px;
-        font-size:13px;
+        font-size:12px;
       ">
         <span>Metode Pembayaran</span>
 
         <strong style="
           background:#fce1ee;
           color:#b54780;
-          padding:7px 12px;
-          border-radius:9px;
+          padding:5px 9px;
+          border-radius:7px;
         ">
           ${escape(order.payment_method)}
         </strong>
@@ -163,7 +168,7 @@ card.innerHTML = `
       <hr style="
         border:0;
         border-top:1px solid #efbfd5;
-        margin:14px 0;
+        margin:8px 0;
       ">
 
       <div style="
@@ -171,16 +176,16 @@ card.innerHTML = `
         justify-content:space-between;
         align-items:center;
         gap:8px;
-        font-size:13px;
+        font-size:12px;
       ">
         <strong>Total Pembayaran</strong>
 
         <strong style="
           background:#fce1ee;
           color:#d95791;
-          padding:8px 10px;
-          border-radius:9px;
-          font-size:17px;
+          padding:5px 9px;
+          border-radius:7px;
+          font-size:15px;
         ">
           ${rupiah(order.total_amount)}
         </strong>
@@ -192,7 +197,7 @@ card.innerHTML = `
   <div style="
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:8px;
   ">
 
     <button type="button"
@@ -201,9 +206,9 @@ card.innerHTML = `
         background:#d95791;
         color:white;
         border:none;
-        border-radius:12px;
-        padding:14px;
-        font-size:14px;
+        border-radius:10px;
+        padding:11px;
+        font-size:13px;
         font-weight:800;
         text-decoration:none;
       ">
@@ -216,9 +221,9 @@ card.innerHTML = `
         background:#f9dce9;
         color:#a7477d;
         border:none;
-        border-radius:12px;
-        padding:14px;
-        font-size:14px;
+        border-radius:10px;
+        padding:11px;
+        font-size:13px;
         font-weight:800;
         text-decoration:none;
       ">
@@ -227,6 +232,9 @@ card.innerHTML = `
 
   </div>
 `;
+
+card.style.padding = "10px";
+card.style.margin = "8px 0";
 
         card.querySelector(".verify-payment").onclick =
           () => updatePayment(order.id, true, card);
