@@ -2437,13 +2437,17 @@ if (data.status === "approved") {
 `;
 
   nextButton.onclick = () => {
-    document.getElementById("dbCustomerForm").style.display = "";
-    document.getElementById("dbDataTitle").style.display = "";
-    document.getElementById("dbConfirmationTurnstile").style.display = "none";
+  const form = document.getElementById("dbCustomerForm");
+  const container = document.getElementById("dbDataFormContainer");
 
-    document.getElementById("dbDataTitle")
-      .scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  container.appendChild(form);
+  form.style.display = "";
+
+  document.getElementById("dbDataTitle").style.display = "none";
+  document.getElementById("dbConfirmationTurnstile").style.display = "none";
+
+  showPage("data-pemesan");
+};
 
   box.append(nextButton);
 
