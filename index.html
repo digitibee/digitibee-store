@@ -1508,6 +1508,18 @@
   display: none !important;
 }
 
+#dbPaymentPanel {
+  background: rgba(255,255,255,0.88) !important;
+  border: 1px solid #ffc9df;
+  border-radius: 22px;
+  padding: 18px !important;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+</style>
+
 </style>
 
     <!-- KERANJANG -->
@@ -2778,8 +2790,6 @@ function showDigitibeePayment(order, channel) {
 
       image.onload = () => {
         proofButton.disabled = false;
-        document.getElementById("dbQrisNote").textContent =
-          "Scan atau simpan gambar QRIS di atas.";
       };
 
       image.onerror = () => {
