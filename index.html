@@ -2351,6 +2351,10 @@ function renderOrderTimeline(status) {
 }
 
 async function updateConfirmationStatus() {
+  const paymentRestored = await restoreDigitibeePayment();
+
+if (paymentRestored) return;
+
   const box = document.getElementById("digitibeeOrderStatus");
   if (!box) return;
 
@@ -2527,6 +2531,86 @@ document.addEventListener("change", function(event) {
 });
 
 document.addEventListener("DOMContentLoaded", updateOrderChannel);
+
+async function restoreDigitibeePayment() {
+  const requestId = localStorage.getItem(
+    "digitibeeLastConfirmationId"
+  );
+
+  const requestCode = localStorage.getItem(
+    "digitibeeLastConfirmationCode"
+  );
+
+  const accessKey = localStorage.getItem(
+    "digitibeeCustomerAccessKey"
+  );
+
+  if (!requestId || !requestCode || !accessKey) {
+    return false;
+  }
+
+  try {
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "digitibee-payment-method",
+        {
+          body: {
+            action: "status",
+            confirmation_request_id: requestId,
+            request_code: requestCode,
+            customer_access_key: accessKey
+          }
+        }
+      );
+
+    if (error || !data?.success || !data?.order) {
+      return false;
+    }
+
+    const order = data.order;
+
+    [
+      "dbCustomerForm",
+      "dbDataTitle",
+      "dbConfirmationTurnstile",
+      "dbCheckoutButton"
+    ].forEach(id => {
+      const element = document.getElementById(id);
+      if (element) element.style.display = "none";
+    });
+
+    const status = document.getElementById(
+      "digitibeeOrderStatus"
+    );
+
+    status.style.display = "block";
+
+    if (
+      order.payment_status === "pending" &&
+      order.order_status === "awaiting_payment"
+    ) {
+      status.textContent = "⏳ Menunggu Pembayaran";
+
+      showDigitibeePayment(
+        order,
+        order.order_channel || "whatsapp"
+      );
+    } else {
+      document.getElementById("dbPaymentPanel")?.remove();
+
+      status.textContent =
+        order.payment_status === "paid"
+          ? "✅ Pembayaran telah diverifikasi admin"
+          : "Silakan hubungi admin untuk status pesanan.";
+    }
+
+    return true;
+
+  } catch (error) {
+    console.error("Restore payment:", error);
+    return false;
+  }
+}
 
 function showDigitibeePayment(order, channel) {
   const BANK_NUMBER = "105040507872";
@@ -2819,7 +2903,11 @@ function showDigitibeePayment(order, channel) {
     }
   };
 
-  chooseMethod("QRIS");
+ chooseMethod(
+  order.payment_method === "Bank Jago"
+    ? "Bank Jago"
+    : "QRIS"
+);
 
   panel.scrollIntoView({
     behavior:"smooth",
