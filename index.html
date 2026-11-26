@@ -1013,6 +1013,83 @@
   line-height: 1.5;
 }
 
+/* TIMELINE STATUS PESANAN */
+.db-order-timeline {
+  text-align: left;
+  padding: 4px 0;
+}
+
+.db-timeline-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #bf5f8b;
+  margin-bottom: 20px;
+}
+
+.db-timeline-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 24px;
+  padding-bottom: 22px;
+  color: #b5a8af;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.db-timeline-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: #e3d9df;
+}
+
+.db-timeline-dot {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d8cbd2;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.db-timeline-step.done {
+  color: #754b59;
+}
+
+.db-timeline-step.done .db-timeline-dot {
+  background: #c65b8e;
+  border-color: #c65b8e;
+  color: white;
+}
+
+.db-timeline-step.done::after {
+  background: #c65b8e;
+}
+
+.db-timeline-step.current {
+  color: #c65b8e;
+  font-weight: 800;
+}
+
+.db-timeline-step.current .db-timeline-dot {
+  background: #f8cce0;
+  border-color: #c65b8e;
+}
+
+.db-timeline-step:last-child {
+  padding-bottom: 0;
+}
+
 /* NAVBAR BAWAH AUTO HIDE */
 
 .navbar-wrapper {
@@ -2218,6 +2295,40 @@ updateOrderChannel();
 
 /* PESANAN WHATSAPP */
 
+function renderOrderTimeline(status) {
+  const steps = [
+    "Menunggu Konfirmasi Admin",
+    "Telah Disetujui Admin",
+    "Pengisian Data Pemesan",
+    "Pembayaran",
+    "Pesanan Diproses",
+    "Pesanan Selesai"
+  ];
+
+  const current = status === "approved" ? 1 : 0;
+
+  return `
+    <div class="db-order-timeline">
+      <div class="db-timeline-title">
+        Status Pesanan
+      </div>
+
+      ${steps.map((step, index) => `
+        <div class="db-timeline-step ${
+          index < current ? "done" :
+          index === current ? "current" : ""
+        }">
+          <span class="db-timeline-dot">
+            ${index < current ? "✓" :
+              index === current ? "●" : ""}
+          </span>
+          <span>${step}</span>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
 async function updateConfirmationStatus() {
   const box = document.getElementById("digitibeeOrderStatus");
   if (!box) return;
@@ -2269,10 +2380,7 @@ if (checkoutButton) {
 
     
 if (data.status === "approved") {
-  box.innerHTML = "";
-
-  const message = document.createElement("div");
-  message.textContent = "✅ Telah Disetujui Admin";
+  box.innerHTML = renderOrderTimeline("approved");
 
   const nextButton = document.createElement("button");
   nextButton.type = "button";
@@ -2293,12 +2401,12 @@ if (data.status === "approved") {
       .scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  box.append(message, nextButton);
+  box.append(nextButton);
 
     } else if (data.status === "rejected") {
-      box.textContent = "❌ Ditolak Admin";
+      box.textContent = "Ditolak Admin ❌";
     } else {
-      box.textContent = "⏳ Menunggu Konfirmasi Admin";
+      box.innerHTML = renderOrderTimeline("pending");
     }
   } catch (error) {
     console.error("Cek status:", error);
