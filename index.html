@@ -2628,21 +2628,6 @@ function showDigitibeePayment(order, channel) {
       margin:20px 0 12px;
     ">💳 Pembayaran</h3>
 
-    <div class="db-white-card"
-      style="padding:18px !important;">
-
-      <div style="text-align:center;">
-        <p style="color:#754b59;">
-          Total Pembayaran
-        </p>
-
-        <h2 id="dbPaymentTotal" style="
-          color:#800000;
-          font-size:28px;
-          margin:8px 0 18px;
-        "></h2>
-      </div>
-
       <p style="
         font-weight:700;
         color:#754b59;
@@ -2677,6 +2662,25 @@ function showDigitibeePayment(order, channel) {
       ">
         ⓘ Pastikan nominal pembayaran sesuai dengan total pesanan.
       </div>
+
+<div style="
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px dashed #f4a9c8;
+  padding:15px 0;
+  margin-top:10px;
+">
+  <span style="font-size:14px;font-weight:bold;">
+    Total Pembayaran
+  </span>
+
+  <h2 id="dbPaymentTotal" style="
+    color:#800000;
+    font-size:22px;
+    margin:0;
+  "></h2>
+</div>
 
       <button
         type="button"
@@ -3223,8 +3227,7 @@ Saya mau order aplikasi premium…
     (sum, item) => sum + Number(item.price) * Number(item.quantity),
     0
   );
-
-  message += `
+message += `
 💳 *Total Pembayaran : ${formatRupiah(total)}*
 
 Mohon dicek ketersediaan produknya serta infoin pembayarannya ya min. Kamsahamnida ♡`;
