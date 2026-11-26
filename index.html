@@ -2383,13 +2383,21 @@ if (data.status === "approved") {
 
   const nextButton = document.createElement("button");
   nextButton.type = "button";
-  nextButton.textContent = "LANJUT KE PENGISIAN DATA 🩷";
+  nextButton.textContent = "▤ Lanjut Isi Data Pemesan ›";
   nextButton.className = "pink-button";
   nextButton.style.cssText = `
-    display:block;
-    margin:12px auto 0;
-    padding:12px 18px;
-  `;
+  display: block;
+  width: 100%;
+  margin: 16px auto 0;
+  padding: 13px 16px;
+  background: #f9d5e6;
+  border: 1px solid #db79a5;
+  border-radius: 14px;
+  color: #b6477b;
+  font-size: 14px;
+  font-weight: 600;
+  box-sizing: border-box;
+`;
 
   nextButton.onclick = () => {
     document.getElementById("dbCustomerForm").style.display = "";
