@@ -1509,13 +1509,20 @@
 }
 
 #dbPaymentPanel {
+  padding-top:8px !important;
+  margin-top:8px !important;
   background: rgba(255,255,255,0.88) !important;
   border: 1px solid #ffc9df;
   border-radius: 22px;
-  padding: 18px !important;
+  padding: 12px !important;
   box-sizing: border-box;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+}
+
+#dbPaymentPanel > h3:first-child,
+#dbPaymentPanel > h2:first-child {
+  margin-top:0 !important;
 }
 
 </style>
@@ -2680,8 +2687,8 @@ function showDigitibeePayment(order, channel) {
   justify-content:space-between;
   align-items:center;
   border-top:1px dashed #f4a9c8;
-  padding:15px 0;
-  margin-top:10px;
+  padding:8px 0;
+margin-top:5px;
 ">
   <span style="font-size:14px;font-weight:bold;">
     Total Pembayaran
@@ -2789,8 +2796,10 @@ function showDigitibeePayment(order, channel) {
       const image = document.getElementById("dbQrisImage");
 
       image.onload = () => {
-        proofButton.disabled = false;
-      };
+  proofButton.disabled = false;
+  const note = document.getElementById("dbQrisNote");
+  if (note) note.style.display = "none";
+};
 
       image.onerror = () => {
         proofButton.disabled = true;
