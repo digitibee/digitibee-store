@@ -1678,11 +1678,31 @@
         <div style="display:flex;align-items:center;gap:8px;background:#ffe8f2;border:1px solid #ffc5df;border-radius:14px;padding:10px;margin-top:15px;">
   <span style="color:#d94e93;font-size:12px;flex-shrink:0;line-height:1;">ⓘ</span>
   <p class="status-note" style="margin:0;font-size:8px;line-height:1.5;">
-    Jika ada paket Konfirmasi WA, pesanan akan diarahkan ke admin terlebih dahulu. Produk Ready bisa lanjut ke pembayaran setelah data lengkap.
+    Pastika seluruh data sudah benar sebelum melanjutkan.
   </p>
 
 
 </div> <!-- Penutup catatan pink -->
+
+<button
+  type="button"
+  onclick="validateCustomerData()"
+  style="
+    display:block;
+    width:100%;
+    margin-top:16px;
+    padding:14px;
+    background:#d95791;
+    color:white;
+    border:none;
+    border-radius:14px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+  "
+>
+  Lanjut ke Pembayaran ›
+</button>
 
 </div> <!-- Penutup kotak formulir -->
 
@@ -2508,6 +2528,35 @@ document.addEventListener("change", function(event) {
 
 document.addEventListener("DOMContentLoaded", updateOrderChannel);
 
+function validateCustomerData() {
+  const fields = [
+    "customerName",
+    "customerPhone",
+    "customerDevice",
+    "customerLocation"
+  ];
+
+  for (const id of fields) {
+    const field = document.getElementById(id);
+
+    if (!field.value.trim()) {
+      alert("Mohon lengkapi seluruh data pemesan.");
+      field.focus();
+      return;
+    }
+  }
+
+  const token = window.turnstile?.getResponse(
+    document.querySelector("#dbCustomerForm .cf-turnstile")
+  );
+
+  if (!token) {
+    alert("Selesaikan verifikasi keamanan terlebih dahulu.");
+    return;
+  }
+
+  alert("Data pemesan sudah lengkap!");
+}
 
 async function sendOrderWhatsApp() {
   if (cart.length === 0) {
