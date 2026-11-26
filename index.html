@@ -2528,34 +2528,102 @@ document.addEventListener("change", function(event) {
 
 document.addEventListener("DOMContentLoaded", updateOrderChannel);
 
-function validateCustomerData() {
-  const fields = [
-    "customerName",
-    "customerPhone",
-    "customerDevice",
-    "customerLocation"
-  ];
+async function validateCustomerData() {
+  const name = document.getElementById("customerName").value.trim();
+  const contact = document.getElementById("customerPhone").value.trim();
+  const device = document.getElementById("customerDevice").value.trim();
+  const location = document.getElementById("customerLocation").value.trim();
+  const note = document.getElementById("customerNote").value.trim();
 
-  for (const id of fields) {
-    const field = document.getElementById(id);
+  const channel = document.querySelector(
+    'input[name="orderChannel"]:checked'
+  )?.value || "whatsapp";
 
-    if (!field.value.trim()) {
-      alert("Mohon lengkapi seluruh data pemesan.");
-      field.focus();
-      return;
-    }
-  }
-
-  const token = window.turnstile?.getResponse(
-    document.querySelector("#dbCustomerForm .cf-turnstile")
-  );
-
-  if (!token) {
-    alert("Selesaikan verifikasi keamanan terlebih dahulu.");
+  if (!name || !contact || !device || !location) {
+    alert("Mohon lengkapi seluruh data pemesan.");
     return;
   }
 
-  alert("Data pemesan sudah lengkap!");
+  const confirmationId = localStorage.getItem(
+    "digitibeeLastConfirmationId"
+  );
+
+  const requestCode = localStorage.getItem(
+    "digitibeeLastConfirmationCode"
+  );
+
+  const accessKey = localStorage.getItem(
+    "digitibeeCustomerAccessKey"
+  );
+
+  if (!confirmationId || !requestCode || !accessKey) {
+    alert("Akses konfirmasi belum tersedia. Silakan buat permintaan konfirmasi baru.");
+    return;
+  }
+
+  const widget = document.querySelector(
+    "#dbCustomerForm .cf-turnstile"
+  );
+
+  const token = window.turnstile?.getResponse(widget);
+
+  if (!token) {
+    alert("Selesaikan verifikasi Cloudflare dahulu.");
+    return;
+  }
+
+  if (validateCustomerData.processing) return;
+  validateCustomerData.processing = true;
+
+  try {
+    const { data, error } = await supabaseClient.functions.invoke(
+      "digitibee-checkout",
+      {
+        body: {
+          mode: "approved",
+          request_id: confirmationId,
+          confirmation_request_id: confirmationId,
+          request_code: requestCode,
+          customer_access_key: accessKey,
+          turnstile_token: token,
+          name,
+          channel,
+          contact,
+          device,
+          location,
+          note,
+          items: cart.map(item => ({
+            variant_id: item.variantId,
+            quantity: Number(item.quantity)
+          }))
+        }
+      }
+    );
+
+    if (error || !data?.success || !data?.order) {
+      throw new Error(
+        data?.error || error?.message ||
+        "Pesanan gagal disimpan."
+      );
+    }
+
+    localStorage.setItem(
+      "digitibeeCurrentOrder",
+      JSON.stringify(data.order)
+    );
+
+    alert(
+      "Pesanan berhasil disimpan! 🩷\n\n" +
+      "Nomor: " + data.order.order_number + "\n" +
+      "Total: " + formatRupiah(data.order.total_amount)
+    );
+
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    validateCustomerData.processing = false;
+    window.turnstile?.reset(widget);
+  }
 }
 
 async function sendOrderWhatsApp() {
