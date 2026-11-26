@@ -2566,6 +2566,12 @@ async function sendOrderWhatsApp() {
 
   const requestId = crypto.randomUUID();
 
+const customerAccessKey = Array.from(
+  crypto.getRandomValues(new Uint8Array(32))
+)
+  .map(byte => byte.toString(16).padStart(2, "0"))
+  .join("");
+
   const needsConfirmation = cart.some(item =>
     item.requiresConfirmation === true ||
     item.requires_confirmation === true
@@ -2592,7 +2598,8 @@ try {
     {
       body: {
         request_id: requestId,
-        turnstile_token: turnstileToken,
+customer_access_key: customerAccessKey,
+turnstile_token: turnstileToken,
         items: cart.map(item => ({
           variant_id: item.variantId,
           quantity: Number(item.quantity)
@@ -2638,6 +2645,10 @@ localStorage.setItem(
   requestId
 );
 
+localStorage.setItem(
+  "digitibeeCustomerAccessKey",
+  customerAccessKey
+);
 
 const checkConfirmationStatus = async () => {
   const savedId = localStorage.getItem("digitibeeLastConfirmationId");
