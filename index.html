@@ -2490,9 +2490,19 @@ if (dataTitle) {
 
 document.addEventListener("change", function(event) {
   if (event.target.name === "orderChannel") {
+    const isIG = event.target.value === "instagram";
     const contact = document.getElementById("customerPhone");
-    if (contact) contact.value = "";
-    updateOrderChannel();
+    const label = document.querySelector('label[for="customerPhone"]');
+
+    contact.value = "";
+    contact.type = isIG ? "text" : "tel";
+    contact.placeholder = isIG
+      ? "Contoh: @namakamu"
+      : "Contoh: 62812xxxx";
+
+    label.textContent = isIG
+      ? "Username Instagram"
+      : "Nomor WhatsApp";
   }
 });
 
