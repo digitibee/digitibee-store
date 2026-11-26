@@ -2528,6 +2528,277 @@ document.addEventListener("change", function(event) {
 
 document.addEventListener("DOMContentLoaded", updateOrderChannel);
 
+function showDigitibeePayment(order, channel) {
+  const BANK_NUMBER = "105040507872";
+  const BANK_OWNER = "Aulia Putri Ramadhani";
+
+  document.getElementById("dbPaymentPanel")?.remove();
+
+  const panel = document.createElement("div");
+  panel.id = "dbPaymentPanel";
+
+  panel.innerHTML = `
+    <h3 style="
+      color:#BF5F8B;
+      font-size:18px;
+      margin:20px 0 12px;
+    ">💳 Pembayaran</h3>
+
+    <div class="db-white-card"
+      style="padding:18px !important;">
+
+      <div style="text-align:center;">
+        <p style="color:#754b59;">
+          Total Pembayaran
+        </p>
+
+        <h2 id="dbPaymentTotal" style="
+          color:#800000;
+          font-size:28px;
+          margin:8px 0 18px;
+        "></h2>
+      </div>
+
+      <p style="
+        font-weight:700;
+        color:#754b59;
+        margin-bottom:10px;
+      ">Pilih Metode Pembayaran</p>
+
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+      ">
+        <button type="button" id="dbChooseQris">
+          QRIS
+        </button>
+
+        <button type="button" id="dbChooseJago">
+          Bank Jago
+        </button>
+      </div>
+
+      <div id="dbPaymentDetail"
+        style="margin:18px 0;">
+      </div>
+
+      <div style="
+        background:#fff0f7;
+        border-radius:12px;
+        padding:12px;
+        color:#754b59;
+        font-size:12px;
+        line-height:1.5;
+      ">
+        ⓘ Pastikan nominal pembayaran sesuai dengan total pesanan.
+      </div>
+
+      <button
+        type="button"
+        id="dbSendPaymentProof"
+        class="pink-button"
+        style="
+          width:100%;
+          padding:15px;
+          margin-top:15px;
+          font-size:14px;
+          border-radius:14px;
+        "
+      >
+        💬 Kirim Bukti Pembayaran ›
+      </button>
+
+      <p style="
+        text-align:center;
+        color:#9b7184;
+        font-size:11px;
+        margin-top:12px;
+      ">
+        Pembayaran diverifikasi secara manual oleh admin.
+      </p>
+    </div>
+  `;
+
+  document.getElementById("dbCustomerForm")
+    .insertAdjacentElement("afterend", panel);
+
+  document.getElementById("dbPaymentTotal")
+    .textContent = formatRupiah(order.total_amount);
+
+  const qrisButton =
+    document.getElementById("dbChooseQris");
+
+  const jagoButton =
+    document.getElementById("dbChooseJago");
+
+  const detail =
+    document.getElementById("dbPaymentDetail");
+
+  const proofButton =
+    document.getElementById("dbSendPaymentProof");
+
+  let paymentMethod = "QRIS";
+
+  function chooseMethod(method) {
+    paymentMethod = method;
+    proofButton.disabled = true;
+
+    [qrisButton, jagoButton].forEach(button => {
+      const active =
+        (button === qrisButton && method === "QRIS") ||
+        (button === jagoButton && method === "Bank Jago");
+
+      button.style.cssText = `
+        border:1.5px solid #d95791;
+        border-radius:14px;
+        padding:15px 8px;
+        font-weight:700;
+        font-size:14px;
+        cursor:pointer;
+        color:#b6477b;
+        background:${active ? "#ffe1ef" : "#fff"};
+      `;
+    });
+
+    qrisButton.textContent =
+      method === "QRIS" ? "QRIS ✓" : "QRIS";
+
+    jagoButton.textContent =
+      method === "Bank Jago" ? "Bank Jago ✓" : "Bank Jago";
+
+    if (method === "QRIS") {
+      detail.innerHTML = `
+        <div style="text-align:center;">
+          <img id="dbQrisImage"
+            alt="QRIS Digitibee"
+            style="
+              width:100%;
+              max-width:280px;
+              border-radius:14px;
+            ">
+
+          <p id="dbQrisNote" style="
+            color:#754b59;
+            font-size:12px;
+            margin-top:10px;
+          ">Memuat QRIS...</p>
+        </div>
+      `;
+
+      const image = document.getElementById("dbQrisImage");
+
+      image.onload = () => {
+        proofButton.disabled = false;
+        document.getElementById("dbQrisNote").textContent =
+          "Scan atau simpan gambar QRIS di atas.";
+      };
+
+      image.onerror = () => {
+        proofButton.disabled = true;
+        document.getElementById("dbQrisNote").textContent =
+          "QRIS tidak tersedia. Jangan lakukan pembayaran.";
+      };
+
+      image.src = "QRIS-digitibee.PNG";
+
+    } else {
+      detail.innerHTML = `
+        <div style="
+          background:#fff8e7;
+          border:1px solid #f3d998;
+          padding:16px;
+          border-radius:16px;
+          color:#754b59;
+        ">
+          <h3 style="color:#d59632;">
+            BANK JAGO
+          </h3>
+
+          <p style="font-size:12px;margin-top:14px;">
+            Nomor Rekening
+          </p>
+
+          <h2 id="dbBankNumber" style="margin:5px 0;"></h2>
+
+          <button type="button" id="dbCopyRekening"
+            class="pink-button">
+            Salin Nomor Rekening
+          </button>
+
+          <p style="font-size:12px;margin-top:14px;">
+            Atas Nama
+          </p>
+
+          <strong id="dbBankOwner"></strong>
+        </div>
+      `;
+
+      document.getElementById("dbBankNumber")
+        .textContent = BANK_NUMBER;
+
+      document.getElementById("dbBankOwner")
+        .textContent = BANK_OWNER;
+
+      const configured =
+        /^[0-9]{5,20}$/.test(BANK_NUMBER) &&
+        BANK_OWNER !== "ISI_NAMA_PEMILIK";
+
+      proofButton.disabled = !configured;
+
+      const copyButton =
+        document.getElementById("dbCopyRekening");
+
+      copyButton.disabled = !configured;
+
+      copyButton.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(BANK_NUMBER);
+          alert("Nomor rekening berhasil disalin!");
+        } catch {
+          window.prompt("Salin nomor rekening:", BANK_NUMBER);
+        }
+      };
+    }
+  }
+
+  qrisButton.onclick = () => chooseMethod("QRIS");
+  jagoButton.onclick = () => chooseMethod("Bank Jago");
+
+  proofButton.onclick = async () => {
+    const message =
+      "Halo Admin Digitibee! 🩷\n\n" +
+      "Saya ingin mengirim bukti pembayaran.\n\n" +
+      "Nomor Pesanan: " + order.order_number + "\n" +
+      "Total: " + formatRupiah(order.total_amount) + "\n" +
+      "Metode: " + paymentMethod + "\n\n" +
+      "Berikut bukti pembayaran saya.";
+
+    if (channel === "instagram") {
+      try {
+        await navigator.clipboard.writeText(message);
+        alert("Detail pesanan disalin. Tempel di DM Instagram dan lampirkan bukti bayar.");
+      } catch {
+        window.prompt("Salin pesan berikut:", message);
+      }
+
+      window.location.href =
+        "https://www.instagram.com/digitibee/";
+    } else {
+      window.location.href =
+        "https://wa.me/6281553352110?text=" +
+        encodeURIComponent(message);
+    }
+  };
+
+  chooseMethod("QRIS");
+
+  panel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
 async function validateCustomerData() {
   const name = document.getElementById("customerName").value.trim();
   const contact = document.getElementById("customerPhone").value.trim();
@@ -2625,11 +2896,7 @@ async function validateCustomerData() {
       JSON.stringify(data.order)
     );
 
-    alert(
-      "Pesanan berhasil disimpan! 🩷\n\n" +
-      "Nomor: " + data.order.order_number + "\n" +
-      "Total: " + formatRupiah(data.order.total_amount)
-    );
+    showDigitibeePayment(data.order, channel);
 
   } catch (error) {
     alert(error.message);
