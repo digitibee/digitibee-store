@@ -2766,6 +2766,34 @@ function showDigitibeePayment(order, channel) {
   jagoButton.onclick = () => chooseMethod("Bank Jago");
 
   proofButton.onclick = async () => {
+    try {
+  const { data, error } =
+    await supabaseClient.functions.invoke(
+      "digitibee-payment-method",
+      {
+        body: {
+          confirmation_request_id:
+            localStorage.getItem("digitibeeLastConfirmationId"),
+
+          request_code:
+            localStorage.getItem("digitibeeLastConfirmationCode"),
+
+          customer_access_key:
+            localStorage.getItem("digitibeeCustomerAccessKey"),
+
+          payment_method: paymentMethod
+        }
+      }
+    );
+
+  if (error || !data?.success) {
+    throw new Error("Metode pembayaran gagal disimpan.");
+  }
+
+} catch (error) {
+  alert(error.message);
+  return;
+}
     const message =
       "Halo Admin Digitibee! 🩷\n\n" +
       "Saya ingin mengirim bukti pembayaran.\n\n" +
