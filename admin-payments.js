@@ -123,7 +123,7 @@ card.innerHTML = `
   ">
 
 <div style="
-  font-size:13px;
+  font-size:15px;
   color:#b54780;
   font-weight:600;
 ">
@@ -164,7 +164,7 @@ card.innerHTML = `
         border:none;
         border-radius:10px;
         padding:11px;
-        font-size:13px;
+        font-size:15px;
         font-weight:800;
         text-decoration:none;
       ">
@@ -179,7 +179,7 @@ card.innerHTML = `
         border:none;
         border-radius:10px;
         padding:11px;
-        font-size:13px;
+        font-size:15px;
         font-weight:800;
         text-decoration:none;
       ">
