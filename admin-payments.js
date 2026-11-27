@@ -151,10 +151,11 @@ card.innerHTML = `
 </div>
 
   <div style="
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  ">
+  display:grid;
+  grid-template-columns:110px 110px;
+  justify-content:center;
+  gap:8px;
+">
 
     <button type="button"
       class="verify-payment"
