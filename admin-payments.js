@@ -122,19 +122,20 @@ card.innerHTML = `
     margin:12px 0;
   ">
 
+<div style="
+  font-size:13px;
+  color:#b54780;
+  font-weight:600;
+">
   <div style="
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:8px;
-    font-size:13px;
     margin-bottom:12px;
   ">
     <span>Metode Pembayaran</span>
-
-    <strong style="color:#b54780;">
-      ${escape(order.payment_method)}
-    </strong>
+    <span>${escape(order.payment_method)}</span>
   </div>
 
   <div style="
@@ -142,18 +143,12 @@ card.innerHTML = `
     justify-content:space-between;
     align-items:center;
     gap:8px;
-    font-size:13px;
     margin-bottom:14px;
   ">
-    <strong>Total Pembayaran</strong>
-
-    <strong style="
-      color:#d95791;
-      font-size:17px;
-    ">
-      ${rupiah(order.total_amount)}
-    </strong>
+    <span>Total Pembayaran</span>
+    <span>${rupiah(order.total_amount)}</span>
   </div>
+</div>
 
   <div style="
     display:grid;
