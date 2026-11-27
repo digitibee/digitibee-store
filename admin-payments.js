@@ -72,10 +72,6 @@ card.innerHTML = `
     display:flex;
     align-items:center;
     gap:10px;
-    background:#fff0f7;
-    border:1px solid #f2b9d5;
-    border-radius:14px;
-    padding:10px;
   ">
 
     <div style="
@@ -123,76 +119,41 @@ card.innerHTML = `
   <hr style="
     border:0;
     border-top:2px dashed #ee91bc;
-    margin:10px 0;
+    margin:12px 0;
   ">
 
-  <section style="
-    background:#fffafd;
-    border:1px solid #efbfd5;
-    border-radius:12px;
-    overflow:hidden;
-    margin-bottom:10px;
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    margin-bottom:12px;
   ">
+    <span>Metode Pembayaran</span>
 
-    <h3 style="
-      background:#ffe1ef;
-      color:#a83f75;
-      padding:9px 10px;
-      margin:0;
-      font-size:13px;
+    <strong style="color:#b54780;">
+      ${escape(order.payment_method)}
+    </strong>
+  </div>
+
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    margin-bottom:14px;
+  ">
+    <strong>Total Pembayaran</strong>
+
+    <strong style="
+      color:#d95791;
+      font-size:17px;
     ">
-      💳 Informasi Pembayaran
-    </h3>
-
-    <div style="padding:9px 10px;">
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:8px;
-        font-size:12px;
-      ">
-        <span>Metode Pembayaran</span>
-
-        <strong style="
-          background:#fce1ee;
-          color:#b54780;
-          padding:5px 9px;
-          border-radius:7px;
-        ">
-          ${escape(order.payment_method)}
-        </strong>
-      </div>
-
-      <hr style="
-        border:0;
-        border-top:1px solid #efbfd5;
-        margin:8px 0;
-      ">
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:8px;
-        font-size:12px;
-      ">
-        <strong>Total Pembayaran</strong>
-
-        <strong style="
-          background:#fce1ee;
-          color:#d95791;
-          padding:5px 9px;
-          border-radius:7px;
-          font-size:15px;
-        ">
-          ${rupiah(order.total_amount)}
-        </strong>
-      </div>
-
-    </div>
-  </section>
+      ${rupiah(order.total_amount)}
+    </strong>
+  </div>
 
   <div style="
     display:grid;
@@ -233,8 +194,11 @@ card.innerHTML = `
   </div>
 `;
 
-card.style.padding = "10px";
-card.style.margin = "8px 0";
+card.style.background = "#ffffff";
+card.style.border = "1.5px solid #efbfd5";
+card.style.borderRadius = "16px";
+card.style.padding = "14px";
+card.style.margin = "10px 0";
 
         card.querySelector(".verify-payment").onclick =
           () => updatePayment(order.id, true, card);
